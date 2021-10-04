@@ -1,0 +1,103 @@
+{
+	"API request": "https://api.flysas.com/v2/emission/flight?origin=OSL&destination=TXL",
+	"legs": [
+		{
+			"origin": { "iata": "OSL", "coordinates": { "latitude": 60.121, "longitude": 11.0502 } },
+			"destination": { "iata": "TXL", "coordinates": { "latitude": 52.5597, "longitude": 13.2877 } },
+			"distance": { "quantity": 852, "unit": "km" },
+			"aircrafts": [
+				{
+					"type": "73W",
+					"name": "737-700W",
+					"seats": 141,
+					"range": 4500,
+					"loadFactor": { "pax": 0.75, "cargo": 0.022 },
+					"emissions": [
+						{ "type": "CO2", "quantity": 89.2, "unit": "kg" },
+						{ "type": "H2O", "quantity": 35, "unit": "kg" },
+						{ "type": "SO2", "quantity": 28.3, "unit": "g" },
+						{ "type": "NOx", "quantity": 290, "unit": "g" },
+						{ "type": "HC", "quantity": 13.8, "unit": "g" },
+						{ "type": "CO", "quantity": 206, "unit": "g" }
+					]
+				},
+				{
+					"type": "73H",
+					"name": "737-800W",
+					"seats": 183,
+					"range": 4300,
+					"loadFactor": { "pax": 0.75, "cargo": 0.022 },
+					"emissions": [
+						{ "type": "CO2", "quantity": 76.2, "unit": "kg" },
+						{ "type": "H2O", "quantity": 30, "unit": "kg" },
+						{ "type": "SO2", "quantity": 24.2, "unit": "g" },
+						{ "type": "NOx", "quantity": 277, "unit": "g" },
+						{ "type": "HC", "quantity": 7.92, "unit": "g" },
+						{ "type": "CO", "quantity": 139, "unit": "g" }
+					]
+				},
+				{
+					"type": "CR9",
+					"name": "CRJ 900LR",
+					"seats": 90,
+					"range": 2100,
+					"loadFactor": { "pax": 0.75, "cargo": 0.022 },
+					"emissions": [
+						{ "type": "CO2", "quantity": 107, "unit": "kg" },
+						{ "type": "H2O", "quantity": 42.2, "unit": "kg" },
+						{ "type": "SO2", "quantity": 34.1, "unit": "g" },
+						{ "type": "NOx", "quantity": 321, "unit": "g" },
+						{ "type": "HC", "quantity": 2.22, "unit": "g" },
+						{ "type": "CO", "quantity": 150, "unit": "g" }
+					]
+				},
+				{
+					"type": "32N",
+					"name": "A320-200NEO",
+					"seats": 180,
+					"range": 4500,
+					"loadFactor": { "pax": 0.75, "cargo": 0.022 },
+					"emissions": [
+						{ "type": "CO2", "quantity": 62.3, "unit": "kg" },
+						{ "type": "H2O", "quantity": 24.5, "unit": "kg" },
+						{ "type": "SO2", "quantity": 19.8, "unit": "g" },
+						{ "type": "NOx", "quantity": 146, "unit": "g" },
+						{ "type": "HC", "quantity": 1.77, "unit": "g" },
+						{ "type": "CO", "quantity": 93.8, "unit": "g" }
+					]
+				},
+				{
+					"type": "736",
+					"name": "737-600",
+					"seats": 120,
+					"range": 2400,
+					"loadFactor": { "pax": 0.75, "cargo": 0.022 },
+					"emissions": [
+						{ "type": "CO2", "quantity": 103, "unit": "kg" },
+						{ "type": "H2O", "quantity": 40.5, "unit": "kg" },
+						{ "type": "SO2", "quantity": 32.7, "unit": "g" },
+						{ "type": "NOx", "quantity": 295, "unit": "g" },
+						{ "type": "HC", "quantity": 25.2, "unit": "g" },
+						{ "type": "CO", "quantity": 300, "unit": "g" }
+					]
+				},
+				{
+					"type": "AT7",
+					"name": "ATR72-600",
+					"seats": 70,
+					"range": 1500,
+					"loadFactor": { "pax": 0.75, "cargo": 0.022 },
+					"emissions": [
+						{ "type": "CO2", "quantity": 68.1, "unit": "kg" },
+						{ "type": "H2O", "quantity": 26.8, "unit": "kg" },
+						{ "type": "SO2", "quantity": 21.5, "unit": "g" },
+						{ "type": "NOx", "quantity": 249, "unit": "g" },
+						{ "type": "HC", "quantity": 53.9, "unit": "g" },
+						{ "type": "CO", "quantity": 193, "unit": "g" }
+					]
+				}
+			],
+			"isMeasuredData": true
+		}
+	]
+}

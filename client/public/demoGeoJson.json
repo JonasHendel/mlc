@@ -1,0 +1,105 @@
+[
+  {
+    "type": "FeatureCollection",
+    "properties": {
+      "name": "Current positions"
+    },
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [59.9139, 10.7522]
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [52.52, 13.405]
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [51.5074, 0.1278]
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [48.8566, 2.3522]
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "meetingPoint",
+          "coordinates": [51.93083589023145, 4.81320276432186]
+        }
+      }
+    ]
+  },
+  {
+    "type": "FeatureCollection",
+    "properties": {
+      "name": "Meeting Point"
+    },
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "color":"white"
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [59.9139, 10.7522],
+            [51.93083589023145, 4.81320276432186]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "color":"white"
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [52.52, 13.405],
+            [51.93083589023145, 4.81320276432186]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "color":"white"
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [51.5074, 0.1278],
+            [51.93083589023145, 4.81320276432186]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "color":"white"
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [48.8566, 2.3522],
+            [51.93083589023145, 4.81320276432186]
+          ]
+        }
+      }
+    ]
+  }
+]

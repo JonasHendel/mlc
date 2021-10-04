@@ -1,0 +1,12 @@
+[
+  { "name": "Oslo",
+    "coordinates": [59.9139, 10.7522]
+  },
+  { "name": "Berlin",
+    "coordinates": [52.52, 13.405]
+  },
+  { "name": "London",
+    "coordinates": [51.5074, 0.1278]
+  }
+	
+]
