@@ -23,7 +23,7 @@ const GeoJson = ({setTotalCO2}) => {
 	const meetingPoint = useSelector((state) => state.meetingPoint.latLng);
 
 	const newMeetingPoint = () => {
-		if (meetingPoint.coordinates?.length > 0) {
+		if (startPoints.length > 2) {
 			const { distanceArray } = meetingPoint;
 			const minDistIndex = distanceArray.indexOf(Math.min(...distanceArray));
 
@@ -32,7 +32,7 @@ const GeoJson = ({setTotalCO2}) => {
 				coordinateArray.push(startPoints[i].coordinates);
 			}
 
-			const distanceArrayNew = geoDist(coordinateArray, startPoints[minDistIndex]?.coordinates);
+			const distanceArrayNew =  geoDist(coordinateArray, startPoints[minDistIndex]?.coordinates);
 
 			distanceArray.map((item, i) => {
 				// console.log('t', item);

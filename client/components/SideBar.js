@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addPoints, setPoints } from '../store/features/pointsSlice';
 
+import AirportSearch from './AirportSearch';
+
 const SideBar = ({ totalCO2 }) => {
 	const [geocode, setGeocode] = useState('');
 
@@ -46,19 +48,7 @@ const SideBar = ({ totalCO2 }) => {
 	return (
 		<div className='w-96 py-5 absolute bg-primary  z-9999 mt-10 ml-10 flex flex-col justify-start rounded-xl'>
 			<p className='font-bold text-xl w-full text-center mb-2'>Add location</p>
-			<form className='flex justify-between mb-6 mx-6' onSubmit={getLatLong}>
-				<input
-					value={geocode}
-					onChange={(e) => {
-						setGeocode(e.target.value);
-					}}
-					placeholder='Enter city'
-					className='bg-transparent border-2 border-gray-700 rounded-md px-1 py-1 h-10 w-52 focus:border-gray-400 outline-none'
-				/>
-				<button type='submit' className='bg-gray-700 h- w-24 rounded-md px-2 text-gray-300'>
-					Add Point
-				</button>
-			</form>
+			<AirportSearch getLatLong={getLatLong} setGeocode={setGeocode} geocode={geocode}/>
 			<div className='flex flex-col'>
 				{startPoints &&
 					startPoints.map((point) => (
@@ -66,7 +56,7 @@ const SideBar = ({ totalCO2 }) => {
 							<div className=''>
 								<p className='font-bold'>{point.name}</p>
 								<p className='text-gray-300'>
-									{point.coordinates[0]}, {point.coordinates[1]}
+									{Math.round(point.coordinates[0]*10000)/10000}, {Math.round(point.coordinates[1]*10000)/10000}
 								</p>
 							</div>
 							<button onClick={() => removeItem(point)} className='bg-red-700 h-8 w-24 rounded-md px-2 text-red-300'>

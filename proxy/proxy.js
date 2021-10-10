@@ -1,6 +1,6 @@
 const express = require('express');
 const axios = require('axios');
-const qs =require('qs')
+const qs = require('qs');
 
 const app = express();
 
@@ -10,7 +10,7 @@ app.use((req, res, next) => {
 });
 
 app.get('/search', (req, res) => {
-  console.log(req.query)
+	console.log(req.query);
 	var data = qs.stringify({
 		action: 'SEARCH',
 		apid: '',
@@ -47,9 +47,14 @@ app.get('/search', (req, res) => {
 
 	axios(config)
 		.then(function (response) {
-      const data = response.data.airports
-      data.filter((item) => item.source = "OurAirports")
-      res.send(data)
+			const data = response.data.airports;
+			console.log(data);
+			if (data) {
+				const newData = data.filter((item) => item.source === 'OurAirports' && item.name !== 'All Airports');
+				return res.send(newData);
+			}else {
+        res.json({err: 'Data is undefined'})
+      }
 		})
 		.catch(function (error) {
 			console.log(error);
