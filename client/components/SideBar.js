@@ -1,13 +1,13 @@
 import axios from 'axios';
+import qs from 'qs';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addPoints, setPoints } from '../store/features/pointsSlice';
 
-const SideBar = () => {
+const SideBar = ({ totalCO2 }) => {
 	const [geocode, setGeocode] = useState('');
 
 	const dispatch = useDispatch();
-
 	// const [airports, setAirports] = useState([]);
 	// const [meetingAirport, setMeetingAirport] = useState(null);
 
@@ -17,13 +17,13 @@ const SideBar = () => {
 	const getLatLong = (e) => {
 		e.preventDefault();
 		if (geocode.length > 1) {
-			axios.get(`https://geocode.search.hereapi.com/v1/geocode?q=${geocode}&apiKey=${process.env.NEXT_PUBLIC_GEOCODING_API_KEY}`).then((res) => {
-				const lat = res.data.items[0].position.lat;
-				const lng = res.data.items[0].position.lng;
-				console.log(res.data.items);
-				console.log(lat, lng);
+			axios.get(`http://localhost:8000/search?city=${geocode}`).then((res) => {
+				const lat = res.data[0].y;
+				const lng = res.data[0].x;
+				console.log(res.data);
+				// console.log(lat, lng);
 				const pointObj = {
-					name: res.data.items[0].address.city,
+					name: res.data[0].ap_name,
 					coordinates: [lat, lng],
 				};
 				dispatch(addPoints(pointObj));
@@ -44,7 +44,7 @@ const SideBar = () => {
 	};
 
 	return (
-		<div className='w-96 py-5 absolute bg-primary shadow-even z-9999 mt-10 ml-10 flex flex-col justify-start rounded-xl'>
+		<div className='w-96 py-5 absolute bg-primary  z-9999 mt-10 ml-10 flex flex-col justify-start rounded-xl'>
 			<p className='font-bold text-xl w-full text-center mb-2'>Add location</p>
 			<form className='flex justify-between mb-6 mx-6' onSubmit={getLatLong}>
 				<input
@@ -95,7 +95,7 @@ const SideBar = () => {
 						<div className='mt-2 flex justify-between'>
 							<div className='flex flex-col'>
 								<p className='font-bold'>Total CO2</p>
-								<p className='text-gray-300'>{Math.round(meetingPoint.distance * 15.5995305164) / 1000}t</p>
+								<p className='text-gray-300'>{Math.round(totalCO2 / 1000)}t</p>
 							</div>
 						</div>
 					</div>

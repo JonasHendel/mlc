@@ -8,7 +8,9 @@ const x = [
 	[48.8566, 2.3522],
 ];
 
-const geoDist = (x, geoMean) => {
+export const geoDist = (x, geoMean) => {
+  // console.log('x',x)
+  // console.log('m',geoMean)
 	let distanceToGeoMean = [];
 	for (let i = 0; i < x.length; i++) {
 		distanceToGeoMean.push(computeDistanceBetween(new LatLng(x[i][0], x[i][1]), new LatLng(geoMean[0], geoMean[1])) / 1000);
@@ -55,7 +57,7 @@ export const geoDesicMedian = (x, eps = 1e-6) => {
     
 		if (distance(geoMean, geoMean2) < eps) {
       const totalDist = distanceArray.reduce((a, b) => a + b, 0); 
-			return {coordinates: geoMean2, distance: Math.round(totalDist)};
+			return {coordinates: geoMean2, distance: Math.round(totalDist), distanceArray: distanceArray};
 		}
 		geoMean = geoMean2;
 	}

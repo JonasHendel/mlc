@@ -5,21 +5,95 @@ import styles from '../../styles/CustomMarker.module.css';
 import colors from './utils/colors';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { geoDesicMedian } from '../../utils/geodesicMedian';
+import { geoDesicMedian, geoDist } from '../../utils/geodesicMedian';
 import { useDispatch } from 'react-redux';
 import { addPoints } from '../../store/features/pointsSlice';
 import { setMeetingPoint, removeMeetingPoint } from '../../store/features/meetingPointSlice';
-import axios from 'axios';
+import emissions from '../../public/emissions.json';
 
-const GeoJson = (props) => {
+const GeoJson = ({setTotalCO2}) => {
+	console.log('-----------------');
 	const dispatch = useDispatch();
+
 
 	// const [airports, setAirports] = useState([]);
 	// const [meetingAirport, setMeetingAirport] = useState(null);
 
 	const startPoints = useSelector((state) => state.startPoints.latLng);
-  const meetingPoint = useSelector((state) => state.meetingPoint.latLng)
+	const meetingPoint = useSelector((state) => state.meetingPoint.latLng);
 
+	const newMeetingPoint = () => {
+		if (meetingPoint.coordinates?.length > 0) {
+			const { distanceArray } = meetingPoint;
+			const minDistIndex = distanceArray.indexOf(Math.min(...distanceArray));
+
+			const coordinateArray = [];
+			for (let i = 0; i < startPoints.length; i++) {
+				coordinateArray.push(startPoints[i].coordinates);
+			}
+
+			const distanceArrayNew = geoDist(coordinateArray, startPoints[minDistIndex]?.coordinates);
+
+			distanceArray.map((item, i) => {
+				// console.log('t', item);
+				// console.log('p', distanceArrayNew[i]);
+				// console.log('d', distanceArrayNew[i] - item);
+			});
+
+			const totalDist1 = meetingPoint.distance;
+			const totalDist2 = distanceArrayNew.reduce((a, b) => a + b, 0);
+
+			const distArr = [125, 250, 500, 750, 1000, 1500, 2000, 2500, 3000];
+
+			const closest = (array, input) => {
+				const value = array.reduce((prev, curr) => {
+					return Math.abs(curr - input) < Math.abs(prev - input) ? curr : prev;
+				});
+
+				return value;
+			};
+
+			const co2CCDArr1 = [];
+			const co2CCDArr2 = [];
+			distanceArray.map((item) => {
+				const itemDistNm = item * 0.539957;
+				const distVal = closest(distArr, itemDistNm);
+
+				const co2for1NM = emissions.CCD.SMR[distVal].CO2 / distVal;
+
+				let co2ForCCD = co2for1NM * itemDistNm;
+
+        if(itemDistNm !== 0) co2ForCCD = co2ForCCD + 4000
+
+				co2CCDArr1.push(co2ForCCD);
+			});
+
+			distanceArrayNew.map((item) => {
+				const itemDistNm = item * 0.539957;
+				const distVal = closest(distArr, itemDistNm);
+
+				const co2for1NM = emissions.CCD.SMR[distVal].CO2 / distVal;
+
+
+				let co2ForCCD = co2for1NM * itemDistNm
+        console.log(itemDistNm)
+
+        if(itemDistNm !== 0) co2ForCCD = co2ForCCD + 4000
+
+				co2CCDArr2.push(co2ForCCD);
+			});
+
+      const co2Old = co2CCDArr1.reduce((a, b) => a + b, 0)
+      const co2New = co2CCDArr2.reduce((a, b) => a + b, 0)
+
+      if(co2Old >= co2New){
+        console.log('move to new point suggested')
+      }
+      setTotalCO2(co2Old >= co2New ? co2New : co2Old)
+		}
+	};
+
+	newMeetingPoint();
 
 	useMapEvents({
 		click(e) {
@@ -48,9 +122,9 @@ const GeoJson = (props) => {
 		if (coordinateArray.length >= 2) {
 			dispatch(setMeetingPoint(geoDesicMedian(coordinateArray)));
 		}
-    if(startPoints.length < 2){
+		if (startPoints.length < 2) {
 			dispatch(removeMeetingPoint());
-    }
+		}
 	}, [startPoints]);
 
 	// useEffect(async () => {
@@ -101,7 +175,6 @@ const MeetingPoint = ({ meetingPoint }) => {
 };
 
 const StartPoints = ({ startPoint, index }) => {
-	console.log('s', startPoint);
 	const customMarkerIcon = divIcon({
 		className: styles.marker,
 		iconSize: null,
