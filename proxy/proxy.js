@@ -14,7 +14,7 @@ app.get('/search', (req, res) => {
 	var data = qs.stringify({
 		action: 'SEARCH',
 		apid: '',
-		city: req.query.city,
+		city: req.query.city.toUpperCase(),
 		code: '',
 		country: 'ALL',
 		db: 'airports',
@@ -53,7 +53,7 @@ app.get('/search', (req, res) => {
 				const newData = data.filter((item) => item.source === 'OurAirports' && item.name !== 'All Airports');
 				return res.send(newData);
 			}else {
-        res.json({err: 'Data is undefined'})
+        console.log({err: 'Data is undefined'})
       }
 		})
 		.catch(function (error) {

@@ -1,6 +1,6 @@
-import { FeatureGroup, useMapEvents } from 'react-leaflet';
+import { FeatureGroup, useMapEvents, Popup } from 'react-leaflet';
 import { LayerGroup, Circle, Marker, Polyline } from 'react-leaflet';
-import L, { divIcon, icon } from 'leaflet';
+import L, { divIcon } from 'leaflet';
 import styles from '../../styles/CustomMarker.module.css';
 import colors from './utils/colors';
 import { useState, useEffect } from 'react';
@@ -10,35 +10,30 @@ import { useDispatch } from 'react-redux';
 import { addPoints } from '../../store/features/pointsSlice';
 import { setMeetingPoint, removeMeetingPoint } from '../../store/features/meetingPointSlice';
 import emissions from '../../public/emissions.json';
+import { v4 as uuidv4 } from 'uuid';
 
-const GeoJson = ({setTotalCO2}) => {
-	console.log('-----------------');
+const GeoJson = ({ setTotalCO2 }) => {
 	const dispatch = useDispatch();
 
-
 	// const [airports, setAirports] = useState([]);
-	// const [meetingAirport, setMeetingAirport] = useState(null);
+	const [meetingAirport, setMeetingAirport] = useState(null);
 
 	const startPoints = useSelector((state) => state.startPoints.latLng);
 	const meetingPoint = useSelector((state) => state.meetingPoint.latLng);
 
 	const newMeetingPoint = () => {
-		if (startPoints.length > 2) {
+		if (Boolean(meetingPoint.coordinates)) {
 			const { distanceArray } = meetingPoint;
 			const minDistIndex = distanceArray.indexOf(Math.min(...distanceArray));
+
+			console.log('minDistIndex', startPoints[minDistIndex]);
 
 			const coordinateArray = [];
 			for (let i = 0; i < startPoints.length; i++) {
 				coordinateArray.push(startPoints[i].coordinates);
 			}
 
-			const distanceArrayNew =  geoDist(coordinateArray, startPoints[minDistIndex]?.coordinates);
-
-			distanceArray.map((item, i) => {
-				// console.log('t', item);
-				// console.log('p', distanceArrayNew[i]);
-				// console.log('d', distanceArrayNew[i] - item);
-			});
+			const distanceArrayNew = geoDist(coordinateArray, startPoints[minDistIndex]?.coordinates);
 
 			const totalDist1 = meetingPoint.distance;
 			const totalDist2 = distanceArrayNew.reduce((a, b) => a + b, 0);
@@ -63,7 +58,7 @@ const GeoJson = ({setTotalCO2}) => {
 
 				let co2ForCCD = co2for1NM * itemDistNm;
 
-        if(itemDistNm !== 0) co2ForCCD = co2ForCCD + 4000
+				if (itemDistNm !== 0) co2ForCCD = co2ForCCD + 4000;
 
 				co2CCDArr1.push(co2ForCCD);
 			});
@@ -74,36 +69,49 @@ const GeoJson = ({setTotalCO2}) => {
 
 				const co2for1NM = emissions.CCD.SMR[distVal].CO2 / distVal;
 
+				let co2ForCCD = co2for1NM * itemDistNm;
+				console.log(itemDistNm);
 
-				let co2ForCCD = co2for1NM * itemDistNm
-        console.log(itemDistNm)
-
-        if(itemDistNm !== 0) co2ForCCD = co2ForCCD + 4000
+				if (itemDistNm !== 0) co2ForCCD = co2ForCCD + 4000;
 
 				co2CCDArr2.push(co2ForCCD);
 			});
 
-      const co2Old = co2CCDArr1.reduce((a, b) => a + b, 0)
-      const co2New = co2CCDArr2.reduce((a, b) => a + b, 0)
+			console.log(co2CCDArr2);
 
-      if(co2Old >= co2New){
-        console.log('move to new point suggested')
-      }
-      setTotalCO2(co2Old >= co2New ? co2New : co2Old)
+			const co2Old = co2CCDArr1.reduce((a, b) => a + b, 0);
+			const co2New = co2CCDArr2.reduce((a, b) => a + b, 0);
+
+			const newPoint = {
+				coordinates: startPoints[minDistIndex].coordinates,
+				distance: Math.round(distanceArrayNew.reduce((a, b) => a + b, 0)),
+				distanceArray: distanceArrayNew,
+			};
+
+			if (co2Old >= co2New) {
+				console.log('move to new point suggested');
+				setMeetingAirport(newPoint);
+			}
+			setTotalCO2(co2Old >= co2New ? co2New : co2Old);
 		}
 	};
 
-	newMeetingPoint();
+	useEffect(() => {
+		newMeetingPoint();
+	}, [meetingPoint]);
 
-	useMapEvents({
-		click(e) {
-			let pointObj = {
-				name: 'Location',
-				coordinates: [Math.round(e.latlng.lat * 1000) / 1000, Math.round(e.latlng.lng * 1000) / 1000],
-			};
-			dispatch(addPoints(pointObj));
-		},
-	});
+	// useMapEvents({
+	// 	click(e) {
+	// 		let pointObj = {
+	// 			name: 'Location',
+	// 			coordinates: [Math.round(e.latlng.lat * 1000) / 1000, Math.round(e.latlng.lng * 1000) / 1000],
+	// 		};
+	// 		dispatch(addPoints(pointObj));
+	// 	},
+	// });
+
+	console.log(meetingAirport);
+	console.log(meetingPoint);
 
 	useEffect(() => {
 		// setAirports([]);
@@ -135,7 +143,6 @@ const GeoJson = ({setTotalCO2}) => {
 
 	return (
 		<FeatureGroup>
-			{meetingPoint.coordinates && <MeetingPoint meetingPoint={meetingPoint.coordinates} />}
 			{/* {airports.length > 0 &&
 				airports.map((airport, index) => (
 					<>
@@ -143,11 +150,12 @@ const GeoJson = ({setTotalCO2}) => {
 					</>
 				))} */}
 			{startPoints.map((startPoint, index) => (
-				<>
-					<StartPoints startPoint={startPoint.coordinates} key={index} />
-					{meetingPoint.coordinates && <LineToMeetingPoint startPoint={startPoint.coordinates} meetingPoint={meetingPoint.coordinates} key={index} />}
-				</>
+				<div key={uuidv4()}>
+					<StartPoints startPoint={startPoint} />
+					{meetingPoint.coordinates && <LineToMeetingPoint startPoint={startPoint.coordinates} meetingPoint={meetingAirport ? meetingAirport.coordinates : meetingPoint.coordinates} />}
+				</div>
 			))}
+			{meetingPoint.coordinates && <MeetingPoint meetingPoint={meetingAirport ? meetingAirport.coordinates : meetingPoint.coordinates} />}
 		</FeatureGroup>
 	);
 };
@@ -171,19 +179,38 @@ const MeetingPoint = ({ meetingPoint }) => {
 		iconAnchor: [7.5, 7.5],
 	});
 
-	return <Marker position={meetingPoint} icon={customMarkerIcon} />;
+	return (
+		<LayerGroup>
+			<Marker position={meetingPoint} icon={customMarkerIcon} />
+		</LayerGroup>
+	);
 };
 
-const StartPoints = ({ startPoint, index }) => {
+const StartPoints = ({ startPoint }) => {
 	const customMarkerIcon = divIcon({
 		className: styles.marker,
 		iconSize: null,
 		iconAnchor: [7.5, 7.5],
 	});
 
+	const svgIcon = L.icon({
+		iconAnchor: [12, 24],
+		iconUrl: './airport.svg',
+	});
+
 	return (
-		<LayerGroup key={index}>
-			<Marker position={startPoint} icon={customMarkerIcon} key={index} />
+		<LayerGroup>
+			<Marker
+				onMouseOver={(e) => {
+					e.target.openPopup();
+				}}
+				onMouseOut={(e) => {
+					e.target.closePopup();
+				}}
+				position={startPoint.coordinates}
+				icon={svgIcon}>
+				<Popup className='custom-popup'>{startPoint.name}</Popup>
+			</Marker>
 		</LayerGroup>
 	);
 };

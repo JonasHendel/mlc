@@ -51,8 +51,8 @@ const SideBar = ({ totalCO2 }) => {
 			<AirportSearch getLatLong={getLatLong} setGeocode={setGeocode} geocode={geocode}/>
 			<div className='flex flex-col'>
 				{startPoints &&
-					startPoints.map((point) => (
-						<div className='flex justify-between items-center mx-6'>
+					startPoints.map((point, i) => (
+						<div key={i} className='flex justify-between items-center mx-6'>
 							<div className=''>
 								<p className='font-bold'>{point.name}</p>
 								<p className='text-gray-300'>

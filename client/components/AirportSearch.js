@@ -15,10 +15,8 @@ const AirportSearch = ({ geocode, setGeocode }) => {
 	useEffect(() => {
 		const getLatLong = (e) => {
 			if (city.length >= 1) {
-				console.log('hey');
+				console.log(city);
 				axios.get(`http://localhost:8000/search?city=${city}`).then((res) => {
-					const lat = res.data[0].y;
-					const lng = res.data[0].x;
 					console.log(res.data);
 					// console.log(lat, lng);
 
@@ -49,11 +47,11 @@ const AirportSearch = ({ geocode, setGeocode }) => {
     setCity('')
 	};
 
+  console.log(city)
 	return (
 		<form className='flex justify-between mb-6 mx-6'>
 			<div>
 				<input
-          value={city}
 					onChange={(e) => {
 						setCity(e.target.value);
 					}}

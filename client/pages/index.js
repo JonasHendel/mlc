@@ -7,7 +7,8 @@ import Map from '../components/map';
 import SideBar from '../components/SideBar';
 
 const Index = () => {
-  const [totalCO2, setTotalCO2] = useState()
+  const [totalCO2, setTotalCO2] = useState('')
+  console.log('x',totalCO2)
 	return (
 		<div>
 			<SideBar totalCO2={totalCO2} />
