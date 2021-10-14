@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { geoDesicMedian, geoDist } from '../../utils/geodesicMedian';
 import { useDispatch } from 'react-redux';
 import { addPoints } from '../../store/features/pointsSlice';
-import { setMeetingPoint, removeMeetingPoint } from '../../store/features/meetingPointSlice';
+import { setGeoDesicMedian, setClosestAirport, removeMeetingPoint, removeClosestAirport } from '../../store/features/meetingPointSlice';
 import emissions from '../../public/emissions.json';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -18,14 +18,16 @@ const GeoJson = ({ setTotalCO2 }) => {
 	const dispatch = useDispatch();
 
 	// const [airports, setAirports] = useState([]);
-	const [meetingAirport, setMeetingAirport] = useState(null);
+	// const [meetingAirport, setMeetingAirport] = useState(null);
 
 	const startPoints = useSelector((state) => state.startPoints.latLng);
-	const meetingPoint = useSelector((state) => state.meetingPoint.latLng);
+	const meetingPointMedian = useSelector((state) => state.meetingPoint.geoDesicMedian);
+	const meetingAirport = useSelector((state) => state.meetingPoint.closestAirport);
+	const meetingPointType = useSelector((state) => state.meetingPointType.meetingPointType);
 
 	const newMeetingPoint = () => {
-		if (Boolean(meetingPoint.coordinates)) {
-			const { distanceArray } = meetingPoint;
+		if (Boolean(meetingPointMedian.coordinates)) {
+			const { distanceArray } = meetingPointMedian;
 
 			const minDistIndex = distanceArray.indexOf(Math.min(...distanceArray));
 
@@ -40,42 +42,9 @@ const GeoJson = ({ setTotalCO2 }) => {
 			// distance array to closest airport
 			const distanceArrayNew = geoDist(coordinateArray, startPoints[minDistIndex]?.coordinates);
 
-			// ranges to calculate emissions
-			const distArr = [125, 250, 500, 750, 1000, 1500, 2000, 2500, 3000];
-
 			const co2CCDArr1 = getCO2Array(distanceArray);
 			const co2CCDArr2 = getCO2Array(distanceArrayNew);
 
-			console.log('distanceArray', distanceArray);
-			distanceArray.map((item) => {
-				// convert distance to Nautical Miles
-				const itemDistInNauticalMiles = item * 0.539957;
-
-				// find the closest integer from distArr to the distance -> to be able to calculate the emsisions more accurately
-				const distVal = closest(distArr, itemDistInNauticalMiles);
-
-				const co2for1NM = emissions.CCD.SMR[distVal].CO2 / distVal;
-
-				let co2ForCCD = co2for1NM * itemDistInNauticalMiles;
-
-				if (itemDistInNauticalMiles > 1) co2ForCCD = co2ForCCD + 3153.59;
-
-				// co2CCDArr1.push(co2ForCCD);
-			});
-
-			console.log('distanceArrayNew', distanceArrayNew);
-			distanceArrayNew.map((item) => {
-				const itemDistInNauticalMiles = item * 0.539957;
-				const distVal = closest(distArr, itemDistInNauticalMiles);
-
-				const co2for1NM = emissions.CCD.SMR[distVal].CO2 / distVal;
-
-				let co2ForCCD = co2for1NM * itemDistInNauticalMiles;
-
-				if (itemDistInNauticalMiles > 1) co2ForCCD = co2ForCCD + 3153.59;
-
-				// co2CCDArr2.push(co2ForCCD);
-			});
 			console.log('coarr', co2CCDArr1, co2CCDArr2);
 
 			const co2Old = co2CCDArr1.reduce((a, b) => a + b, 0);
@@ -90,9 +59,9 @@ const GeoJson = ({ setTotalCO2 }) => {
 			};
 			if (co2Old >= co2New) {
 				console.log('move to new point suggested');
-				setMeetingAirport(newPoint);
+				dispatch(setClosestAirport(newPoint));
 			} else {
-				setMeetingAirport();
+				dispatch(removeClosestAirport());
 			}
 			setTotalCO2(co2Old >= co2New ? co2New : co2Old);
 		}
@@ -101,7 +70,7 @@ const GeoJson = ({ setTotalCO2 }) => {
 	useEffect(() => {
 		console.log('calc mp');
 		newMeetingPoint();
-	}, [meetingPoint]);
+	}, [meetingPointMedian]);
 
 	// new Point by click on map
 	// useMapEvents({
@@ -114,7 +83,7 @@ const GeoJson = ({ setTotalCO2 }) => {
 	// 	},
 	// });
 
-	console.log('m1', meetingPoint);
+	console.log('m1', meetingPointMedian);
 	console.log('m2', meetingAirport);
 
 	useEffect(() => {
@@ -124,7 +93,7 @@ const GeoJson = ({ setTotalCO2 }) => {
 		});
 		if (coordinateArray.length >= 2) {
 			console.log('new mp');
-			dispatch(setMeetingPoint(geoDesicMedian(coordinateArray)));
+			dispatch(setGeoDesicMedian(geoDesicMedian(coordinateArray)));
 		}
 		if (startPoints.length < 2) {
 			dispatch(removeMeetingPoint());
@@ -133,14 +102,21 @@ const GeoJson = ({ setTotalCO2 }) => {
 
 	return (
 		<FeatureGroup>
-			{startPoints.map((startPoint, index) => (
+			{startPoints.map((startPoint) => (
 				<div key={uuidv4()}>
 					<StartPoints startPoint={startPoint} />
-					{meetingPoint.coordinates && <LineToMeetingPoint startPoint={startPoint.coordinates} meetingPoint={meetingAirport ? meetingAirport.coordinates : meetingPoint.coordinates} />}
+					{meetingPointMedian.coordinates && (
+						<LineToMeetingPoint
+							startPoint={startPoint.coordinates}
+							meetingPoint={meetingPointType === 'co2' ? (meetingAirport.coordinates ? meetingAirport.coordinates : meetingPointMedian.coordinates) : meetingPointMedian.coordinates}
+						/>
+					)}
 				</div>
 			))}
-			{meetingPoint.coordinates && <MeetingPoint meetingPoint={meetingAirport ? meetingAirport.coordinates : meetingPoint.coordinates} />}
-			{meetingPoint.coordinates && <MeetingPoint meetingPoint={meetingPoint.coordinates} />}
+			{meetingPointMedian.coordinates && (
+				<MeetingPoint meetingPoint={meetingPointType === 'co2' ? (meetingAirport.coordinates ? meetingAirport.coordinates : meetingPointMedian.coordinates) : meetingPointMedian.coordinates} />
+			)}
+			{/* {meetingPointMedian.coordinates && <MeetingPoint meetingPoint={meetingPointMedian.coordinates} />} */}
 		</FeatureGroup>
 	);
 };

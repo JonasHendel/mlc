@@ -69,7 +69,7 @@ const AirportSearch = ({ geocode, setGeocode }) => {
 					</div>
 				)}
 			</div>
-			<button type='submit' className='bg-gray-700 h- w-24 rounded-md px-2 text-gray-300'>
+			<button type='submit' className='bg-gray-700 h-10 w-24 rounded-md px-2 text-gray-300'>
 				Add Point
 			</button>
 		</form>

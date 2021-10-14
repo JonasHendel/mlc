@@ -1,5 +1,6 @@
 import emissions from '../public/emissions.json';
 
+// ranges to calculate emissions
 const distArr = [125, 250, 500, 750, 1000, 1500, 2000, 2500, 3000];
 
 // find the closest integer from distArr to the distance -> to be able to calculate the emsisions more accurately
@@ -11,6 +12,7 @@ export const closest = (array, input) => {
 	return value;
 };
 
+// get the co2 emissions for each trip i.e. berlin to meetingpoint, london to meetingpoint, etc.
 export const getCO2Array = (array) => {
 	const co2Array = [];
 	array.map((item) => {

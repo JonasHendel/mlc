@@ -3,6 +3,7 @@ import qs from 'qs';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addPoints, setPoints } from '../store/features/pointsSlice';
+import {setMeetingPointTypeDistance, setMeetingPointTypeCO2} from '../store/features/meetingPointTypeSlice'
 
 import AirportSearch from './AirportSearch';
 
@@ -15,7 +16,7 @@ const SideBar = ({ totalCO2 }) => {
 	// const [meetingAirport, setMeetingAirport] = useState(null);
 
 	const startPoints = useSelector((state) => state.startPoints.latLng);
-	const meetingPoint = useSelector((state) => state.meetingPoint.latLng);
+	const meetingPoint = useSelector((state) => state.meetingPoint.geoDesicMedian);
 
 	const getLatLong = (e) => {
 		e.preventDefault();
@@ -71,9 +72,9 @@ const SideBar = ({ totalCO2 }) => {
 					<div className='h-1px rounded-xl bg-gray-500 mx-6 my-4' />
 					<div className='mx-6'>
 						<p className='font-bold text-xl w-full text-center mb-2'>Meeting Point</p>
-            <div>
-              <button>Min. CO2</button>
-              <button>Min. distance</button>
+            <div className=" w-full flex justify-evenly">
+              <button className="bg-gray-700 h-10 rounded-md px-2 text-gray-300" onClick={()=>{dispatch(setMeetingPointTypeCO2())}}>Min. CO2</button>
+              <button className="bg-gray-700 h-10 mb-2 rounded-md px-2 text-gray-300" onClick={()=>{dispatch(setMeetingPointTypeDistance())}}>Min. distance</button>
             </div>
 						<div className='flex justify-between'>
 							<div className='flex flex-col'>
