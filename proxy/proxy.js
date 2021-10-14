@@ -50,7 +50,7 @@ app.get('/search', (req, res) => {
 			const data = response.data.airports;
 			console.log(data);
 			if (data) {
-				const newData = data.filter((item) => item.source === 'OurAirports' && item.name !== 'All Airports');
+				const newData = data.filter((item) => item.name !== 'All Airports');
 				return res.send(newData);
 			}else {
         console.log({err: 'Data is undefined'})

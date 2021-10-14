@@ -8,6 +8,7 @@ import AirportSearch from './AirportSearch';
 
 const SideBar = ({ totalCO2 }) => {
 	const [geocode, setGeocode] = useState('');
+  const [meetingPointType, setMeetingPointType] = useState('');
 
 	const dispatch = useDispatch();
 	// const [airports, setAirports] = useState([]);
@@ -70,6 +71,10 @@ const SideBar = ({ totalCO2 }) => {
 					<div className='h-1px rounded-xl bg-gray-500 mx-6 my-4' />
 					<div className='mx-6'>
 						<p className='font-bold text-xl w-full text-center mb-2'>Meeting Point</p>
+            <div>
+              <button>Min. CO2</button>
+              <button>Min. distance</button>
+            </div>
 						<div className='flex justify-between'>
 							<div className='flex flex-col'>
 								<p className='font-bold'>Location</p>
