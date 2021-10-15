@@ -11,8 +11,7 @@ const Index = () => {
   console.log('x',totalCO2)
 	return (
 		<div>
-			<SideBar totalCO2={totalCO2} />
-			<Map setTotalCO2={setTotalCO2} />
+			<Map totalCO2={totalCO2} setTotalCO2={setTotalCO2} />
 		</div>
 	);
 };

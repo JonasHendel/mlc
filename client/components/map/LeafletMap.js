@@ -3,10 +3,12 @@ import GeoJson from './GeoJson';
 import styles from '../../styles/Leaflet.module.css';
 import 'leaflet/dist/leaflet.css';
 import geoJson from '../../public/demoGeoJson.json';
+import SideBar from '../SideBar'
 
-const Map = ({setTotalCO2}) => {
+const Map = ({setTotalCO2, totalCO2}) => {
 	return (
 		<div>
+      <SideBar totalCO2={totalCO2}/>
 			<MapContainer className={styles.map} center={[51.93083589023145, 4.81320276432186]} zoom={5} zoomControl={false} attributionControl={false}>
 				<TileLayer
 					attribution='© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>'

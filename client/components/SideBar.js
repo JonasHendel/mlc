@@ -3,13 +3,13 @@ import qs from 'qs';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addPoints, setPoints } from '../store/features/pointsSlice';
-import {setMeetingPointTypeDistance, setMeetingPointTypeCO2} from '../store/features/meetingPointTypeSlice'
+import { setMeetingPointTypeDistance, setMeetingPointTypeCO2 } from '../store/features/meetingPointTypeSlice';
 
 import AirportSearch from './AirportSearch';
 
 const SideBar = ({ totalCO2 }) => {
 	const [geocode, setGeocode] = useState('');
-  const [meetingPointType, setMeetingPointType] = useState('');
+	const [meetingPointType, setMeetingPointType] = useState('');
 
 	const dispatch = useDispatch();
 	// const [airports, setAirports] = useState([]);
@@ -50,7 +50,7 @@ const SideBar = ({ totalCO2 }) => {
 	return (
 		<div className='w-96 py-5 absolute bg-primary  z-9999 mt-10 ml-10 flex flex-col justify-start rounded-xl'>
 			<p className='font-bold text-xl w-full text-center mb-2'>Add location</p>
-			<AirportSearch getLatLong={getLatLong} setGeocode={setGeocode} geocode={geocode}/>
+			<AirportSearch getLatLong={getLatLong} setGeocode={setGeocode} geocode={geocode} />
 			<div className='flex flex-col'>
 				{startPoints &&
 					startPoints.map((point, i) => (
@@ -58,7 +58,7 @@ const SideBar = ({ totalCO2 }) => {
 							<div className=''>
 								<p className='font-bold'>{point.name}</p>
 								<p className='text-gray-300'>
-									{Math.round(point.coordinates[0]*10000)/10000}, {Math.round(point.coordinates[1]*10000)/10000}
+									{Math.round(point.coordinates[0] * 10000) / 10000}, {Math.round(point.coordinates[1] * 10000) / 10000}
 								</p>
 							</div>
 							<button onClick={() => removeItem(point)} className='bg-red-700 h-8 w-24 rounded-md px-2 text-red-300'>
@@ -72,10 +72,22 @@ const SideBar = ({ totalCO2 }) => {
 					<div className='h-1px rounded-xl bg-gray-500 mx-6 my-4' />
 					<div className='mx-6'>
 						<p className='font-bold text-xl w-full text-center mb-2'>Meeting Point</p>
-            <div className=" w-full flex justify-evenly">
-              <button className="bg-gray-700 h-10 rounded-md px-2 text-gray-300" onClick={()=>{dispatch(setMeetingPointTypeCO2())}}>Min. CO2</button>
-              <button className="bg-gray-700 h-10 mb-2 rounded-md px-2 text-gray-300" onClick={()=>{dispatch(setMeetingPointTypeDistance())}}>Min. distance</button>
-            </div>
+						<div className=' w-full flex justify-evenly'>
+							<button
+								className='bg-gray-700 h-10 rounded-md px-2 text-gray-300 font-bold w-32'
+								onClick={() => {
+									dispatch(setMeetingPointTypeCO2());
+								}}>
+								Min. CO2
+							</button>
+							<button
+								className='bg-gray-700 h-10 mb-2 rounded-md px-2 text-gray-300 font-bold w-32'
+								onClick={() => {
+									dispatch(setMeetingPointTypeDistance());
+								}}>
+								Min. distance
+							</button>
+						</div>
 						<div className='flex justify-between'>
 							<div className='flex flex-col'>
 								<p className='font-bold'>Location</p>
