@@ -1,6 +1,7 @@
 import { motion, useAnimation } from 'framer-motion';
 import { useEffect } from 'react/cjs/react.development';
 import Loading from '../components/Loading';
+import Notify from '../components/Notify';
 
 const Test = () => {
 	const plane1 = useAnimation();
@@ -21,7 +22,10 @@ const Test = () => {
 	});
 
 	return (
-		<Loading/>
+		<>
+			<Loading />
+			<Notify msg={'Minimum distance does not equal minimum emissions'} />
+		</>
 	);
 };
 

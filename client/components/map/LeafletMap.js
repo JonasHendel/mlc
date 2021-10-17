@@ -4,10 +4,12 @@ import styles from '../../styles/Leaflet.module.css';
 import 'leaflet/dist/leaflet.css';
 import geoJson from '../../public/demoGeoJson.json';
 import SideBar from '../SideBar'
+import Notify from '../Notify';
 
 const Map = ({setTotalCO2, totalCO2}) => {
 	return (
 		<div>
+      <Notify />
       <SideBar totalCO2={totalCO2}/>
 			<MapContainer className={styles.map} center={[51.93083589023145, 4.81320276432186]} zoom={5} zoomControl={false} attributionControl={false}>
 				<TileLayer

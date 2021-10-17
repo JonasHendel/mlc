@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { geoDesicMedian, geoDist } from '../../utils/geodesicMedian';
 import { useDispatch } from 'react-redux';
 import { addPoints } from '../../store/features/pointsSlice';
-import { setGeoDesicMedian, setClosestAirport, removeMeetingPoint, removeClosestAirport } from '../../store/features/meetingPointSlice';
+import { setGeoDesicMedian, setClosestAirport, removeMeetingPoint, removeClosestAirport, addCO2 } from '../../store/features/meetingPointSlice';
 import emissions from '../../public/emissions.json';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -56,7 +56,9 @@ const GeoJson = ({ setTotalCO2 }) => {
 				coordinates: startPoints[minDistIndex].coordinates,
 				distance: Math.round(distanceArrayNew.reduce((a, b) => a + b, 0)),
 				distanceArray: distanceArrayNew,
+				co2: co2New,
 			};
+			dispatch(addCO2(co2Old));
 			if (co2Old >= co2New) {
 				console.log('move to new point suggested');
 				dispatch(setClosestAirport(newPoint));

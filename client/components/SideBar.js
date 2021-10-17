@@ -1,22 +1,34 @@
 import axios from 'axios';
 import qs from 'qs';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addPoints, setPoints } from '../store/features/pointsSlice';
 import { setMeetingPointTypeDistance, setMeetingPointTypeCO2 } from '../store/features/meetingPointTypeSlice';
 
 import AirportSearch from './AirportSearch';
+import { clearNotify, notifyError } from '../store/features/notifySlice';
+import { addCO2 } from '../store/features/meetingPointSlice';
 
 const SideBar = ({ totalCO2 }) => {
 	const [geocode, setGeocode] = useState('');
-	const [meetingPointType, setMeetingPointType] = useState('');
 
 	const dispatch = useDispatch();
 	// const [airports, setAirports] = useState([]);
 	// const [meetingAirport, setMeetingAirport] = useState(null);
+	const [meetingPoint, setMeetingPoint] = useState();
 
 	const startPoints = useSelector((state) => state.startPoints.latLng);
-	const meetingPoint = useSelector((state) => state.meetingPoint.geoDesicMedian);
+	const meetingPointMedian = useSelector((state) => state.meetingPoint.geoDesicMedian);
+	const meetingAirport = useSelector((state) => state.meetingPoint.closestAirport);
+	const meetingPointType = useSelector((state) => state.meetingPointType.meetingPointType);
+
+  
+	useEffect(() => {
+    setMeetingPoint(meetingPointType === 'co2' ? (Object.keys(meetingAirport).length > 0 ? meetingAirport : meetingPointMedian) : meetingPointMedian);
+	}, [meetingPointType, meetingAirport, meetingPointMedian]);
+
+  console.log('dfjks', Object.keys(meetingAirport).length)
+	console.log('m', meetingPoint);
 
 	const getLatLong = (e) => {
 		e.preventDefault();
@@ -67,7 +79,7 @@ const SideBar = ({ totalCO2 }) => {
 						</div>
 					))}
 			</div>
-			{meetingPoint.coordinates && (
+			{meetingPoint?.coordinates && (
 				<>
 					<div className='h-1px rounded-xl bg-gray-500 mx-6 my-4' />
 					<div className='mx-6'>
@@ -76,6 +88,7 @@ const SideBar = ({ totalCO2 }) => {
 							<button
 								className='bg-gray-700 h-10 rounded-md px-2 text-gray-300 font-bold w-32'
 								onClick={() => {
+                  dispatch(clearNotify())
 									dispatch(setMeetingPointTypeCO2());
 								}}>
 								Min. CO2
@@ -84,6 +97,7 @@ const SideBar = ({ totalCO2 }) => {
 								className='bg-gray-700 h-10 mb-2 rounded-md px-2 text-gray-300 font-bold w-32'
 								onClick={() => {
 									dispatch(setMeetingPointTypeDistance());
+									dispatch(notifyError('Minimum distance does not equal minimum emissions.'));
 								}}>
 								Min. distance
 							</button>
@@ -103,7 +117,7 @@ const SideBar = ({ totalCO2 }) => {
 						<div className='mt-2 flex justify-between'>
 							<div className='flex flex-col'>
 								<p className='font-bold'>Total CO2</p>
-								<p className='text-gray-300'>{Math.round(totalCO2 / 1000)}t</p>
+								<p className='text-gray-300'>{Math.round(meetingPoint.co2)/1000}t</p>
 							</div>
 						</div>
 					</div>

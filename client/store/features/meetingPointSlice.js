@@ -20,9 +20,12 @@ export const meetingPointSlice = createSlice({
 		removeClosestAirport: (state) => {
 			state.closestAirport = {};
 		},
+    addCO2: (state,action)=>{
+      state.geoDesicMedian.co2 = action.payload
+    }
 	},
 });
 
-export const { setGeoDesicMedian, removeMeetingPoint, setClosestAirport, removeClosestAirport } = meetingPointSlice.actions;
+export const { setGeoDesicMedian, removeMeetingPoint, setClosestAirport, removeClosestAirport, addCO2 } = meetingPointSlice.actions;
 
 export default meetingPointSlice.reducer;
