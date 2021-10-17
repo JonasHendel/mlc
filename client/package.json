@@ -7,7 +7,7 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		"cypress":"cypress open"
+		"cypress:open":"cypress open"
 	},
 	"dependencies": {
 		"@reduxjs/toolkit": "^1.6.1",
