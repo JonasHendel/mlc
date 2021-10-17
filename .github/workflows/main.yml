@@ -13,6 +13,8 @@ jobs:
         uses: actions/checkout@v2
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
+      - name: Change Dir
+        run: cd client
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
