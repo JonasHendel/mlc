@@ -17,13 +17,13 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14
+      - name: npm i
+        run: npm install
       - name: Test
         run: |
           ls
           cat package.json
           npm run build
-      - name: npm i
-        run: npm install
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
