@@ -1,4 +1,4 @@
-name: Cypress tests
+name: Cypress tests 2
 on: [push]
 jobs:
   cypress-run:
@@ -7,6 +7,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Test
+        run: |
+          ls
+          cat package.json
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
