@@ -23,9 +23,8 @@ jobs:
         run: |
           ls
           cat package.json
-          npm run build
       - name: Cypress run
-        uses: cypress-io/github-action@v2.3.6
+        uses: cypress-io/github-action@v2.11.7
         with:
           build: npm run build
           start: npm start
