@@ -18,6 +18,7 @@ jobs:
         run: |
           ls
           cat package.json
+          npm run build
       - name: npm i
         run: npm install
       - name: Cypress run
