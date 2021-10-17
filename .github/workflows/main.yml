@@ -15,7 +15,9 @@ jobs:
       # and run all Cypress tests
       
       - name: Test
-        run: ls
+        run: |
+          ls
+          cat package.json
       - name: npm i
         run: npm install
       - name: Cypress run
