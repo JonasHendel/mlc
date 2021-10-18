@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { useState } from 'react';
-import { useEffect } from 'react/cjs/react.development';
+import { useEffect } from 'react';
 import { addPoints } from '../store/features/pointsSlice';
 
 const AirportSearch = ({ geocode, setGeocode }) => {

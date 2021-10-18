@@ -1,5 +1,5 @@
 import { motion, useAnimation } from 'framer-motion';
-import { useEffect } from 'react/cjs/react.development';
+import { useEffect } from 'react';
 
 const Test = () => {
 	const plane1 = useAnimation();
