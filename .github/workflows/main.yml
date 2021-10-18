@@ -14,9 +14,9 @@ jobs:
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Test
-          run: |
-            ls
-            cat package-lock.json
+        run: |
+          ls
+          cat package-lock.json
       - name: Cypress run
         uses: cypress-io/github-action@v2.11.7
         with:
