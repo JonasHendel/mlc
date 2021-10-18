@@ -6,13 +6,23 @@ jobs:
   cypress-run:
     runs-on: ubuntu-latest
     steps:
+    
       - name: Checkout
         uses: actions/checkout@v2
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
-      - name: Cypress run
-        uses: cypress-io/github-action@v2.11.7
+      - uses: actions/setup-node@v2
         with:
-          project: /client
+          node-version: '14'
+          cache: 'npm'
+          cache-dependency-path: proxy/package-lock.json
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          run: |
+            cd proxy && npm install
+            node proxy
+            cd ../
+          working-directory: client
           build: npm run build
           start: npm start
