@@ -1,0 +1,17 @@
+{
+	"name": "y",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/JonasHendel/mlc.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/JonasHendel/mlc/issues"
+	},
+	"homepage": "https://github.com/JonasHendel/mlc#readme"
+}

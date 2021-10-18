@@ -21,7 +21,7 @@ const AirportSearch = ({ geocode, setGeocode }) => {
 		const getLatLong = (e) => {
 			if (city.length >= 1) {
 				console.log(city);
-				axios.get(`http://localhost:8000/search?city=${city}`).then((res) => {
+				axios.get(`http://144.126.246.115:8000/search?city=${city}`).then((res) => {
 					console.log(res.data);
 					// console.log(lat, lng);
 
