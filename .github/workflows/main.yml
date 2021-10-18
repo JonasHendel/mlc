@@ -10,9 +10,9 @@ jobs:
       - name: Setup npm package
 
         run: |
-          cd client
           npm init -y && npm install
       - name: Cypress run
         uses: cypress-io/github-action@v2.11.7
         with:
+          project: ./client
           build: npm run build
