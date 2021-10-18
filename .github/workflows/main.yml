@@ -13,10 +13,10 @@ jobs:
       - name: Start proxy server
         uses: actions/setup-node@v2
         with:
-          working-directory: proxy
           node-version: '14'
           cache: 'npm'
           run: |
+            cd proxy
             npm install
             node proxy
       - name: Cypress run
