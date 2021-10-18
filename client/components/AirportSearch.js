@@ -19,7 +19,7 @@ const AirportSearch = ({ geocode, setGeocode }) => {
 	useEffect(() => {
 		setAirports((prevState) => ({ ...prevState, loading: true }));
 		const getLatLong = (e) => {
-			if (city.length >= 1) {i
+			if (city.length >= 1) {
 				console.log(city);
 				axios.get(`http://144.126.246.115:8000/search?city=${city}`).then((res) => {
 					console.log(res.data);
