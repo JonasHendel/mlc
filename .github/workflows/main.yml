@@ -16,7 +16,7 @@ jobs:
           node-version: '14'
           cache: 'npm'
           cache-dependency-path: proxy/package-lock.json
-      - run: cd client && npm install
+      - run: cd proxy && npm install
       - run: node proxy
       - run: cd ../
       - name: Cypress run
