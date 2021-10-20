@@ -1,5 +1,5 @@
-describe('Navigation', () => {
-  it('should navigate to the about page', () => {
+describe('', () => {
+  it('', () => {
     // Start from the index page
     cy.visit('http://localhost:3000/')
 

@@ -1,4 +1,10 @@
 {
+  "info":{
+    "0": "Emission values are averages from the 3 most common aircrafts for short/medium-range (SR-MR) and long-range (LR)." ,
+    "1": "Data is obtained from the European Environment Agency (https://www.eea.europa.eu/publications/emep-eea-guidebook-2019/part-b-sectoral-guidance-chapters/1-energy/1-a-combustion/1-a-3-a-aviation-1/view)",
+    "2": "The emissions are not for 1 passenger, but for the whole aircraft, even when there are SR/MR and LR trips, the emission values for the whole trip are used, even though LR planes have a bigger seating capicity,",
+    "3": "If you have availablity to better data or see flaws with the one used, please take contact via email: devhendel@gmail.com "
+  },
 	"LTO": {
 		"AIRCRAFT": "SR/MR",
 		"CO2": 3153.59,
