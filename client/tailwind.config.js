@@ -25,7 +25,9 @@ module.exports = {
 			backgroundColor: {
 				primary: '#252525',
 				secondary: '#404040',
+        tertiary: 'rgba(0, 0, 0, 0.7)',
 			},
+
 		},
 	},
 	variants: {

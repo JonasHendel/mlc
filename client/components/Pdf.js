@@ -6,7 +6,7 @@ import MlcLogo from '../public/mlcLOGOv2.svg';
 
 // Create styles
 const Pdf = () => (
-	<PDFViewer showToolbar='false' width='800' height='1180'>
+	<PDFViewer showToolbar='false' width='640' height='944'>
 		<Document>
 			<Page style={styles.body}>
 				<View style={styles.header}>

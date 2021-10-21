@@ -9,7 +9,7 @@ import AirportSearch from './AirportSearch';
 import { clearNotify, notifyError } from '../store/features/notifySlice';
 import { addCO2 } from '../store/features/meetingPointSlice';
 
-const SideBar = ({ totalCO2 }) => {
+const SideBar = ({ setShowReport }) => {
 	const [geocode, setGeocode] = useState('');
 
 	const dispatch = useDispatch();
@@ -22,12 +22,11 @@ const SideBar = ({ totalCO2 }) => {
 	const meetingAirport = useSelector((state) => state.meetingPoint.closestAirport);
 	const meetingPointType = useSelector((state) => state.meetingPointType.meetingPointType);
 
-  
 	useEffect(() => {
-    setMeetingPoint(meetingPointType === 'co2' ? (Object.keys(meetingAirport).length > 0 ? meetingAirport : meetingPointMedian) : meetingPointMedian);
+		setMeetingPoint(meetingPointType === 'co2' ? (Object.keys(meetingAirport).length > 0 ? meetingAirport : meetingPointMedian) : meetingPointMedian);
 	}, [meetingPointType, meetingAirport, meetingPointMedian]);
 
-  console.log('dfjks', Object.keys(meetingAirport).length)
+	console.log('dfjks', Object.keys(meetingAirport).length);
 	console.log('m', meetingPoint);
 
 	const getLatLong = (e) => {
@@ -88,7 +87,7 @@ const SideBar = ({ totalCO2 }) => {
 							<button
 								className='bg-gray-700 h-10 rounded-md px-2 text-gray-300 font-bold w-32'
 								onClick={() => {
-                  dispatch(clearNotify())
+									dispatch(clearNotify());
 									dispatch(setMeetingPointTypeCO2());
 								}}>
 								Min. CO2
@@ -117,9 +116,19 @@ const SideBar = ({ totalCO2 }) => {
 						<div className='mt-2 flex justify-between'>
 							<div className='flex flex-col'>
 								<p className='font-bold'>Total CO2</p>
-								<p className='text-gray-300'>{Math.round(meetingPoint.co2)/1000}t</p>
+								<p className='text-gray-300'>{Math.round(meetingPoint.co2) / 1000}t</p>
 							</div>
 						</div>
+            <div className="flex justify-center mt-3">
+
+						<button
+            className="bg-blue-600 w-full p-2 rounded-md font-bold"
+							onClick={() => {
+								setShowReport((prevState) => true);
+							}}>
+							Show report
+						</button>
+            </div>
 					</div>
 				</>
 			)}
