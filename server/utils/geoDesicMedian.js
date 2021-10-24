@@ -1,23 +1,18 @@
-import { computeDistanceBetween, LatLng, LatLngBounds } from 'spherical-geometry-js';
-import { mean, distance } from 'mathjs';
+const mathjs = require('mathjs');
+const haversineFormula = require('./haversineFormula.js')
+const {mean, distance} = mathjs;
 
 
-const x = [
-  [59.9139, 10.7522],
-	[52.52, 13.405],
-	[51.5074, 0.1278],
-	[48.8566, 2.3522],
-];
-
-export const geoDist = (x, geoMean) => {
+const geoDist = (x, geoMean) => {
   console.log('x',x)
   // console.log('m',geoMean)
 	let distanceToGeoMean = [];
 	for (let i = 0; i < x.length; i++) {
-		distanceToGeoMean.push(computeDistanceBetween(new LatLng(x[i][0], x[i][1]), new LatLng(geoMean[0], geoMean[1])) / 1000);
+		distanceToGeoMean.push(haversineFormula(x[i][0], x[i][1], geoMean[0], geoMean[1]) / 1000);
 	}
 	return distanceToGeoMean;
 };
+
 
 // find geometric mean
 // find distance from all X points to geometric mean
@@ -28,8 +23,7 @@ export const geoDist = (x, geoMean) => {
 // new geoMean
 // if distance from new geoMean to old geoMean is below eps => return geoMean 
 // else repeat
-
-export const geoDesicMedian = (x, eps = 1e-6) => {
+const geoDesicMedian = (x, eps = 1e-6) => {
   let geoMean = mean(x, 0);
 	while (true) {
     for (let i = 0; i < x.length; i++) {
@@ -41,7 +35,6 @@ export const geoDesicMedian = (x, eps = 1e-6) => {
     console.log('x3',x)
 
 		const distanceArray = geoDist(x, geoMean);
-    console.log(distanceArray)
 		const W = distanceArray.map((dist) => 1 / dist);
 
 		let sum1 = 0;
@@ -66,4 +59,9 @@ export const geoDesicMedian = (x, eps = 1e-6) => {
 		geoMean = geoMean2;
 	}
 };
+
+module.exports = {
+  geoDesicMedian,
+  geoDist
+}
 

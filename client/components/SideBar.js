@@ -17,7 +17,7 @@ const SideBar = ({ setShowReport }) => {
 	// const [meetingAirport, setMeetingAirport] = useState(null);
 	const [meetingPoint, setMeetingPoint] = useState();
 
-	const startPoints = useSelector((state) => state.startPoints.latLng);
+	const startPoints = useSelector((state) => state.startPoints.points);
 	const meetingPointMedian = useSelector((state) => state.meetingPoint.geoDesicMedian);
 	const meetingAirport = useSelector((state) => state.meetingPoint.closestAirport);
 	const meetingPointType = useSelector((state) => state.meetingPointType.meetingPointType);
@@ -58,6 +58,14 @@ const SideBar = ({ setShowReport }) => {
 		}
 	};
 
+	const navbarData = [
+		{ id: '1', title: 'home', ref: '#home' },
+		{ id: '2', title: 'Skills', ref: '#skills' },
+		{ id: '3', title: 'The List', ref: '#theList' },
+		{ id: '4', title: 'Team', ref: '#team' },
+		{ id: '5', title: 'Contact', ref: '#contact' },
+	];
+
 	return (
 		<div className='w-96 py-5 absolute bg-primary  z-9999 mt-10 ml-10 flex flex-col justify-start rounded-xl'>
 			<p className='font-bold text-xl w-full text-center mb-2'>Add location</p>
@@ -67,9 +75,9 @@ const SideBar = ({ setShowReport }) => {
 					startPoints.map((point, i) => (
 						<div key={i} className='flex justify-between items-center mx-6'>
 							<div className=''>
-								<p className='font-bold'>{point.name}</p>
+								<p className='font-bold'>{point.airport.name}</p>
 								<p className='text-gray-300'>
-									{Math.round(point.coordinates[0] * 10000) / 10000}, {Math.round(point.coordinates[1] * 10000) / 10000}
+									{Math.round(point.airport.coordinates[0] * 10000) / 10000}, {Math.round(point.airport.coordinates[1] * 10000) / 10000}
 								</p>
 							</div>
 							<button onClick={() => removeItem(point)} className='bg-red-700 h-8 w-24 rounded-md px-2 text-red-300'>
@@ -119,16 +127,15 @@ const SideBar = ({ setShowReport }) => {
 								<p className='text-gray-300'>{Math.round(meetingPoint.co2) / 1000}t</p>
 							</div>
 						</div>
-            <div className="flex justify-center mt-3">
-
-						<button
-            className="bg-blue-600 w-full p-2 rounded-md font-bold"
-							onClick={() => {
-								setShowReport((prevState) => true);
-							}}>
-							Show report
-						</button>
-            </div>
+						<div className='flex justify-center mt-3'>
+							<button
+								className={`bg-blue-600 w-full p-2 rounded-md font-bold`}
+								onClick={() => {
+									setShowReport((prevState) => !prevState);
+								}}>
+								Show report
+							</button>
+						</div>
 					</div>
 				</>
 			)}

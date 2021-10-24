@@ -1,0 +1,75 @@
+{
+  "info":{
+    "0": "Emission values are averages from the 3 most common aircrafts for short/medium-range (SR-MR) and long-range (LR)." ,
+    "1": "Data is obtained from the European Environment Agency (https://www.eea.europa.eu/publications/emep-eea-guidebook-2019/part-b-sectoral-guidance-chapters/1-energy/1-a-combustion/1-a-3-a-aviation-1/view)",
+    "2": "The emissions are not for 1 passenger, but for the whole aircraft, even when there are SR/MR and LR trips, the emission values for the whole trip are used, even though LR planes have a bigger seating capicity,",
+    "3": "If you have availablity to better data or see flaws with the one used, please take contact via email: devhendel@gmail.com "
+  },
+	"LTO": {
+		"AIRCRAFT": "SR/MR",
+		"CO2": 3153.59,
+		"FUEL": 1001.14,
+		"TYPE": "LTO"
+	},
+	"CCD": {
+		"SMR": {
+      "seats": 176,
+			"125": {
+				"CO2": 3259.05,
+				"FUEL": 1034.62,
+				"TYPE": "CCD"
+			},
+			"200": {
+				"CO2": 5019.12,
+				"FUEL": 1514.4,
+				"TYPE": "CCD"
+			},
+			"250": {
+				"CO2": 6100.41,
+				"FUEL": 1840.22,
+				"TYPE": "CCD"
+			},
+			"500": {
+				"CO2": 9279.35,
+				"FUEL": 3335.72,
+				"TYPE": "CCD"
+			},
+			"750": {
+				"CO2": 15849.8,
+				"FUEL": 4729.28,
+				"TYPE": "CCD"
+			},
+			"1000": {
+				"CO2": 19158.32,
+				"FUEL": 6082.01,
+				"TYPE": "CCD"
+			},
+			"1500": {
+				"CO2": 28358.11,
+				"FUEL": 9002.57,
+				"TYPE": "CCD"
+			},
+			"2000": {
+				"CO2": 37910.43,
+				"FUEL": 12035.06,
+				"TYPE": "CCD"
+			},
+			"2500": {
+				"CO2": 46949.16,
+				"FUEL": 14904.5,
+				"TYPE": "CCD"
+			},
+			"3000": {
+				"CO2": 56863.25,
+				"FUEL": 15846.86,
+				"TYPE": "CCD"
+			}
+		},
+    "LR":{
+      "seats": 241
+      
+    }
+	}
+}
+
+

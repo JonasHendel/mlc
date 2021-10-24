@@ -1,0 +1,22 @@
+{
+	"startPoint": {
+		"airport": {
+			"name": "LHR",
+			"city": "London",
+			"latitude": 12,
+			"longitude": 50
+		},
+		"trips": {
+			"toMedian": {
+				"distance": 423,
+				"co2": 10
+			},
+			"toClosestAirport": {
+				"distance": 423,
+				"co2": 10
+			}
+		}
+	}
+}
+
+

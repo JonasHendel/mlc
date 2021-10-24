@@ -3,18 +3,63 @@ import { createSlice } from '@reduxjs/toolkit';
 export const pointsSlice = createSlice({
 	name: 'points',
 	initialState: {
-		latLng: [
+		points: [
 			{
-				name: 'OSL',
-				coordinates: ['60.121', '11.0502'],
+				airport: {
+					name: 'OSL',
+					city: 'Oslo',
+					coordinates: ['60.121', '11.0502'],
+					latitude: 12,
+					longitude: 50,
+				},
+				trips: {
+					toMedian: {
+						distance: 423,
+						co2: 10,
+					},
+					toClosestAirport: {
+						distance: 423,
+						co2: 10,
+					},
+				},
 			},
 			{
-				name: 'LHR',
-				coordinates: ['51.4706', '-0.461941'],
+				airport: {
+					name: 'LHR',
+					city: 'London',
+					coordinates: ['51.4706', '-0.461941'],
+					latitude: 12,
+					longitude: 50,
+				},
+				trips: {
+					toMedian: {
+						distance: 423,
+						co2: 10,
+					},
+					toClosestAirport: {
+						distance: 423,
+						co2: 10,
+					},
+				},
 			},
 			{
-				name: 'SXF',
-				coordinates: ['52.380001', '13.5225'],
+				airport: {
+					name: 'SXF',
+					city: 'Berlin',
+					coordinates: ['52.380001', '13.5225'],
+					latitude: 12,
+					longitude: 50,
+				},
+				trips: {
+					toMedian: {
+						distance: 423,
+						co2: 10,
+					},
+					toClosestAirport: {
+						distance: 423,
+						co2: 10,
+					},
+				},
 			},
 		],
 	},
@@ -25,9 +70,12 @@ export const pointsSlice = createSlice({
 		addPoints: (state, action) => {
 			state.latLng.push(action.payload);
 		},
+		addCO2: (state, action) => {
+			state.latLng[action.payload.name].co2 = action.payload.co2;
+		},
 	},
 });
 
-export const { setPoints, addPoints } = pointsSlice.actions;
+export const { setPoints, addPoints, addCO2 } = pointsSlice.actions;
 
 export default pointsSlice.reducer;

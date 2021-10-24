@@ -10,6 +10,7 @@ import Report from '../Pdf';
 
 const Map = ({ setTotalCO2, totalCO2 }) => {
 	const [showReport, setShowReport] = useState(false);
+  const [trips, setTrips] = useState([]);
 	return (
 		<div>
 			<Notify />
@@ -26,7 +27,7 @@ const Map = ({ setTotalCO2, totalCO2 }) => {
 					attribution='© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>'
 					url='https://api.mapbox.com/styles/v1/jonashendel/cktwy56fx189v18qjl5x00urx/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoiam9uYXNoZW5kZWwiLCJhIjoiY2t0aWYzajUxMHF2djJ4bXpyejl5dzl4MiJ9.IUHTwT6wueVEMUHRkVoZBg'
 				/>
-				<GeoJson data={geoJson} setTotalCO2={setTotalCO2} />
+				<GeoJson data={geoJson} setTotalCO2={setTotalCO2} setTrips={setTrips} />
 				<AttributionControl position='bottomright' prefix={false} />
 			</MapContainer>
 			<div className={styles.mapboxAttr} />

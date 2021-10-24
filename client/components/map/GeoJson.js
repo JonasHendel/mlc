@@ -7,23 +7,27 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { geoDesicMedian, geoDist } from '../../utils/geodesicMedian';
 import { useDispatch } from 'react-redux';
-import { addPoints } from '../../store/features/pointsSlice';
-import { setGeoDesicMedian, setClosestAirport, removeMeetingPoint, removeClosestAirport, addCO2 } from '../../store/features/meetingPointSlice';
+import { addCO2 } from '../../store/features/pointsSlice';
+import { setGeoDesicMedian, setClosestAirport, removeMeetingPoint, removeClosestAirport } from '../../store/features/meetingPointSlice';
 import emissions from '../../public/emissions.json';
 import { v4 as uuidv4 } from 'uuid';
 
 import { closest, getCO2Array } from '../../utils/functions';
 
-const GeoJson = ({ setTotalCO2 }) => {
+const GeoJson = ({ setTotalCO2, setTrips }) => {
 	const dispatch = useDispatch();
 
 	// const [airports, setAirports] = useState([]);
 	// const [meetingAirport, setMeetingAirport] = useState(null);
 
-	const startPoints = useSelector((state) => state.startPoints.latLng);
+	const startPoints = useSelector((state) => state.startPoints.points);
 	const meetingPointMedian = useSelector((state) => state.meetingPoint.geoDesicMedian);
 	const meetingAirport = useSelector((state) => state.meetingPoint.closestAirport);
 	const meetingPointType = useSelector((state) => state.meetingPointType.meetingPointType);
+
+	startPoints.map((startPoint) => {
+		console.log(startPoint.airport.coordinates);
+	});
 
 	const newMeetingPoint = () => {
 		if (Boolean(meetingPointMedian.coordinates)) {
@@ -31,36 +35,28 @@ const GeoJson = ({ setTotalCO2 }) => {
 
 			const minDistIndex = distanceArray.indexOf(Math.min(...distanceArray));
 
-			console.log('minDistIndex', startPoints[minDistIndex]);
-
 			const coordinateArray = [];
 			for (let i = 0; i < startPoints.length; i++) {
 				coordinateArray.push(startPoints[i].coordinates);
 			}
 
-			console.log('coordinateArray', coordinateArray);
 			// distance array to closest airport
 			const distanceArrayNew = geoDist(coordinateArray, startPoints[minDistIndex]?.coordinates);
 
 			const co2CCDArr1 = getCO2Array(distanceArray);
 			const co2CCDArr2 = getCO2Array(distanceArrayNew);
 
-			console.log('coarr', co2CCDArr1, co2CCDArr2);
-
 			const co2Old = co2CCDArr1.reduce((a, b) => a + b, 0);
 			const co2New = co2CCDArr2.reduce((a, b) => a + b, 0);
-			console.log('c1', co2Old);
-			console.log('c2', co2New);
 
 			const newPoint = {
 				coordinates: startPoints[minDistIndex].coordinates,
 				distance: Math.round(distanceArrayNew.reduce((a, b) => a + b, 0)),
 				distanceArray: distanceArrayNew,
+				co2CCDArray: co2CCDArr2,
 				co2: co2New,
 			};
-			dispatch(addCO2(co2Old));
 			if (co2Old >= co2New) {
-				console.log('move to new point suggested');
 				dispatch(setClosestAirport(newPoint));
 			} else {
 				dispatch(removeClosestAirport());
@@ -70,8 +66,6 @@ const GeoJson = ({ setTotalCO2 }) => {
 	};
 
 	useEffect(() => {
-		console.log('calc mp');
-		newMeetingPoint();
 	}, [meetingPointMedian]);
 
 	// new Point by click on map
@@ -85,16 +79,12 @@ const GeoJson = ({ setTotalCO2 }) => {
 	// 	},
 	// });
 
-	console.log('m1', meetingPointMedian);
-	console.log('m2', meetingAirport);
-
 	useEffect(() => {
 		let coordinateArray = [];
 		startPoints.map((startPoint) => {
-			coordinateArray.push(startPoint.coordinates);
+			coordinateArray.push(startPoint.airport.coordinates);
 		});
 		if (coordinateArray.length >= 2) {
-			console.log('new mp');
 			dispatch(setGeoDesicMedian(geoDesicMedian(coordinateArray)));
 		}
 		if (startPoints.length < 2) {
@@ -109,7 +99,7 @@ const GeoJson = ({ setTotalCO2 }) => {
 					<StartPoints startPoint={startPoint} />
 					{meetingPointMedian.coordinates && (
 						<LineToMeetingPoint
-							startPoint={startPoint.coordinates}
+							startPoint={startPoint.airport.coordinates}
 							meetingPoint={meetingPointType === 'co2' ? (meetingAirport.coordinates ? meetingAirport.coordinates : meetingPointMedian.coordinates) : meetingPointMedian.coordinates}
 						/>
 					)}
@@ -158,7 +148,7 @@ const StartPoints = ({ startPoint }) => {
 				onMouseOut={(e) => {
 					e.target.closePopup();
 				}}
-				position={startPoint.coordinates}
+				position={startPoint.airport.coordinates}
 				icon={svgIcon}>
 				<Popup className='custom-popup'>{startPoint.name}</Popup>
 			</Marker>
