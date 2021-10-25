@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const fs = require('fs');
+const cors = require('cors');
 require('dotenv').config();
 
 const PORT = process.env.PORT || 8000;
@@ -8,6 +9,8 @@ const PORT = process.env.PORT || 8000;
 app.use(express.urlencoded())
 
 app.use(express.json());
+
+app.use(cors());
 
 
 fs.readdir('./routes/', (err, files) => {

@@ -44,6 +44,6 @@ module.exports  = (lat1,lng1) => {
 	}
 	console.log(d);
 	console.log(ap);
-  return {ap: ap, d: d}
+  return ap
 };
 

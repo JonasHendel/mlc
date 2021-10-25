@@ -47,11 +47,15 @@ const AirportSearch = ({ geocode, setGeocode }) => {
 	// }, [city]);
 
 	const addAirport = (airport) => {
-		const lat = airport.y;
-		const lng = airport.x;
+		const lat = airport.latitude_deg;
+		const lng = airport.longitude_deg;
 		const pointObj = {
-			name: airport.iata,
-			coordinates: [lat, lng],
+			airport: {
+        name: airport.name,
+        iata_code: airport.iata_code,
+        city: airport.municipality,
+        coordinates: [lat, lng]
+      },
 		};
 		setCity('');
 		dispatch(addPoints(pointObj));

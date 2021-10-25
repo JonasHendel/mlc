@@ -26,8 +26,8 @@ const SideBar = ({ setShowReport }) => {
 		setMeetingPoint(meetingPointType === 'co2' ? (Object.keys(meetingAirport).length > 0 ? meetingAirport : meetingPointMedian) : meetingPointMedian);
 	}, [meetingPointType, meetingAirport, meetingPointMedian]);
 
-	console.log('dfjks', Object.keys(meetingAirport).length);
-	console.log('m', meetingPoint);
+	// console.log('dfjks', Object.keys(meetingAirport).length);
+	// console.log('m', meetingPoint);
 
 	const getLatLong = (e) => {
 		e.preventDefault();
@@ -58,13 +58,6 @@ const SideBar = ({ setShowReport }) => {
 		}
 	};
 
-	const navbarData = [
-		{ id: '1', title: 'home', ref: '#home' },
-		{ id: '2', title: 'Skills', ref: '#skills' },
-		{ id: '3', title: 'The List', ref: '#theList' },
-		{ id: '4', title: 'Team', ref: '#team' },
-		{ id: '5', title: 'Contact', ref: '#contact' },
-	];
 
 	return (
 		<div className='w-96 py-5 absolute bg-primary  z-9999 mt-10 ml-10 flex flex-col justify-start rounded-xl'>
@@ -118,13 +111,13 @@ const SideBar = ({ setShowReport }) => {
 							</div>
 							<div className='flex flex-col'>
 								<p className='font-bold'>Total Distance</p>
-								<p className='text-gray-300'>{meetingPoint.distance}km</p>
+								<p className='text-gray-300'>{Math.round(meetingPoint.totalDistance)}km</p>
 							</div>
 						</div>
 						<div className='mt-2 flex justify-between'>
 							<div className='flex flex-col'>
 								<p className='font-bold'>Total CO2</p>
-								<p className='text-gray-300'>{Math.round(meetingPoint.co2) / 1000}t</p>
+								<p className='text-gray-300'>{Math.round(meetingPoint.totalCO2) / 1000}t</p>
 							</div>
 						</div>
 						<div className='flex justify-center mt-3'>

@@ -7,7 +7,7 @@ module.exports = {
 				even: '0 0 20px 4px rgb(125, 125, 125, 0.1 )',
 			},
 			zIndex: {
-				9999: '9999',
+				9999: '999',
 			},
 			height: {
 				'1px': '2px',

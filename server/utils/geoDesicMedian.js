@@ -4,7 +4,7 @@ const {mean, distance} = mathjs;
 
 
 const geoDist = (x, geoMean) => {
-  console.log('x',x)
+  // console.log('x',x)
   // console.log('m',geoMean)
 	let distanceToGeoMean = [];
 	for (let i = 0; i < x.length; i++) {
@@ -32,7 +32,6 @@ const geoDesicMedian = (x, eps = 1e-6) => {
         geoMean = geoMean.map((float) => (float * 1000 + 10) / 1000);
 			}
 		}
-    console.log('x3',x)
 
 		const distanceArray = geoDist(x, geoMean);
 		const W = distanceArray.map((dist) => 1 / dist);
