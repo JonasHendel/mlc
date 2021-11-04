@@ -22,3 +22,4 @@ module.exports = (lat1, lng1, lat, lng) => {
 
 	return d;
 };
+

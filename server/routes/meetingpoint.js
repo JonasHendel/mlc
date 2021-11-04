@@ -8,12 +8,13 @@ const router = express.Router();
 
 router.post('/', (req, res) => {
 	const startPoints = req.body;
+  //console.log(startPoints)
 
   if(startPoints.length === 0) {
     return res.status(400).json({error: 'No start points provided'});
   }
 
-	console.log(startPoints);
+	//console.log(startPoints);
 
 	let coordinateArray = [];
 
@@ -21,9 +22,10 @@ router.post('/', (req, res) => {
 		coordinateArray.push(point.airport.coordinates);
 	});
 
-	const meetingpointMedian = geoDesicMedian.geoDesicMedian(coordinateArray);
+	const meetingpointMedian = geoDesicMedian.geoDesicMedian(coordinateArray, 0.0001);
 
 	const tempAirportMedian = closestAirport(meetingpointMedian.coordinates[0], meetingpointMedian.coordinates[1]);
+
 
 	const medianAirport = {
 		name: tempAirportMedian.name,
@@ -44,11 +46,27 @@ router.post('/', (req, res) => {
 
   medianAirport.totalCO2 = tripsToMedianAP.totalCO2;
   medianAirport.totalDistance = tripsToMedianAP.totalDist;
+  medianAirport.distanceArray = distanceArrayMedian
 
-  console.log('18', medianAirport);
+  if(Math.max(...distanceArrayMedian) > 4000){
+    const weights = [1,4,1,1,1]
+    console.log(coordinateArray)
+    const array = [
+  [ '60.121', '11.0502' ],
+  [ '40.639801', '118.2437' ],
+  [ '52.351389', '13.493889' ],
+  [ '45.7699', '11.76' ],
+  [ '57.7666', '14.08' ],
+]
+    const wGM = geoDesicMedian.weightedGeoMedian(array, weights, 0.0001)
+    console.log(wGM)
+  }
+
+  //console.log(medianAirport)
+
 
 	startPoints.map((point, index) => {
-		console.log(co2ArrMedian[index]);
+		//console.log(co2ArrMedian[index]);
 		point.toMedianAirport = {
       name: medianAirport.name,
       iata_code: medianAirport.iata_code,

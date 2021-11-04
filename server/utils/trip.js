@@ -21,7 +21,7 @@ const getCO2Array = (array) => {
 		// convert distance to Nautical Miles
 		const tripDistInNauticalMiles = trip / 1.852;
 
-    console.log('moinsdfa',tripDistInNauticalMiles);
+    //console.log('moinsdfa',tripDistInNauticalMiles);
 
 		// find the closest integer from distArr to the distance -> to be able to calculate the emsisions more accurately
 		const distVal = closestNumber(distArr, tripDistInNauticalMiles);
@@ -49,7 +49,7 @@ const trip = (startPoints, meetingPoint) => {
 
 	const co2Arr = getCO2Array(distanceArray);
 
-  console.log(co2Arr);
+  //console.log(co2Arr);
 
 	const totalCO2 = co2Arr.reduce((a, b) => a + b, 0);
 

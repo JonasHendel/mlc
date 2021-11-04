@@ -1,139 +1,211 @@
-import axios from 'axios';
-import qs from 'qs';
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { addPoints, setPoints } from '../store/features/pointsSlice';
-import { setMeetingPointTypeDistance, setMeetingPointTypeCO2 } from '../store/features/meetingPointTypeSlice';
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { X } from "phosphor-react";
 
-import AirportSearch from './AirportSearch';
-import { clearNotify, notifyError } from '../store/features/notifySlice';
-import { addCO2 } from '../store/features/meetingPointSlice';
+import { addPoints, setPoints, addStopOver } from "../store/features/pointsSlice";
+import {
+  setMeetingPointTypeDistance,
+  setMeetingPointTypeCO2,
+} from "../store/features/meetingPointTypeSlice";
+import AirportSearch from "./AirportSearch";
+import { clearNotify, notifyError } from "../store/features/notifySlice";
+import {} from "../store/features/meetingPointSlice";
 
 const SideBar = ({ setShowReport }) => {
-	const [geocode, setGeocode] = useState('');
+  const [geocode, setGeocode] = useState("");
 
-	const dispatch = useDispatch();
-	// const [airports, setAirports] = useState([]);
-	// const [meetingAirport, setMeetingAirport] = useState(null);
-	const [meetingPoint, setMeetingPoint] = useState();
+  const dispatch = useDispatch();
+  // const [airports, setAirports] = useState([]);
+  // const [meetingAirport, setMeetingAirport] = useState(null);
+  const [meetingPoint, setMeetingPoint] = useState();
 
-	const startPoints = useSelector((state) => state.startPoints.points);
-	const meetingPointMedian = useSelector((state) => state.meetingPoint.geoDesicMedian);
-	const meetingAirport = useSelector((state) => state.meetingPoint.closestAirport);
-	const meetingPointType = useSelector((state) => state.meetingPointType.meetingPointType);
+  const [airport, setAirport] = useState();
 
-	useEffect(() => {
-		setMeetingPoint(meetingPointType === 'co2' ? (Object.keys(meetingAirport).length > 0 ? meetingAirport : meetingPointMedian) : meetingPointMedian);
-	}, [meetingPointType, meetingAirport, meetingPointMedian]);
+  const [stopOver, setStopOver] = useState({});
 
-	// console.log('dfjks', Object.keys(meetingAirport).length);
-	// console.log('m', meetingPoint);
+  const startPoints = useSelector((state) => state.startPoints.points);
+  const meetingPointMedian = useSelector(
+    (state) => state.meetingPoint.geoDesicMedian
+  );
+  const meetingAirport = useSelector(
+    (state) => state.meetingPoint.closestAirport
+  );
+  const meetingPointType = useSelector(
+    (state) => state.meetingPointType.meetingPointType
+  );
 
-	const getLatLong = (e) => {
-		e.preventDefault();
-		if (geocode.length > 1) {
-			axios.get(`http://localhost:8000/search?city=${geocode}`).then((res) => {
-				const lat = res.data[0].y;
-				const lng = res.data[0].x;
-				console.log(res.data);
-				// console.log(lat, lng);
-				const pointObj = {
-					name: res.data[0].ap_name,
-					coordinates: [lat, lng],
-				};
-				dispatch(addPoints(pointObj));
+  useEffect(() => {
+    setMeetingPoint(
+      meetingPointType === "co2" ? meetingAirport : meetingPointMedian
+    );
+  }, [meetingPointType, meetingAirport, meetingPointMedian]);
 
-				if (res.err) {
-					console.log(res.err);
-				}
-			});
-		}
-		setGeocode('');
-	};
+  // consol.log('dfjks', Object.keys(meetingAirport).length);
+  // console.log('m', meetingPoint);
 
-	const removeItem = (point) => {
-		const filteredPoints = startPoints.filter((item) => item.coordinates !== point.coordinates);
-		dispatch(setPoints(filteredPoints));
-		if (filteredPoints.length === 0) {
-		}
-	};
+  const addAirport = (airport) => {
+    const lat = airport.latitude_deg;
+    const lng = airport.longitude_deg;
+    const pointObj = {
+      airport: {
+        name: airport.name,
+        iata_code: airport.iata_code,
+        city: airport.municipality,
+        coordinates: [lat, lng],
+      },
+    };
+    dispatch(addPoints(pointObj));
+  };
 
+  const removeItem = (point) => {
+    const filteredPoints = startPoints.filter(
+      (item) => item.airport.coordinates !== point.airport.coordinates
+    );
+    dispatch(setPoints(filteredPoints));
+    if (filteredPoints.length === 0) {
+    }
+  };
 
-	return (
-		<div className='w-96 py-5 absolute bg-primary  z-9999 mt-10 ml-10 flex flex-col justify-start rounded-xl'>
-			<p className='font-bold text-xl w-full text-center mb-2'>Add location</p>
-			<AirportSearch getLatLong={getLatLong} setGeocode={setGeocode} geocode={geocode} />
-			<div className='flex flex-col'>
-				{startPoints &&
-					startPoints.map((point, i) => (
-						<div key={i} className='flex justify-between items-center mx-6'>
-							<div className=''>
-								<p className='font-bold'>{point.airport.name}</p>
-								<p className='text-gray-300'>
-									{Math.round(point.airport.coordinates[0] * 10000) / 10000}, {Math.round(point.airport.coordinates[1] * 10000) / 10000}
-								</p>
-							</div>
-							<button onClick={() => removeItem(point)} className='bg-red-700 h-8 w-24 rounded-md px-2 text-red-300'>
-								Remove
-							</button>
-						</div>
-					))}
-			</div>
-			{meetingPoint?.coordinates && (
-				<>
-					<div className='h-1px rounded-xl bg-gray-500 mx-6 my-4' />
-					<div className='mx-6'>
-						<p className='font-bold text-xl w-full text-center mb-2'>Meeting Point</p>
-						<div className=' w-full flex justify-evenly'>
-							<button
-								className='bg-gray-700 h-10 rounded-md px-2 text-gray-300 font-bold w-32'
-								onClick={() => {
-									dispatch(clearNotify());
-									dispatch(setMeetingPointTypeCO2());
-								}}>
-								Min. CO2
-							</button>
-							<button
-								className='bg-gray-700 h-10 mb-2 rounded-md px-2 text-gray-300 font-bold w-32'
-								onClick={() => {
-									dispatch(setMeetingPointTypeDistance());
-									dispatch(notifyError('Minimum distance does not equal minimum emissions.'));
-								}}>
-								Min. distance
-							</button>
-						</div>
-						<div className='flex justify-between'>
-							<div className='flex flex-col'>
-								<p className='font-bold'>Location</p>
-								<p className='text-gray-300'>
-									{Math.round(meetingPoint.coordinates[0] * 1000) / 1000}, {Math.round(meetingPoint.coordinates[1] * 1000) / 1000}
-								</p>
-							</div>
-							<div className='flex flex-col'>
-								<p className='font-bold'>Total Distance</p>
-								<p className='text-gray-300'>{Math.round(meetingPoint.totalDistance)}km</p>
-							</div>
-						</div>
-						<div className='mt-2 flex justify-between'>
-							<div className='flex flex-col'>
-								<p className='font-bold'>Total CO2</p>
-								<p className='text-gray-300'>{Math.round(meetingPoint.totalCO2) / 1000}t</p>
-							</div>
-						</div>
-						<div className='flex justify-center mt-3'>
-							<button
-								className={`bg-blue-600 w-full p-2 rounded-md font-bold`}
-								onClick={() => {
-									setShowReport((prevState) => !prevState);
-								}}>
-								Show report
-							</button>
-						</div>
-					</div>
-				</>
-			)}
-		</div>
-	);
+  const addStopOverFunc = (airport, i) => {
+    const lat = airport.latitude_deg;
+    const lng = airport.longitude_deg;
+    const pointObj = {
+      index: i,
+      airport: {
+        name: airport.name,
+        iata_code: airport.iata_code,
+        city: airport.municipality,
+        coordinates: [lat, lng],
+      },
+    };
+    dispatch(addStopOver(pointObj));
+  };
+
+  return (
+    <div className="absolute flex flex-col justify-start py-5 mt-10 ml-10 w-96 bg-primary max-h-90 z-9999 rounded-xl">
+      <p className="w-full mb-2 text-xl font-bold text-center">Add location</p>
+      <AirportSearch
+        setAirport={setAirport}
+        setGeocode={setGeocode}
+        geocode={geocode}
+        onClickFunction={(airport) => {
+          addAirport(airport);
+        }}
+      />
+      <div className="flex flex-col">
+        {startPoints &&
+          startPoints.map((point, i) => (
+            <div className="flex flex-col ">
+              <div key={i} className="flex items-center justify-between mx-6">
+                <div className="">
+                  <p className="font-bold">{point.airport.iata_code}</p>
+                  <p className="text-gray-300">
+                    {Math.round(point.airport.coordinates[0] * 10000) / 10000},{" "}
+                    {Math.round(point.airport.coordinates[1] * 10000) / 10000}
+                  </p>
+                </div>
+                <div className="flex items-center">
+                  <button
+                    onClick={() =>
+                      setStopOver(
+                        Object.keys(stopOver).length === 0 ? point : {}
+                      )
+                    }
+                    className="h-8 px-2 mr-3 font-semibold text-white text-gray-300 bg-gray-700 rounded-md"
+                  >
+                    Add stopover
+                  </button>
+                  <button
+                    onClick={() => removeItem(point)}
+                    className="w-8 h-8 px-2 text-white bg-red-700 rounded-md"
+                  >
+                    <X weight="bold" />
+                  </button>
+                </div>
+              </div>
+              {stopOver === point && (
+                <AirportSearch
+                  setAirport={setAirport}
+                  setGeocode={setGeocode}
+                  geocode={geocode}
+                  onClickFunction={(airport) => {
+                    addStopOverFunc(airport, i);
+                  }}
+                />
+              )}
+            </div>
+          ))}
+      </div>
+      {meetingPoint?.coordinates && (
+        <>
+          <div className="mx-6 my-4 bg-gray-500 h-1px rounded-xl" />
+          <div className="mx-6">
+            <p className="w-full mb-2 text-xl font-bold text-center">
+              Meeting Point
+            </p>
+            <div className="flex w-full justify-evenly">
+              <button
+                className="w-32 h-10 px-2 font-bold text-gray-300 bg-gray-700 rounded-md"
+                onClick={() => {
+                  dispatch(clearNotify());
+                  dispatch(setMeetingPointTypeCO2());
+                }}
+              >
+                Min. CO2
+              </button>
+              <button
+                className="w-32 h-10 px-2 mb-2 font-bold text-gray-300 bg-gray-700 rounded-md"
+                onClick={() => {
+                  dispatch(setMeetingPointTypeDistance());
+                  dispatch(
+                    notifyError(
+                      "Minimum distance does not equal minimum emissions."
+                    )
+                  );
+                }}
+              >
+                Min. distance
+              </button>
+            </div>
+            <div className="flex justify-between">
+              <div className="flex flex-col">
+                <p className="font-bold">Location</p>
+                <p className="text-gray-300">
+                  {Math.round(meetingPoint.coordinates[0] * 1000) / 1000},{" "}
+                  {Math.round(meetingPoint.coordinates[1] * 1000) / 1000}
+                </p>
+              </div>
+              <div className="flex flex-col">
+                <p className="font-bold">Total Distance</p>
+                <p className="text-gray-300">
+                  {Math.round(meetingPoint.totalDistance)}km
+                </p>
+              </div>
+            </div>
+            <div className="flex justify-between mt-2">
+              <div className="flex flex-col">
+                <p className="font-bold">Total CO2</p>
+                <p className="text-gray-300">
+                  {Math.round(meetingPoint.totalCO2) / 1000}t
+                </p>
+              </div>
+            </div>
+            <div className="flex justify-center mt-3">
+              <button
+                className={`bg-blue-600 w-full p-2 rounded-md font-bold`}
+                onClick={() => {
+                  setShowReport((prevState) => !prevState);
+                }}
+              >
+                Show report
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  );
 };
 
 export default SideBar;

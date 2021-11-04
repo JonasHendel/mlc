@@ -20,30 +20,36 @@ const getLatLng = async (city) => {
 };
 
 router.get('/coordinates', async (req, res) => {
-	const { city } = req.query;
-	if (!city) {
-		res.status(400).json({ error: 'Please provide a city' });
-	}
-	const latLng = await getLatLng(city);
-	if (latLng.error) {
-		return res.status(400).json({ error: latLng.error });
-	}
+  try{
 
-	res.status(200).json(latLng);
+    const { lat, lng } = req.query;
+    // if (!city) {
+      // 	res.status(400).json({ error: 'Please provide a city' });
+      // }
+      const closestAp = closestAirport(lat, lng);
+      
+      return  res.status(200).json(closestAp);
+    }catch(err){
+      return res.status(500).json({ error: err.message });
+    }
 });
 
-router.get('/', async (req, res) => {
-	const { city } = req.query;
-	if (!city) {
-		res.status(400).json({ error: 'Please provide a city' });
-	}
-	const latLng = await getLatLng(city);
-
-  const {lat, lng} = latLng.success;
-
-	const closestAp = closestAirport(lat, lng);
-
-	res.json(closestAp);
+router.get('/city', async (req, res) => {
+  try{
+    const { city } = req.query;
+    if (!city) {
+      res.status(400).json({ error: 'Please provide a city' });
+    }
+    // const latLng = await getLatLng(city);
+    
+    // const {lat, lng} = latLng.success;
+    
+    const closestAp = closestAirport(lat, lng);
+    
+    return res.status(200).json(closestAp);
+  }catch(err){
+    return res.status(500).json({ error: err.message });
+  }
 });
 
 module.exports = router;

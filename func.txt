@@ -1,0 +1,25 @@
+Calc Geo median
+
+If max distance < 3000 nm
+  return geoMedian
+
+else calc geoMedian with weight
+ run loop for finding geoMedian
+  if max dist to geoMean is < 3000 NN
+    if max dist to newgeoMean is < 3000NM
+      
+
+
+
+How ranges are defined / calc average
+Asia & Australia
+Japan Air Lines defines routes to Europe and North America as long-haul and all other flights as short-haul.[1]
+Virgin Australia defines domestic flights as within Australia, short-haul as those to South East Asia/Pacific and long-haul as those to Abu Dhabi or Los Angeles.[2]
+Hong Kong International Airport considers destinations in North and South Americas, Europe, the Middle East, Africa, Southwest Pacific and the Indian Subcontinent long-haul and all others are short-haul.[3]
+Europe
+Eurocontrol defines medium-haul routes as being between 1,500 and 4,000 km (930 and 2,490 mi; 810 and 2,160 nmi), short-haul as shorter and long-haul routes as longer than that.[4]
+The Association of European Airlines defined Long-haul as flights to Americas, sub-Saharan Africa, Asia, Australasia and medium-haul as flights to North Africa and Middle East.[5] The now defunct airline Air Berlin defined short- and medium-haul as flights to Europe/North Africa and long-haul as those to the rest of the world.[6]
+Air France defines short-haul as domestic, medium-haul as within Europe/North Africa and long haul as the rest of the world.[7]
+North America
+American Airlines defines short-/medium-haul flights as being less than 3,000 mi (2,600 nmi; 4,800 km) and long-haul as either being more than 3,000 mi (2,600 nmi; 4,800 km) or being the New York–Los Angeles and New York–San Francisco routes.[8]
+United Airlines defines short-haul flights as being less than 700 mi (610 nmi; 1,100 km)[9] and long-haul flights as being greater than 3,000 mi (2,600 nmi; 4,800 km).[10]

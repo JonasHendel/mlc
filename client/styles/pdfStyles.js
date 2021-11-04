@@ -2,7 +2,8 @@ import { StyleSheet } from "@react-pdf/renderer";
 
 const BORDER_COLOR = '#000';
 const BORDER_STYLE = 'solid';
-const COLN_WIDTH = 20;
+const COLN_WIDTH = 20
+const COL2_WIDTH = 19;
 export const styles = StyleSheet.create({
 	body: {
 		padding: 40,
@@ -14,6 +15,7 @@ export const styles = StyleSheet.create({
     fontFamily: "Times-Bold",
 		marginBottom: 10,
     marginTop: 15,
+    fontSize: 14,
 	},
 	title: {
 		fontSize: 20,
@@ -75,7 +77,42 @@ export const styles = StyleSheet.create({
 		borderLeftWidth: 0,
 		borderTopWidth: 0,
 	},
+	tableColHeader1: {
+		width: COL2_WIDTH + '%',
+		borderStyle: BORDER_STYLE,
+		borderColor: BORDER_COLOR,
+		borderWidth: 1,
+		borderLeftWidth: 0,
+		borderTopWidth: 0,
+		fontWeight: 'bold',
+	},
+	tableCol1: {
+		width: COL2_WIDTH + '%',
+		borderStyle: BORDER_STYLE,
+		borderColor: BORDER_COLOR,
+		borderWidth: 1,
+		borderLeftWidth: 0,
+		borderTopWidth: 0,
+	},
+  tableColHeader2: {
+		width: '24%',
+		borderStyle: BORDER_STYLE,
+		borderColor: BORDER_COLOR,
+		borderWidth: 1,
+		borderLeftWidth: 0,
+		borderTopWidth: 0,
+		fontWeight: 'bold',
+	},
+	tableCol2: {
+		width: '24%',
+		borderStyle: BORDER_STYLE,
+		borderColor: BORDER_COLOR,
+		borderWidth: 1,
+		borderLeftWidth: 0,
+		borderTopWidth: 0,
+	},
 	tableCellHeader: {
+    fontFamily: "Times-Bold",
 		margin: 5,
 		fontSize: 12,
 		fontWeight: 500,

@@ -1,4 +1,4 @@
-import { FeatureGroup, useMapEvents, Popup } from 'react-leaflet';
+import { FeatureGroup, useMapEvents, Popup, Tooltip } from 'react-leaflet';
 import { LayerGroup, Circle, Marker, Polyline } from 'react-leaflet';
 import L, { divIcon } from 'leaflet';
 import styles from '../../styles/CustomMarker.module.css';
@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { geoDesicMedian, geoDist } from '../../utils/geodesicMedian';
 import { useDispatch } from 'react-redux';
-import { addCO2, setTrips } from '../../store/features/pointsSlice';
+import { addCO2, setTrips, addPoints } from '../../store/features/pointsSlice';
 import { setGeoDesicMedian, setClosestAirport, removeMeetingPoint, removeClosestAirport } from '../../store/features/meetingPointSlice';
 import emissions from '../../public/emissions.json';
 import { v4 as uuidv4 } from 'uuid';
@@ -15,7 +15,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { closest, getCO2Array } from '../../utils/functions';
 import axios from 'axios';
 
-const GeoJson = ({ setTotalCO2}) => {
+const GeoJson = ({ setTotalCO2 }) => {
 	const dispatch = useDispatch();
 
 	// const [airports, setAirports] = useState([]);
@@ -26,16 +26,32 @@ const GeoJson = ({ setTotalCO2}) => {
 	const meetingAirport = useSelector((state) => state.meetingPoint.closestAirport);
 	const meetingPointType = useSelector((state) => state.meetingPointType.meetingPointType);
 
+	const getClosestAirport = async (lat, lng) => {
+		try {
+			return await axios.get(`http://localhost:8000/airports/coordinates?lat=${lat}&lng=${lng}`).then((res) => {
+				return res.data;
+			});
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
 	// new Point by click on map
-	// useMapEvents({
-	// 	click(e) {
-	// 		let pointObj = {
-	// 			name: 'Location',
-	// 			coordinates: [Math.round(e.latlng.lat * 1000) / 1000, Math.round(e.latlng.lng * 1000) / 1000],
-	// 		};
-	// 		dispatch(addPoints(pointObj));
-	// 	},
-	// });
+	useMapEvents({
+		click(e) {
+			getClosestAirport(e.latlng.lat, e.latlng.lng).then((res) => {
+				const pointObj = {
+					airport: {
+						name: res.name,
+						iata_code: res.iata_code,
+						city: res.municipality,
+						coordinates: [res.latitude_deg, res.longitude_deg],
+					},
+				};
+				dispatch(addPoints(pointObj));
+			});
+		},
+	});
 
 	const getDataFromStartPoints = async (startPoints) => {
 		try {
@@ -46,7 +62,6 @@ const GeoJson = ({ setTotalCO2}) => {
 			console.log({ error: err.message });
 		}
 	};
-
 
 	useEffect(async () => {
 		let coordinateArray = [];
@@ -61,7 +76,7 @@ const GeoJson = ({ setTotalCO2}) => {
 				console.log(meetingPoints);
 				dispatch(setClosestAirport(meetingPoints.startPointAirport));
 				dispatch(setGeoDesicMedian(meetingPoints.medianAirport));
-        dispatch(setTrips(startPoints));
+				dispatch(setTrips(startPoints));
 			}
 			// dispatch(setPoints());
 		}
@@ -86,21 +101,27 @@ const GeoJson = ({ setTotalCO2}) => {
 			{meetingPointMedian.coordinates && (
 				<MeetingPoint meetingPoint={meetingPointType === 'co2' ? (meetingAirport.coordinates ? meetingAirport.coordinates : meetingPointMedian.coordinates) : meetingPointMedian.coordinates} />
 			)}
-			{/* {meetingPointMedian.coordinates && <MeetingPoint meetingPoint={meetingPointMedian.coordinates} />} */}
+      {meetingPointMedian.coordinates && <MeetingPoint meetingPoint={meetingPointMedian.coordinates} type="median"/>}
 		</FeatureGroup>
 	);
 };
 
-const MeetingPoint = ({ meetingPoint }) => {
+const MeetingPoint = ({ meetingPoint, type }) => {
 	const customMarkerIcon = divIcon({
 		className: styles.meetingPoint,
 		iconSize: null,
 		iconAnchor: [7.5, 7.5],
 	});
 
+	const customMarkerIcon2 = L.icon({
+		iconAnchor: [7.5, 7.5],
+    iconUrl: './x.svg',
+    iconSize: [15, 15]
+	});
+
 	return (
 		<LayerGroup>
-			<Marker position={meetingPoint} icon={customMarkerIcon} />
+      <Marker position={meetingPoint} icon={type === 'median' ? customMarkerIcon2 : customMarkerIcon} />
 		</LayerGroup>
 	);
 };
@@ -120,15 +141,14 @@ const StartPoints = ({ startPoint }) => {
 	return (
 		<LayerGroup>
 			<Marker
-				onMouseOver={(e) => {
-					e.target.openPopup();
-				}}
-				onMouseOut={(e) => {
-					e.target.closePopup();
-				}}
 				position={startPoint.airport.coordinates}
 				icon={svgIcon}>
-				<Popup className='custom-popup'>{startPoint.name}</Popup>
+				<Tooltip className='custom-popup' opacity={0.9} offset={[-50, -60]} autoclose={false}>
+					<div>
+						<p>{startPoint.airport.iata_code}</p>
+						<p>{Math.round(startPoint.airport.coordinates[0]*100)/100}, {Math.round(startPoint.airport.coordinates[1]*100)/100}</p>
+					</div>
+				</Tooltip>
 			</Marker>
 		</LayerGroup>
 	);

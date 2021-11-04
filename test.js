@@ -1,4 +1,15 @@
 const airports = require('./client/public/largeairports.json');
+const gm = [52.602408081965116, 12.641580551868893];
+
+const p1 = [59.9139, 10.7522];
+const p2 = [52.52, 13.405];
+const p3 = [51.5074, 0.1278];
+const p4 = [48.8566, 2.3522];
+
+const d1 =haversineFormula(gm[0], gm[1], p1[0], p1[1]);
+const d2 =haversineFormula(gm[0], gm[1], p2[0], p2[1]);
+const d3 =haversineFormula(gm[0], gm[1], p3[0], p3[1]);
+const d4 = haversineFormula(gm[0], gm[1], p4[0], p4[1]);
 
 
 

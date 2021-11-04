@@ -21,13 +21,16 @@ module.exports = {
 			minHeight: {
 				96: '24rem',
 				10: '2.5rem',
+				90: '90%',
+			},
+			maxHeight: {
+				90: '90%',
 			},
 			backgroundColor: {
 				primary: '#252525',
 				secondary: '#404040',
-        tertiary: 'rgba(0, 0, 0, 0.7)',
+				tertiary: 'rgba(0, 0, 0, 0.7)',
 			},
-
 		},
 	},
 	variants: {

@@ -20,8 +20,8 @@ fs.readdir('./routes/', (err, files) => {
 
 	let routeFiles = files.filter((f) => f.split('.').pop() === 'js');
 
-	console.log('Loading routes:');
-
+  console.log('Loading routes:');
+ 
 	routeFiles.forEach((routeFile, index) => {
 		let route = require(`./routes/${routeFile}`);
 		app.use('/' + routeFile.replace('.js', ''), route);

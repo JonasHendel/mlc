@@ -29,7 +29,8 @@ export const pointsSlice = createSlice({
 				},
 			},
 		],
-    trips: []
+    trips: [],
+    stopOver: {}
 	},
 	reducers: {
 		setPoints: (state, action) => {
@@ -41,9 +42,16 @@ export const pointsSlice = createSlice({
 		addPoints: (state, action) => {
 			state.points.push(action.payload);
 		},
+    addStopOver: (state, action) => {
+      console.log(action.payload)
+      const {index, airport} = action.payload
+      console.log(index)
+      state.points[0].stopOver = airport 
+
+    }
 	},
 });
 
-export const { setPoints, addPoints, setTrips } = pointsSlice.actions;
+export const { setPoints, addPoints, setTrips, addStopOver } = pointsSlice.actions;
 
 export default pointsSlice.reducer;

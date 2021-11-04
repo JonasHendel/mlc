@@ -27,7 +27,7 @@ const distanceToAP = (lat1, lng1, lat, lng) => {
 	return d;
 };
 
-console.log(distanceToAP(60.121, 11.0502, 54.072, 9.831))
+//console.log(distanceToAP(60.121, 11.0502, 54.072, 9.831))
 
 module.exports  = (lat1,lng1) => {
 	var d = null;
@@ -42,8 +42,8 @@ module.exports  = (lat1,lng1) => {
 			var ap = airports.airports[i];
 		}
 	}
-	console.log(d);
-	console.log(ap);
+	//console.log(d);
+	//console.log(ap);
   return ap
 };
 
