@@ -26,9 +26,11 @@ router.get('/coordinates', async (req, res) => {
     // if (!city) {
       // 	res.status(400).json({ error: 'Please provide a city' });
       // }
-      const closestAp = closestAirport(lat, lng);
-      
-      return  res.status(200).json(closestAp);
+    const closestAps = closestAirport(lat, lng);
+    
+
+
+      return  res.status(200).json(closestAps);
     }catch(err){
       return res.status(500).json({ error: err.message });
     }

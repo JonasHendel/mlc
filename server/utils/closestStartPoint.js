@@ -6,19 +6,23 @@ module.exports = (meetingPoint, startPoints) => {
     // const { distanceArray } = meetingPoint;
     const x = []
     for(let i = 0; i < startPoints.length; i++) {
+      //console.log(i, startPoints[i])
       x.push(startPoints[i].airport.coordinates)
     }
 
-    console.log(meetingPoint.coordinates)
+
+    //console.log(meetingPoint.coordinates)
 
     const distanceArray = median.geoDist(x, meetingPoint.coordinates)
 
-    console.log(distanceArray)
+    //console.log(distanceArray)
 
     // index of the closest startPoint
     const minDistIndex = distanceArray.indexOf(Math.min(...distanceArray));
 
     const closestStartPoint = startPoints[minDistIndex];
+
+    //console.log('cs',closestStartPoint)
 
     return closestStartPoint.airport;
   }

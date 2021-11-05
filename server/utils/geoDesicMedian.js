@@ -96,7 +96,7 @@ const geoDesicMedian = (x, eps) => {
 };
 
 const weightedGeoMedian = (x, WX, eps) => {
-  console.log('called wgm')
+  //console.log('called wgm')
   let lat = []
   let long = []
 
@@ -126,7 +126,7 @@ const weightedGeoMedian = (x, WX, eps) => {
     const distanceArray = geoDist(x, geoMean);
     const W = distanceArray.map((dist, i) => WX[i] / dist);
     //console.log(W);
-    console.log(distanceArray)
+    //console.log(distanceArray)
 
     let sum1 = 0;
     let sum2 = 0;

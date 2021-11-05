@@ -107,16 +107,6 @@ const SideBar = ({ setShowReport }) => {
                 </div>
                 <div className="flex items-center">
                   <button
-                    onClick={() =>
-                      setStopOver(
-                        Object.keys(stopOver).length === 0 ? point : {}
-                      )
-                    }
-                    className="h-8 px-2 mr-3 font-semibold text-white text-gray-300 bg-gray-700 rounded-md"
-                  >
-                    Add stopover
-                  </button>
-                  <button
                     onClick={() => removeItem(point)}
                     className="w-8 h-8 px-2 text-white bg-red-700 rounded-md"
                   >

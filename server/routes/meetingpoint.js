@@ -27,14 +27,32 @@ router.post('/', (req, res) => {
 	const tempAirportMedian = closestAirport(meetingpointMedian.coordinates[0], meetingpointMedian.coordinates[1]);
 
 
+
 	const medianAirport = {
-		name: tempAirportMedian.name,
-    iata_code: tempAirportMedian.iata_code,
-		city: tempAirportMedian.municipality,
-		coordinates: [tempAirportMedian.latitude_deg, tempAirportMedian.longitude_deg],
+		name: tempAirportMedian[0].ap.name,
+    iata_code: tempAirportMedian[0].ap.iata_code,
+		city: tempAirportMedian[0].ap.municipality,
+		coordinates: [tempAirportMedian[0].ap.latitude_deg, tempAirportMedian[0].ap.longitude_deg],
 		// latitude: tempAirportMedian.latitude_deg,
 		// longitude: tempAirportMedian.longitude_deg,
 	};
+
+
+
+  for(let i = 0; i < tempAirportMedian.length; i++){
+    const medianAirport = {
+      name: tempAirportMedian[i].ap.name,
+      iata_code: tempAirportMedian[i].ap.iata_code,
+      city: tempAirportMedian[i].ap.municipality,
+      coordinates: [tempAirportMedian[i].ap.latitude_deg, tempAirportMedian[i].ap.longitude_deg],
+      // latitude: tempAirportMedian.latitude_deg,
+      // longitude: tempAirportMedian.longitude_deg,
+	  };
+    console.log('------------')
+	 const tripsToMedianAP = tripData(startPoints, medianAirport);
+   console.log(i,  tripsToMedianAP)
+
+  }
 
 
 	const startPointAirport = closestStartPoint(medianAirport, startPoints);
@@ -50,7 +68,7 @@ router.post('/', (req, res) => {
 
   if(Math.max(...distanceArrayMedian) > 4000){
     const weights = [1,4,1,1,1]
-    console.log(coordinateArray)
+    //console.log(coordinateArray)
     const array = [
   [ '60.121', '11.0502' ],
   [ '40.639801', '118.2437' ],
@@ -59,7 +77,7 @@ router.post('/', (req, res) => {
   [ '57.7666', '14.08' ],
 ]
     const wGM = geoDesicMedian.weightedGeoMedian(array, weights, 0.0001)
-    console.log(wGM)
+    //console.log(wGM)
   }
 
   //console.log(medianAirport)

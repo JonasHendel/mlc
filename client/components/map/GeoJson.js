@@ -1,18 +1,14 @@
-import { FeatureGroup, useMapEvents, Popup, Tooltip } from 'react-leaflet';
-import { LayerGroup, Circle, Marker, Polyline } from 'react-leaflet';
+import { FeatureGroup, useMapEvents, Tooltip } from 'react-leaflet';
+import { LayerGroup,  Marker, Polyline } from 'react-leaflet';
 import L, { divIcon } from 'leaflet';
 import styles from '../../styles/CustomMarker.module.css';
-import colors from './utils/colors';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { geoDesicMedian, geoDist } from '../../utils/geodesicMedian';
 import { useDispatch } from 'react-redux';
 import { addCO2, setTrips, addPoints } from '../../store/features/pointsSlice';
 import { setGeoDesicMedian, setClosestAirport, removeMeetingPoint, removeClosestAirport } from '../../store/features/meetingPointSlice';
-import emissions from '../../public/emissions.json';
 import { v4 as uuidv4 } from 'uuid';
 
-import { closest, getCO2Array } from '../../utils/functions';
 import axios from 'axios';
 
 const GeoJson = ({ setTotalCO2 }) => {
