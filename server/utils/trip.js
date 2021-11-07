@@ -1,59 +1,72 @@
-const { distance } = require('mathjs');
-const emissions = require('../public/emissions.json');
-const {geoDist} = require('../utils/geoDesicMedian');
+const { distance } = require("mathjs");
+const emissions = require("../public/emissions.json");
+const { geoDist } = require("../utils/geoDesicMedian");
+
+const mediumhaulEmissions = require("../public/average_emissions/mediumhaul_emissions.json");
+const longhaulEmissions = require("../public/average_emissions/longhaul_emissions.json");
 
 // distances emission data is available for
-const distArr = [125, 250, 500, 750, 1000, 1500, 2000, 2500, 3000];
+const distArr = [
+  125, 200, 250, 500, 750, 1000, 1500, 2000, 2500, 3000, 4000, 4500, 5000, 5500,
+  6000, 6500, 7000, 7500,
+];
 
 // find the closest integer from distArr to the distance -> to be able to calculate the emsisions more accurately
 const closestNumber = (array, input) => {
-	const value = array.reduce((prev, curr) => {
-		return Math.abs(curr - input) < Math.abs(prev - input) ? curr : prev;
-	});
-
-	return value;
+  const value = array.reduce((prev, curr) => {
+    return Math.abs(curr - input) < Math.abs(prev - input) ? curr : prev;
+  });
+  return value;
 };
 
 // get the co2 emissions for each trip i.e. berlin to meetingpoint, london to meetingpoint, etc.
 const getCO2Array = (array) => {
-	const co2Array = [];
-	array.map((trip) => {
-		// convert distance to Nautical Miles
-		const tripDistInNauticalMiles = trip / 1.852;
+  const co2Array = [];
+  array.map((trip) => {
+    // convert distance to Nautical Miles
+    const tripDistInNauticalMiles = trip / 1.852;
 
     //console.log('moinsdfa',tripDistInNauticalMiles);
 
-		// find the closest integer from distArr to the distance -> to be able to calculate the emsisions more accurately
-		const distVal = closestNumber(distArr, tripDistInNauticalMiles);
+    // find the closest integer from distArr to the distance -> to be able to calculate the emsisions more accurately
+    const distVal = closestNumber(distArr, tripDistInNauticalMiles);
 
-		const co2for1NM = emissions.CCD.SMR[distVal].CO2 / distVal;
+    let co2for1NM = 0;
 
-		let co2ForCCD = co2for1NM * tripDistInNauticalMiles;
 
-		if (tripDistInNauticalMiles > 1) co2ForCCD = co2ForCCD + 3153.59;
+    if (distVal > 2000) {
+      co2for1NM = longhaulEmissions.CCD[distVal].CO2 / distVal;
+    } else {
+      co2for1NM = mediumhaulEmissions.CCD[distVal].CO2 / distVal;
+    }
 
-		co2Array.push(co2ForCCD);
-	});
-	return co2Array;
+    let co2ForTrip = co2for1NM * tripDistInNauticalMiles;
+
+    if (tripDistInNauticalMiles > 1) co2ForTrip = co2ForTrip + 3153.59;
+
+    co2Array.push(co2ForTrip);
+  });
+  return co2Array;
 };
 
 const trip = (startPoints, meetingPoint) => {
-	let coordinateArray = [];
+  let coordinateArray = [];
 
-	for (let i = 0; i < startPoints.length; i++) {
-		coordinateArray.push(startPoints[i].airport.coordinates);
-	}
+  for (let i = 0; i < startPoints.length; i++) {
+    coordinateArray.push(startPoints[i].airport.coordinates);
+  }
 
-	// distance array to closest airport
-	const distanceArray = geoDist(coordinateArray, meetingPoint.coordinates);
+  // distance array to closest airport
+  const distanceArray = geoDist(coordinateArray, meetingPoint.coordinates);
 
-	const co2Arr = getCO2Array(distanceArray);
+
+  const co2Arr = getCO2Array(distanceArray);
 
   //console.log(co2Arr);
 
-	const totalCO2 = co2Arr.reduce((a, b) => a + b, 0);
+  const totalCO2 = co2Arr.reduce((a, b) => a + b, 0);
 
-	const totalDist = distanceArray.reduce((a, b) => a + b, 0);
+  const totalDist = distanceArray.reduce((a, b) => a + b, 0);
 
   // console.log(startPoints)
   // startPoints.map((startPoint, i) => {
@@ -62,7 +75,7 @@ const trip = (startPoints, meetingPoint) => {
   // })
   // console.log(startPoints)
 
-  return {totalCO2, totalDist, co2Arr, distanceArray }
+  return { totalCO2, totalDist, co2Arr, distanceArray };
 };
 
 module.exports = trip;

@@ -6554,24 +6554,6 @@
 			"wikipedia_link": "https://en.wikipedia.org/wiki/Faro_Airport_(Portugal)"
 		},
 		{
-			"id": "4456",
-			"ident": "LPPD",
-			"type": "large_airport",
-			"name": "João Paulo II Airport",
-			"latitude_deg": "37.74119949",
-			"longitude_deg": "-25.69790077",
-			"elevation_ft": "259",
-			"continent": "EU",
-			"iso_country": "PT",
-			"iso_region": "PT-20",
-			"municipality": "Ponta Delgada",
-			"scheduled_service": "yes",
-			"gps_code": "LPPD",
-			"iata_code": "PDL",
-			"home_link": "http://www.ana.pt/en-US/Aeroportos/acores/PontaDelgada/Pages/Homepage-PontaDelgada.aspx",
-			"wikipedia_link": "https://en.wikipedia.org/wiki/Jo%C3%A3o_Paulo_II_Airport"
-		},
-		{
 			"id": "4459",
 			"ident": "LPPR",
 			"type": "large_airport",

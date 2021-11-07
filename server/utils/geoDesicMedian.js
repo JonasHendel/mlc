@@ -13,7 +13,7 @@ const X2 = [p1[1], p2[1], p3[1], p4[1]];
 const x = [p1, p2, p3, p4];
 
 const geoDist = (x, geoMean) => {
-   //console.log('x',x)
+  //console.log('x',x)
   // console.log('m',geoMean)
   let distanceToGeoMean = [];
   for (let i = 0; i < x.length; i++) {
@@ -95,17 +95,37 @@ const geoDesicMedian = (x, eps) => {
   }
 };
 
-const weightedGeoMedian = (x, WX, eps) => {
+const weightedGeoMedian = (x, WX, eps, medianAirport) => {
   //console.log('called wgm')
-  let lat = []
-  let long = []
+  let lat = [];
+  let long = [];
 
-  for(let i = 0; i < x.length; i++){
-    lat.push(x[i][0])
-    long.push(x[i][1])
+  for (let i = 0; i < x.length; i++) {
+    lat.push(x[i][0]);
+    long.push(x[i][1]);
   }
 
-  let geoMean = [weightedMean(lat, WX), weightedMean(long, WX)];
+  //let geoMean = [weightedMean(lat, WX), weightedMean(long, WX)];
+
+  let geoMean = medianAirport.coordinates;
+
+  console.log({geoMean})
+
+  let longhaulArr = [];
+  let mediumhaulArr = [];
+
+  const initialDistArr = medianAirport.distanceArray
+
+  console.log({initialDistArr})
+
+  initialDistArr.map((dist, index) => {
+    console.log(dist);
+    if (dist / 1.852 > 2000) {
+      longhaulArr.push(index);
+    } else {
+      mediumhaulArr.push(index);
+    }
+  });
 
   while (true) {
     for (let i = 0; i < x.length; i++) {
@@ -117,13 +137,13 @@ const weightedGeoMedian = (x, WX, eps) => {
       }
     }
 
-
     //    0.0012702583687056333,
     //  0.0021788488911851835,
     // 0.0020763199141260323,
     //  0.0017577408228106805
 
     const distanceArray = geoDist(x, geoMean);
+
     const W = distanceArray.map((dist, i) => WX[i] / dist);
     //console.log(W);
     //console.log(distanceArray)
@@ -143,6 +163,32 @@ const weightedGeoMedian = (x, WX, eps) => {
     let wSum = W.reduce((a, b) => a + b, 0);
     const geoMean2 = finalArr.map((float) => float / wSum);
 
+    let abort = false
+    console.log(distanceArray[1])
+
+    longhaulArr.map((indexOfLonghaulFlights) => {
+      if (distanceArray[indexOfLonghaulFlights]/1.852 < 2100) {
+        console.log('toLong', distanceArray)
+        abort = true
+      }
+    });
+
+    mediumhaulArr.map((indexOfMediumHaulFlights)=>{
+      if(distanceArray[indexOfMediumHaulFlights]/1.852 > 1900){
+        abort = true
+      }
+    })
+
+    if(abort){
+      const totalDist = distanceArray.reduce((a, b) => a + b, 0);
+      return {
+        coordinates: geoMean2,
+        distance: Math.round(totalDist),
+        distanceArray: distanceArray,
+      };
+
+    }
+
     if (distance(geoMean, geoMean2) < eps) {
       const totalDist = distanceArray.reduce((a, b) => a + b, 0);
       return {
@@ -158,7 +204,6 @@ const weightedGeoMedian = (x, WX, eps) => {
 //weightedGeoMedian(x, [1, 1, 1, 1], 0.0001);
 
 //geoDesicMedian(x)
-
 
 module.exports = {
   geoDesicMedian,

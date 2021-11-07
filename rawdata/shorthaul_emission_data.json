@@ -1,0 +1,148 @@
+{
+	"emissions": [
+		{
+			"aircraft_id": "e190",
+			"lto_ccd": "CCD",
+			"distance": "125",
+			"duration": "0:23:07",
+			"fuel": "750.15",
+			"CO2": "2363"
+		},
+		{
+			"aircraft_id": "e190",
+			"lto_ccd": "CCD",
+			"distance": "200",
+			"duration": "0:33:32",
+			"fuel": "1110.67",
+			"CO2": "3499"
+		},
+		{
+			"aircraft_id": "e190",
+			"lto_ccd": "CCD",
+			"distance": "250",
+			"duration": "0:39:41",
+			"fuel": "1327.19",
+			"CO2": "4181"
+		},
+		{
+			"aircraft_id": "e190",
+			"lto_ccd": "CCD",
+			"distance": "500",
+			"duration": "1:14:13",
+			"fuel": "2316.19",
+			"CO2": "7296"
+		},
+		{
+			"aircraft_id": "e190",
+			"lto_ccd": "CCD",
+			"distance": "750",
+			"duration": "1:49:32",
+			"fuel": "3321.61",
+			"CO2": "10463"
+		},
+		{
+			"aircraft_id": "e190",
+			"lto_ccd": "CCD",
+			"distance": "1000",
+			"duration": "2:24:25",
+			"fuel": "4226.11",
+			"CO2": "13312"
+		},
+		{
+			"aircraft_id": "e190",
+			"lto_ccd": "CCD",
+			"distance": "1500",
+			"duration": "3:34:16",
+			"fuel": "6118.79",
+			"CO2": "19274"
+		},
+		{
+			"aircraft_id": "e190",
+			"lto_ccd": "CCD",
+			"distance": "2000",
+			"duration": "4:44:07",
+			"fuel": "8145.42",
+			"CO2": "25658"
+		},
+		{
+			"aircraft_id": "e190",
+			"lto_ccd": "LTO",
+			"distance": "125",
+			"duration": "0:32:54",
+			"fuel": "651.65",
+			"CO2": "2053"
+		},
+		{
+			"aircraft_id": "e195",
+			"lto_ccd": "CCD",
+			"distance": "125",
+			"duration": "0:23:07",
+			"fuel": "750.15",
+			"CO2": "2363"
+		},
+		{
+			"aircraft_id": "e195",
+			"lto_ccd": "CCD",
+			"distance": "200",
+			"duration": "0:33:32",
+			"fuel": "1110.67",
+			"CO2": "3499"
+		},
+		{
+			"aircraft_id": "e195",
+			"lto_ccd": "CCD",
+			"distance": "250",
+			"duration": "0:39:41",
+			"fuel": "1327.19",
+			"CO2": "4181"
+		},
+		{
+			"aircraft_id": "e195",
+			"lto_ccd": "CCD",
+			"distance": "500",
+			"duration": "1:14:13",
+			"fuel": "2316.19",
+			"CO2": "7296"
+		},
+		{
+			"aircraft_id": "e195",
+			"lto_ccd": "CCD",
+			"distance": "750",
+			"duration": "1:49:32",
+			"fuel": "3321.61",
+			"CO2": "10463"
+		},
+		{
+			"aircraft_id": "e195",
+			"lto_ccd": "CCD",
+			"distance": "1000",
+			"duration": "2:24:25",
+			"fuel": "4226.11",
+			"CO2": "13312"
+		},
+		{
+			"aircraft_id": "e195",
+			"lto_ccd": "CCD",
+			"distance": "1500",
+			"duration": "3:34:16",
+			"fuel": "6118.79",
+			"CO2": "19274"
+		},
+		{
+			"aircraft_id": "e195",
+			"lto_ccd": "CCD",
+			"distance": "2000",
+			"duration": "4:44:07",
+			"fuel": "8145.42",
+			"CO2": "25658"
+		},
+		{
+			"aircraft_id": "e195",
+			"lto_ccd": "LTO",
+			"distance": "125",
+			"duration": "0:32:54",
+			"fuel": "651.65",
+			"CO2": "2053"
+		}
+	]
+}

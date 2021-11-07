@@ -1,99 +1,164 @@
-const express = require('express');
-const geoDesicMedian = require('../utils/geoDesicMedian');
-const closestStartPoint = require('../utils/closestStartPoint');
-const closestAirport = require('../utils/airport/closestAirport');
-const tripData = require('../utils/trip');
+const express = require("express");
+const geoDesicMedian = require("../utils/geoDesicMedian");
+const closestStartPoint = require("../utils/closestStartPoint");
+const closestAirport = require("../utils/airport/closestAirport");
+const tripData = require("../utils/trip");
 
 const router = express.Router();
 
-router.post('/', (req, res) => {
-	const startPoints = req.body;
+router.post("/", (req, res) => {
+  const startPoints = req.body;
   //console.log(startPoints)
 
-  if(startPoints.length === 0) {
-    return res.status(400).json({error: 'No start points provided'});
+  if (startPoints.length === 0) {
+    return res.status(400).json({ error: "No start points provided" });
   }
 
-	//console.log(startPoints);
+  //console.log(startPoints);
 
-	let coordinateArray = [];
+  let coordinateArray = [];
 
-	startPoints.map((point) => {
-		coordinateArray.push(point.airport.coordinates);
-	});
+  startPoints.map((point) => {
+    coordinateArray.push(point.airport.coordinates);
+  });
 
-	const meetingpointMedian = geoDesicMedian.geoDesicMedian(coordinateArray, 0.0001);
+  const meetingpointMedian = geoDesicMedian.geoDesicMedian(
+    coordinateArray,
+    0.0001
+  );
 
-	const tempAirportMedian = closestAirport(meetingpointMedian.coordinates[0], meetingpointMedian.coordinates[1]);
+  const tempAirportMedian = closestAirport(
+    meetingpointMedian.coordinates[0],
+    meetingpointMedian.coordinates[1]
+  );
 
-
-
-	const medianAirport = {
-		name: tempAirportMedian[0].ap.name,
+  const medianAirport = {
+    name: tempAirportMedian[0].ap.name,
     iata_code: tempAirportMedian[0].ap.iata_code,
-		city: tempAirportMedian[0].ap.municipality,
-		coordinates: [tempAirportMedian[0].ap.latitude_deg, tempAirportMedian[0].ap.longitude_deg],
-		// latitude: tempAirportMedian.latitude_deg,
-		// longitude: tempAirportMedian.longitude_deg,
-	};
+    city: tempAirportMedian[0].ap.municipality,
+    coordinates: [
+      Number(tempAirportMedian[0].ap.latitude_deg),
+      Number(tempAirportMedian[0].ap.longitude_deg),
+    ],
+    // latitude: tempAirportMedian.latitude_deg,
+    // longitude: tempAirportMedian.longitude_deg,
+  };
 
+  // test if co2 can be optimised
+  //
+  const arr = [
+    [-1.5, 0],
+    [1.5, -0],
+    [0, -1.5],
+    [0, 1.5],
+  ];
 
-
-  for(let i = 0; i < tempAirportMedian.length; i++){
+  arr.map((item) => {
     const medianAirport = {
-      name: tempAirportMedian[i].ap.name,
-      iata_code: tempAirportMedian[i].ap.iata_code,
-      city: tempAirportMedian[i].ap.municipality,
-      coordinates: [tempAirportMedian[i].ap.latitude_deg, tempAirportMedian[i].ap.longitude_deg],
-      // latitude: tempAirportMedian.latitude_deg,
-      // longitude: tempAirportMedian.longitude_deg,
-	  };
-    console.log('------------')
-	 const tripsToMedianAP = tripData(startPoints, medianAirport);
-   console.log(i,  tripsToMedianAP)
+      name: tempAirportMedian[0].ap.name,
+      iata_code: tempAirportMedian[0].ap.iata_code,
+      city: tempAirportMedian[0].ap.municipality,
+      coordinates: [
+        Number(tempAirportMedian[0].ap.latitude_deg) + item[0],
+        Number(tempAirportMedian[0].ap.longitude_deg) + item[1],
+      ],
+    };
+    //console.log(medianAirport)
+    //console.log(item, tripData(startPoints, medianAirport))
+  });
 
-  }
+  const startPointAirport = closestStartPoint(medianAirport, startPoints);
 
+  const tripsToMedianAP = tripData(startPoints, medianAirport);
 
-	const startPointAirport = closestStartPoint(medianAirport, startPoints);
-
-	const tripsToMedianAP = tripData(startPoints, medianAirport);
-
-	const co2ArrMedian = tripsToMedianAP.co2Arr;
-	const distanceArrayMedian = tripsToMedianAP.distanceArray;
+  const co2ArrMedian = tripsToMedianAP.co2Arr;
+  const distanceArrayMedian = tripsToMedianAP.distanceArray;
 
   medianAirport.totalCO2 = tripsToMedianAP.totalCO2;
   medianAirport.totalDistance = tripsToMedianAP.totalDist;
-  medianAirport.distanceArray = distanceArrayMedian
+  medianAirport.distanceArray = distanceArrayMedian;
 
-  if(Math.max(...distanceArrayMedian) > 4000){
-    const weights = [1,4,1,1,1]
-    //console.log(coordinateArray)
-    const array = [
-  [ '60.121', '11.0502' ],
-  [ '40.639801', '118.2437' ],
-  [ '52.351389', '13.493889' ],
-  [ '45.7699', '11.76' ],
-  [ '57.7666', '14.08' ],
-]
-    const wGM = geoDesicMedian.weightedGeoMedian(array, weights, 0.0001)
-    //console.log(wGM)
+  console.log({medianAirport});
+
+  if (Math.max(...distanceArrayMedian) / 1.852 > 2000) {
+    let weights = [];
+
+    distanceArrayMedian.map((dist, i) => {
+      let distArr = distanceArrayMedian;
+
+      const filteredDist = distArr.filter((val) => val !== dist);
+
+      const averageFilteredDist =
+        filteredDist.reduce((a, b) => a + b, 0) / filteredDist.length;
+
+      let co2Arr = co2ArrMedian;
+
+      const filteredCO2 = co2Arr.filter((val) => val !== co2Arr[i]);
+
+      const averageFilteredCO2 =
+        filteredCO2.reduce((a, b) => a + b, 0) / filteredCO2.length;
+
+      const averageCO2perKm = averageFilteredCO2 / averageFilteredDist;
+
+      let co2PerKM = 0;
+      if (dist === 0) {
+        co2PerKM = 0
+      }else{
+        co2PerKM = co2Arr[i] / dist;
+      }
+
+
+      console.log(co2PerKM);
+      console.log(averageCO2perKm);
+
+      const w = co2PerKM / averageCO2perKm;
+      weights.push(Number(w));
+    });
+
+    const minVal = Math.min(...weights);
+
+    console.log({ minVal });
+
+    let toOne = 0
+    if(minVal === 0){
+      toOne = 1
+    }else {
+     toOne = 1 / Number(minVal);
+    }
+    console.log({ toOne });
+
+    const scaledWeights = weights.map((weight) => weight * toOne);
+
+    console.log({scaledWeights});
+
+    console.log({weights})
+
+
+    console.log(coordinateArray);
+    const wGM = geoDesicMedian.weightedGeoMedian(
+      coordinateArray,
+      weights,
+      0.0001,
+      medianAirport
+    );
+    console.log(wGM);
   }
 
-  //console.log(medianAirport)
+  //console.log(co2ArrMedian)
 
+  //console.log('ma',medianAirport)
 
-	startPoints.map((point, index) => {
-		//console.log(co2ArrMedian[index]);
-		point.toMedianAirport = {
+  startPoints.map((point, index) => {
+    //console.log(co2ArrMedian[index]);
+    point.toMedianAirport = {
       name: medianAirport.name,
       iata_code: medianAirport.iata_code,
-			co2: co2ArrMedian[index],
-			distance: distanceArrayMedian[index],
-		};
-	});
+      co2: co2ArrMedian[index],
+      distance: distanceArrayMedian[index],
+    };
+  });
 
-	const tripsToStartPointAP = tripData(startPoints, startPointAirport);
+  const tripsToStartPointAP = tripData(startPoints, startPointAirport);
 
   const co2ArrStartPoint = tripsToStartPointAP.co2Arr;
   const distanceArrayStartPoint = tripsToStartPointAP.distanceArray;
@@ -101,16 +166,19 @@ router.post('/', (req, res) => {
   startPointAirport.totalCO2 = tripsToStartPointAP.totalCO2;
   startPointAirport.totalDistance = tripsToStartPointAP.totalDist;
 
-	startPoints.map((point, index) => {
-	  point.toStartPointAirport = {
+  startPoints.map((point, index) => {
+    point.toStartPointAirport = {
       name: startPointAirport.name,
       iata_code: startPointAirport.iata_code,
-	    co2: co2ArrStartPoint[index],
-	    distance: distanceArrayStartPoint[index],
-	  };
-	});
+      co2: co2ArrStartPoint[index],
+      distance: distanceArrayStartPoint[index],
+    };
+  });
 
-	res.json({ meetingPoints: { medianAirport, startPointAirport }, startPoints });
+  res.json({
+    meetingPoints: { medianAirport, startPointAirport },
+    startPoints,
+  });
 });
 
 module.exports = router;

@@ -1,0 +1,1172 @@
+{
+	"emissions": [
+		{
+			"aircraft_id": "A380",
+			"lto_ccd": "CCD",
+			"distance": "125",
+			"duration": "0:20:33",
+			"fuel": "4319.15",
+			"CO2": "13605"
+		},
+		{
+			"aircraft_id": "A380",
+			"lto_ccd": "CCD",
+			"distance": "200",
+			"duration": "0:30:22",
+			"fuel": "6591.48",
+			"CO2": "20763"
+		},
+		{
+			"aircraft_id": "A380",
+			"lto_ccd": "CCD",
+			"distance": "250",
+			"duration": "0:36:11",
+			"fuel": "7954.70",
+			"CO2": "25057"
+		},
+		{
+			"aircraft_id": "A380",
+			"lto_ccd": "CCD",
+			"distance": "500",
+			"duration": "1:06:44",
+			"fuel": "14206.49",
+			"CO2": "44750"
+		},
+		{
+			"aircraft_id": "A380",
+			"lto_ccd": "CCD",
+			"distance": "750",
+			"duration": "1:37:36",
+			"fuel": "20397.19",
+			"CO2": "64251"
+		},
+		{
+			"aircraft_id": "A380",
+			"lto_ccd": "CCD",
+			"distance": "1000",
+			"duration": "2:08:22",
+			"fuel": "26876.73",
+			"CO2": "84662"
+		},
+		{
+			"aircraft_id": "A380",
+			"lto_ccd": "CCD",
+			"distance": "1500",
+			"duration": "3:09:59",
+			"fuel": "39715.14",
+			"CO2": "125103"
+		},
+		{
+			"aircraft_id": "A380",
+			"lto_ccd": "CCD",
+			"distance": "2000",
+			"duration": "4:11:38",
+			"fuel": "52908.77",
+			"CO2": "166663"
+		},
+		{
+			"aircraft_id": "A380",
+			"lto_ccd": "CCD",
+			"distance": "2500",
+			"duration": "5:13:09",
+			"fuel": "65800.47",
+			"CO2": "207271"
+		},
+		{
+			"aircraft_id": "A380",
+			"lto_ccd": "CCD",
+			"distance": "3000",
+			"duration": "6:14:49",
+			"fuel": "79107.54",
+			"CO2": "249189"
+		},
+		{
+			"aircraft_id": "A380",
+			"lto_ccd": "CCD",
+			"distance": "3500",
+			"duration": "7:16:20",
+			"fuel": "92004.80",
+			"CO2": "289815"
+		},
+		{
+			"aircraft_id": "A380",
+			"lto_ccd": "CCD",
+			"distance": "4000",
+			"duration": "8:18:04",
+			"fuel": "105547.32",
+			"CO2": "332474"
+		},
+		{
+			"aircraft_id": "A380",
+			"lto_ccd": "CCD",
+			"distance": "4500",
+			"duration": "9:19:38",
+			"fuel": "118451.86",
+			"CO2": "373123"
+		},
+		{
+			"aircraft_id": "A380",
+			"lto_ccd": "CCD",
+			"distance": "5000",
+			"duration": "10:21:13",
+			"fuel": "132326.99",
+			"CO2": "416830"
+		},
+		{
+			"aircraft_id": "A380",
+			"lto_ccd": "CCD",
+			"distance": "5500",
+			"duration": "11:22:46",
+			"fuel": "145229.89",
+			"CO2": "457474"
+		},
+		{
+			"aircraft_id": "A380",
+			"lto_ccd": "CCD",
+			"distance": "6000",
+			"duration": "12:33:34",
+			"fuel": "164737.04",
+			"CO2": "518922"
+		},
+		{
+			"aircraft_id": "A380",
+			"lto_ccd": "CCD",
+			"distance": "6500",
+			"duration": "13:36:01",
+			"fuel": "177843.86",
+			"CO2": "560208"
+		},
+		{
+			"aircraft_id": "A380",
+			"lto_ccd": "CCD",
+			"distance": "7000",
+			"duration": "14:38:23",
+			"fuel": "190925.13",
+			"CO2": "601414"
+		},
+		{
+			"aircraft_id": "A380",
+			"lto_ccd": "CCD",
+			"distance": "7500",
+			"duration": "15:40:45",
+			"fuel": "203994.52",
+			"CO2": "642583"
+		},
+		{
+			"aircraft_id": "A380",
+			"lto_ccd": "LTO",
+			"distance": "125",
+			"duration": "0:32:54",
+			"fuel": "4142.40",
+			"CO2": "13049"
+		},
+		{
+			"aircraft_id": "B748",
+			"lto_ccd": "CCD",
+			"distance": "125",
+			"duration": "0:19:07",
+			"fuel": "3342.95",
+			"CO2": "10530"
+		},
+		{
+			"aircraft_id": "B748",
+			"lto_ccd": "CCD",
+			"distance": "200",
+			"duration": "0:28:11",
+			"fuel": "5116.76",
+			"CO2": "16118"
+		},
+		{
+			"aircraft_id": "B748",
+			"lto_ccd": "CCD",
+			"distance": "250",
+			"duration": "0:34:19",
+			"fuel": "6269.65",
+			"CO2": "19749"
+		},
+		{
+			"aircraft_id": "B748",
+			"lto_ccd": "CCD",
+			"distance": "500",
+			"duration": "1:05:05",
+			"fuel": "11253.68",
+			"CO2": "35449"
+		},
+		{
+			"aircraft_id": "B748",
+			"lto_ccd": "CCD",
+			"distance": "750",
+			"duration": "1:36:12",
+			"fuel": "16386.25",
+			"CO2": "51617"
+		},
+		{
+			"aircraft_id": "B748",
+			"lto_ccd": "CCD",
+			"distance": "1000",
+			"duration": "2:07:20",
+			"fuel": "21548.93",
+			"CO2": "67879"
+		},
+		{
+			"aircraft_id": "B748",
+			"lto_ccd": "CCD",
+			"distance": "1500",
+			"duration": "3:09:38",
+			"fuel": "31736.83",
+			"CO2": "99971"
+		},
+		{
+			"aircraft_id": "B748",
+			"lto_ccd": "CCD",
+			"distance": "2000",
+			"duration": "4:11:56",
+			"fuel": "42266.34",
+			"CO2": "133139"
+		},
+		{
+			"aircraft_id": "B748",
+			"lto_ccd": "CCD",
+			"distance": "2500",
+			"duration": "5:14:12",
+			"fuel": "52478.99",
+			"CO2": "165309"
+		},
+		{
+			"aircraft_id": "B748",
+			"lto_ccd": "CCD",
+			"distance": "3000",
+			"duration": "6:16:30",
+			"fuel": "63273.20",
+			"CO2": "199311"
+		},
+		{
+			"aircraft_id": "B748",
+			"lto_ccd": "CCD",
+			"distance": "3500",
+			"duration": "7:18:45",
+			"fuel": "73481.79",
+			"CO2": "231468"
+		},
+		{
+			"aircraft_id": "B748",
+			"lto_ccd": "CCD",
+			"distance": "4000",
+			"duration": "8:21:00",
+			"fuel": "84585.51",
+			"CO2": "266444"
+		},
+		{
+			"aircraft_id": "B748",
+			"lto_ccd": "CCD",
+			"distance": "4500",
+			"duration": "9:23:19",
+			"fuel": "94807.16",
+			"CO2": "298643"
+		},
+		{
+			"aircraft_id": "B748",
+			"lto_ccd": "CCD",
+			"distance": "5000",
+			"duration": "10:25:26",
+			"fuel": "106195.07",
+			"CO2": "334514"
+		},
+		{
+			"aircraft_id": "B748",
+			"lto_ccd": "CCD",
+			"distance": "5500",
+			"duration": "11:27:44",
+			"fuel": "116410.90",
+			"CO2": "366694"
+		},
+		{
+			"aircraft_id": "B748",
+			"lto_ccd": "CCD",
+			"distance": "6000",
+			"duration": "12:30:19",
+			"fuel": "128408.84",
+			"CO2": "404488"
+		},
+		{
+			"aircraft_id": "B748",
+			"lto_ccd": "CCD",
+			"distance": "6500",
+			"duration": "13:32:28",
+			"fuel": "139209.83",
+			"CO2": "438511"
+		},
+		{
+			"aircraft_id": "B748",
+			"lto_ccd": "CCD",
+			"distance": "7000",
+			"duration": "14:34:51",
+			"fuel": "149438.90",
+			"CO2": "470733"
+		},
+		{
+			"aircraft_id": "B748",
+			"lto_ccd": "CCD",
+			"distance": "7500",
+			"duration": "15:37:13",
+			"fuel": "159666.72",
+			"CO2": "502950"
+		},
+		{
+			"aircraft_id": "B748",
+			"lto_ccd": "LTO",
+			"distance": "125",
+			"duration": "0:32:54",
+			"fuel": "3494.91",
+			"CO2": "11009"
+		},
+		{
+			"aircraft_id": "B744",
+			"lto_ccd": "CCD",
+			"distance": "125",
+			"duration": "0:21:13",
+			"fuel": "3494.36",
+			"CO2": "11007"
+		},
+		{
+			"aircraft_id": "B744",
+			"lto_ccd": "CCD",
+			"distance": "200",
+			"duration": "0:30:14",
+			"fuel": "5079.10",
+			"CO2": "15999"
+		},
+		{
+			"aircraft_id": "B744",
+			"lto_ccd": "CCD",
+			"distance": "250",
+			"duration": "0:36:16",
+			"fuel": "6169.62",
+			"CO2": "19434"
+		},
+		{
+			"aircraft_id": "B744",
+			"lto_ccd": "CCD",
+			"distance": "500",
+			"duration": "1:07:44",
+			"fuel": "10667.90",
+			"CO2": "33604"
+		},
+		{
+			"aircraft_id": "B744",
+			"lto_ccd": "CCD",
+			"distance": "750",
+			"duration": "1:38:53",
+			"fuel": "15374.49",
+			"CO2": "48430"
+		},
+		{
+			"aircraft_id": "B744",
+			"lto_ccd": "CCD",
+			"distance": "1000",
+			"duration": "2:10:01",
+			"fuel": "20125.87",
+			"CO2": "63396"
+		},
+		{
+			"aircraft_id": "B744",
+			"lto_ccd": "CCD",
+			"distance": "1500",
+			"duration": "3:12:17",
+			"fuel": "29455.70",
+			"CO2": "92785"
+		},
+		{
+			"aircraft_id": "B744",
+			"lto_ccd": "CCD",
+			"distance": "2000",
+			"duration": "4:14:38",
+			"fuel": "39141.35",
+			"CO2": "123295"
+		},
+		{
+			"aircraft_id": "B744",
+			"lto_ccd": "CCD",
+			"distance": "2500",
+			"duration": "5:16:53",
+			"fuel": "48528.46",
+			"CO2": "152865"
+		},
+		{
+			"aircraft_id": "B744",
+			"lto_ccd": "CCD",
+			"distance": "3000",
+			"duration": "6:19:11",
+			"fuel": "58376.58",
+			"CO2": "183886"
+		},
+		{
+			"aircraft_id": "B744",
+			"lto_ccd": "CCD",
+			"distance": "3500",
+			"duration": "7:21:26",
+			"fuel": "67762.13",
+			"CO2": "213451"
+		},
+		{
+			"aircraft_id": "B744",
+			"lto_ccd": "CCD",
+			"distance": "4000",
+			"duration": "8:23:44",
+			"fuel": "77907.08",
+			"CO2": "245407"
+		},
+		{
+			"aircraft_id": "B744",
+			"lto_ccd": "CCD",
+			"distance": "4500",
+			"duration": "9:26:02",
+			"fuel": "87302.12",
+			"CO2": "275002"
+		},
+		{
+			"aircraft_id": "B744",
+			"lto_ccd": "CCD",
+			"distance": "5000",
+			"duration": "10:28:09",
+			"fuel": "97785.06",
+			"CO2": "308023"
+		},
+		{
+			"aircraft_id": "B744",
+			"lto_ccd": "CCD",
+			"distance": "5500",
+			"duration": "11:30:26",
+			"fuel": "107180.10",
+			"CO2": "337617"
+		},
+		{
+			"aircraft_id": "B744",
+			"lto_ccd": "CCD",
+			"distance": "6000",
+			"duration": "12:32:10",
+			"fuel": "118020.12",
+			"CO2": "371763"
+		},
+		{
+			"aircraft_id": "B744",
+			"lto_ccd": "CCD",
+			"distance": "6500",
+			"duration": "13:33:47",
+			"fuel": "128656.59",
+			"CO2": "405268"
+		},
+		{
+			"aircraft_id": "B744",
+			"lto_ccd": "CCD",
+			"distance": "7000",
+			"duration": "14:36:02",
+			"fuel": "138045.11",
+			"CO2": "434842"
+		},
+		{
+			"aircraft_id": "B744",
+			"lto_ccd": "LTO",
+			"distance": "125",
+			"duration": "0:32:54",
+			"fuel": "3319.68",
+			"CO2": "10457"
+		},
+		{
+			"aircraft_id": "A350",
+			"lto_ccd": "CCD",
+			"distance": "125",
+			"duration": "0:21:25",
+			"fuel": "1739.10",
+			"CO2": "5478"
+		},
+		{
+			"aircraft_id": "A350",
+			"lto_ccd": "CCD",
+			"distance": "200",
+			"duration": "0:31:27",
+			"fuel": "2649.94",
+			"CO2": "8347"
+		},
+		{
+			"aircraft_id": "A350",
+			"lto_ccd": "CCD",
+			"distance": "250",
+			"duration": "0:37:22",
+			"fuel": "3186.92",
+			"CO2": "10039"
+		},
+		{
+			"aircraft_id": "A350",
+			"lto_ccd": "CCD",
+			"distance": "500",
+			"duration": "1:08:03",
+			"fuel": "5674.77",
+			"CO2": "17876"
+		},
+		{
+			"aircraft_id": "A350",
+			"lto_ccd": "CCD",
+			"distance": "750",
+			"duration": "1:39:17",
+			"fuel": "8029.13",
+			"CO2": "25292"
+		},
+		{
+			"aircraft_id": "A350",
+			"lto_ccd": "CCD",
+			"distance": "1000",
+			"duration": "2:10:25",
+			"fuel": "10601.15",
+			"CO2": "33394"
+		},
+		{
+			"aircraft_id": "A350",
+			"lto_ccd": "CCD",
+			"distance": "1500",
+			"duration": "3:12:47",
+			"fuel": "15514.95",
+			"CO2": "48872"
+		},
+		{
+			"aircraft_id": "A350",
+			"lto_ccd": "CCD",
+			"distance": "2000",
+			"duration": "4:15:12",
+			"fuel": "20667.68",
+			"CO2": "65103"
+		},
+		{
+			"aircraft_id": "A350",
+			"lto_ccd": "CCD",
+			"distance": "2500",
+			"duration": "5:17:27",
+			"fuel": "25496.41",
+			"CO2": "80314"
+		},
+		{
+			"aircraft_id": "A350",
+			"lto_ccd": "CCD",
+			"distance": "3000",
+			"duration": "6:19:54",
+			"fuel": "30664.03",
+			"CO2": "96592"
+		},
+		{
+			"aircraft_id": "A350",
+			"lto_ccd": "CCD",
+			"distance": "3500",
+			"duration": "7:22:08",
+			"fuel": "35672.32",
+			"CO2": "112368"
+		},
+		{
+			"aircraft_id": "A350",
+			"lto_ccd": "CCD",
+			"distance": "4000",
+			"duration": "8:24:38",
+			"fuel": "40879.04",
+			"CO2": "128769"
+		},
+		{
+			"aircraft_id": "A350",
+			"lto_ccd": "CCD",
+			"distance": "4500",
+			"duration": "9:26:56",
+			"fuel": "45892.44",
+			"CO2": "144561"
+		},
+		{
+			"aircraft_id": "A350",
+			"lto_ccd": "CCD",
+			"distance": "5000",
+			"duration": "10:29:32",
+			"fuel": "51341.35",
+			"CO2": "161725"
+		},
+		{
+			"aircraft_id": "A350",
+			"lto_ccd": "CCD",
+			"distance": "5500",
+			"duration": "11:31:49",
+			"fuel": "56354.15",
+			"CO2": "177516"
+		},
+		{
+			"aircraft_id": "A350",
+			"lto_ccd": "LTO",
+			"distance": "125",
+			"duration": "0:32:54",
+			"fuel": "2137.98",
+			"CO2": "6735"
+		},
+		{
+			"aircraft_id": "A346",
+			"lto_ccd": "CCD",
+			"distance": "125",
+			"duration": "0:21:23",
+			"fuel": "2885.25",
+			"CO2": "9089"
+		},
+		{
+			"aircraft_id": "A346",
+			"lto_ccd": "CCD",
+			"distance": "200",
+			"duration": "0:31:25",
+			"fuel": "4325.11",
+			"CO2": "13624"
+		},
+		{
+			"aircraft_id": "A346",
+			"lto_ccd": "CCD",
+			"distance": "250",
+			"duration": "0:37:21",
+			"fuel": "5172.64",
+			"CO2": "16294"
+		},
+		{
+			"aircraft_id": "A346",
+			"lto_ccd": "CCD",
+			"distance": "500",
+			"duration": "1:08:35",
+			"fuel": "9199.68",
+			"CO2": "28979"
+		},
+		{
+			"aircraft_id": "A346",
+			"lto_ccd": "CCD",
+			"distance": "750",
+			"duration": "1:40:14",
+			"fuel": "13383.48",
+			"CO2": "42158"
+		},
+		{
+			"aircraft_id": "A346",
+			"lto_ccd": "CCD",
+			"distance": "1000",
+			"duration": "2:11:43",
+			"fuel": "17632.43",
+			"CO2": "55542"
+		},
+		{
+			"aircraft_id": "A346",
+			"lto_ccd": "CCD",
+			"distance": "1500",
+			"duration": "3:14:52",
+			"fuel": "26217.59",
+			"CO2": "82585"
+		},
+		{
+			"aircraft_id": "A346",
+			"lto_ccd": "CCD",
+			"distance": "2000",
+			"duration": "4:18:03",
+			"fuel": "34871.33",
+			"CO2": "109845"
+		},
+		{
+			"aircraft_id": "A346",
+			"lto_ccd": "CCD",
+			"distance": "2500",
+			"duration": "5:21:02",
+			"fuel": "43366.37",
+			"CO2": "136604"
+		},
+		{
+			"aircraft_id": "A346",
+			"lto_ccd": "CCD",
+			"distance": "3000",
+			"duration": "6:24:11",
+			"fuel": "52137.91",
+			"CO2": "164234"
+		},
+		{
+			"aircraft_id": "A346",
+			"lto_ccd": "CCD",
+			"distance": "3500",
+			"duration": "7:27:10",
+			"fuel": "60630.79",
+			"CO2": "190987"
+		},
+		{
+			"aircraft_id": "A346",
+			"lto_ccd": "CCD",
+			"distance": "4000",
+			"duration": "8:30:18",
+			"fuel": "69507.19",
+			"CO2": "218948"
+		},
+		{
+			"aircraft_id": "A346",
+			"lto_ccd": "CCD",
+			"distance": "4500",
+			"duration": "9:33:20",
+			"fuel": "78006.76",
+			"CO2": "245721"
+		},
+		{
+			"aircraft_id": "A346",
+			"lto_ccd": "CCD",
+			"distance": "5000",
+			"duration": "10:47:25",
+			"fuel": "90397.59",
+			"CO2": "284752"
+		},
+		{
+			"aircraft_id": "A346",
+			"lto_ccd": "CCD",
+			"distance": "5500",
+			"duration": "11:51:38",
+			"fuel": "99052.69",
+			"CO2": "312016"
+		},
+		{
+			"aircraft_id": "A346",
+			"lto_ccd": "CCD",
+			"distance": "6000",
+			"duration": "12:55:53",
+			"fuel": "107712.34",
+			"CO2": "339294"
+		},
+		{
+			"aircraft_id": "A346",
+			"lto_ccd": "CCD",
+			"distance": "6500",
+			"duration": "14:00:10",
+			"fuel": "116381.61",
+			"CO2": "366602"
+		},
+		{
+			"aircraft_id": "A346",
+			"lto_ccd": "CCD",
+			"distance": "7000",
+			"duration": "15:04:21",
+			"fuel": "125036.30",
+			"CO2": "393864"
+		},
+		{
+			"aircraft_id": "A346",
+			"lto_ccd": "CCD",
+			"distance": "7500",
+			"duration": "16:08:31",
+			"fuel": "133686.80",
+			"CO2": "421113"
+		},
+		{
+			"aircraft_id": "A346",
+			"lto_ccd": "LTO",
+			"distance": "125",
+			"duration": "0:32:54",
+			"fuel": "3372.96",
+			"CO2": "10625"
+		},
+		{
+			"aircraft_id": "A343",
+			"lto_ccd": "CCD",
+			"distance": "125",
+			"duration": "0:21:31",
+			"fuel": "2322.25",
+			"CO2": "7315"
+		},
+		{
+			"aircraft_id": "A343",
+			"lto_ccd": "CCD",
+			"distance": "200",
+			"duration": "0:31:42",
+			"fuel": "3512.36",
+			"CO2": "11064"
+		},
+		{
+			"aircraft_id": "A343",
+			"lto_ccd": "CCD",
+			"distance": "250",
+			"duration": "0:37:46",
+			"fuel": "4230.42",
+			"CO2": "13326"
+		},
+		{
+			"aircraft_id": "A343",
+			"lto_ccd": "CCD",
+			"distance": "500",
+			"duration": "1:10:32",
+			"fuel": "7533.88",
+			"CO2": "23732"
+		},
+		{
+			"aircraft_id": "A343",
+			"lto_ccd": "CCD",
+			"distance": "750",
+			"duration": "1:43:20",
+			"fuel": "10949.27",
+			"CO2": "34490"
+		},
+		{
+			"aircraft_id": "A343",
+			"lto_ccd": "CCD",
+			"distance": "1000",
+			"duration": "2:16:01",
+			"fuel": "14416.21",
+			"CO2": "45411"
+		},
+		{
+			"aircraft_id": "A343",
+			"lto_ccd": "CCD",
+			"distance": "1500",
+			"duration": "3:21:31",
+			"fuel": "21420.37",
+			"CO2": "67474"
+		},
+		{
+			"aircraft_id": "A343",
+			"lto_ccd": "CCD",
+			"distance": "2000",
+			"duration": "4:27:03",
+			"fuel": "28482.74",
+			"CO2": "89721"
+		},
+		{
+			"aircraft_id": "A343",
+			"lto_ccd": "CCD",
+			"distance": "2500",
+			"duration": "5:32:24",
+			"fuel": "35412.09",
+			"CO2": "111548"
+		},
+		{
+			"aircraft_id": "A343",
+			"lto_ccd": "CCD",
+			"distance": "3000",
+			"duration": "6:38:00",
+			"fuel": "42577.18",
+			"CO2": "134118"
+		},
+		{
+			"aircraft_id": "A343",
+			"lto_ccd": "CCD",
+			"distance": "3500",
+			"duration": "7:43:21",
+			"fuel": "49503.94",
+			"CO2": "155937"
+		},
+		{
+			"aircraft_id": "A343",
+			"lto_ccd": "CCD",
+			"distance": "4000",
+			"duration": "8:49:01",
+			"fuel": "56726.09",
+			"CO2": "178687"
+		},
+		{
+			"aircraft_id": "A343",
+			"lto_ccd": "CCD",
+			"distance": "4500",
+			"duration": "9:54:26",
+			"fuel": "63664.54",
+			"CO2": "200543"
+		},
+		{
+			"aircraft_id": "A343",
+			"lto_ccd": "CCD",
+			"distance": "5000",
+			"duration": "10:58:50",
+			"fuel": "72623.71",
+			"CO2": "228765"
+		},
+		{
+			"aircraft_id": "A343",
+			"lto_ccd": "CCD",
+			"distance": "5500",
+			"duration": "12:04:12",
+			"fuel": "79562.40",
+			"CO2": "250622"
+		},
+		{
+			"aircraft_id": "A343",
+			"lto_ccd": "CCD",
+			"distance": "6000",
+			"duration": "13:09:37",
+			"fuel": "86509.62",
+			"CO2": "272505"
+		},
+		{
+			"aircraft_id": "A343",
+			"lto_ccd": "CCD",
+			"distance": "6500",
+			"duration": "14:15:04",
+			"fuel": "93458.01",
+			"CO2": "294393"
+		},
+		{
+			"aircraft_id": "A343",
+			"lto_ccd": "CCD",
+			"distance": "7000",
+			"duration": "15:20:26",
+			"fuel": "100386.65",
+			"CO2": "316218"
+		},
+		{
+			"aircraft_id": "A343",
+			"lto_ccd": "LTO",
+			"distance": "125",
+			"duration": "0:32:54",
+			"fuel": "2019.89",
+			"CO2": "6363"
+		},
+		{
+			"aircraft_id": "A333",
+			"lto_ccd": "CCD",
+			"distance": "125",
+			"duration": "0:20:58",
+			"fuel": "2132.93",
+			"CO2": "6719"
+		},
+		{
+			"aircraft_id": "A333",
+			"lto_ccd": "CCD",
+			"distance": "200",
+			"duration": "0:30:35",
+			"fuel": "3159.08",
+			"CO2": "9951"
+		},
+		{
+			"aircraft_id": "A333",
+			"lto_ccd": "CCD",
+			"distance": "250",
+			"duration": "0:36:46",
+			"fuel": "3844.10",
+			"CO2": "12109"
+		},
+		{
+			"aircraft_id": "A333",
+			"lto_ccd": "CCD",
+			"distance": "500",
+			"duration": "1:08:59",
+			"fuel": "6463.93",
+			"CO2": "20361"
+		},
+		{
+			"aircraft_id": "A333",
+			"lto_ccd": "CCD",
+			"distance": "750",
+			"duration": "1:40:59",
+			"fuel": "9085.49",
+			"CO2": "28619"
+		},
+		{
+			"aircraft_id": "A333",
+			"lto_ccd": "CCD",
+			"distance": "1000",
+			"duration": "2:12:52",
+			"fuel": "11467.20",
+			"CO2": "36122"
+		},
+		{
+			"aircraft_id": "A333",
+			"lto_ccd": "CCD",
+			"distance": "1500",
+			"duration": "3:16:46",
+			"fuel": "16708.16",
+			"CO2": "52631"
+		},
+		{
+			"aircraft_id": "A333",
+			"lto_ccd": "CCD",
+			"distance": "2000",
+			"duration": "4:20:41",
+			"fuel": "22085.16",
+			"CO2": "69568"
+		},
+		{
+			"aircraft_id": "A333",
+			"lto_ccd": "CCD",
+			"distance": "2500",
+			"duration": "5:24:27",
+			"fuel": "27225.97",
+			"CO2": "85762"
+		},
+		{
+			"aircraft_id": "A333",
+			"lto_ccd": "CCD",
+			"distance": "3000",
+			"duration": "6:28:24",
+			"fuel": "33032.07",
+			"CO2": "104051"
+		},
+		{
+			"aircraft_id": "A333",
+			"lto_ccd": "CCD",
+			"distance": "3500",
+			"duration": "7:32:09",
+			"fuel": "38171.39",
+			"CO2": "120240"
+		},
+		{
+			"aircraft_id": "A333",
+			"lto_ccd": "CCD",
+			"distance": "4000",
+			"duration": "8:36:09",
+			"fuel": "44296.80",
+			"CO2": "139535"
+		},
+		{
+			"aircraft_id": "A333",
+			"lto_ccd": "CCD",
+			"distance": "4500",
+			"duration": "9:39:58",
+			"fuel": "49442.51",
+			"CO2": "155744"
+		},
+		{
+			"aircraft_id": "A333",
+			"lto_ccd": "CCD",
+			"distance": "5000",
+			"duration": "10:43:43",
+			"fuel": "54984.08",
+			"CO2": "173200"
+		},
+		{
+			"aircraft_id": "A333",
+			"lto_ccd": "CCD",
+			"distance": "5500",
+			"duration": "11:47:31",
+			"fuel": "60125.56",
+			"CO2": "189396"
+		},
+		{
+			"aircraft_id": "A333",
+			"lto_ccd": "CCD",
+			"distance": "6000",
+			"duration": "12:51:21",
+			"fuel": "65270.15",
+			"CO2": "205601"
+		},
+		{
+			"aircraft_id": "A333",
+			"lto_ccd": "LTO",
+			"distance": "125",
+			"duration": "0:32:54",
+			"fuel": "2168.08",
+			"CO2": "6829"
+		},
+		{
+			"aircraft_id": "B738",
+			"lto_ccd": "CCD",
+			"distance": "125",
+			"duration": "0:22:10",
+			"fuel": "961.89",
+			"CO2": "3030"
+		},
+		{
+			"aircraft_id": "B738",
+			"lto_ccd": "CCD",
+			"distance": "200",
+			"duration": "0:32:07",
+			"fuel": "1424.96",
+			"CO2": "4489"
+		},
+		{
+			"aircraft_id": "B738",
+			"lto_ccd": "CCD",
+			"distance": "250",
+			"duration": "0:39:00",
+			"fuel": "1726.52",
+			"CO2": "5439"
+		},
+		{
+			"aircraft_id": "B738",
+			"lto_ccd": "CCD",
+			"distance": "500",
+			"duration": "1:11:18",
+			"fuel": "3113.11",
+			"CO2": "9806"
+		},
+		{
+			"aircraft_id": "B738",
+			"lto_ccd": "CCD",
+			"distance": "750",
+			"duration": "1:45:14",
+			"fuel": "4350.57",
+			"CO2": "13704"
+		},
+		{
+			"aircraft_id": "B738",
+			"lto_ccd": "CCD",
+			"distance": "1000",
+			"duration": "2:18:48",
+			"fuel": "5527.33",
+			"CO2": "17411"
+		},
+		{
+			"aircraft_id": "B738",
+			"lto_ccd": "CCD",
+			"distance": "1500",
+			"duration": "3:25:58",
+			"fuel": "8142.11",
+			"CO2": "25648"
+		},
+		{
+			"aircraft_id": "B738",
+			"lto_ccd": "CCD",
+			"distance": "2000",
+			"duration": "4:33:10",
+			"fuel": "10824.24",
+			"CO2": "34096"
+		},
+		{
+			"aircraft_id": "B738",
+			"lto_ccd": "CCD",
+			"distance": "2500",
+			"duration": "5:40:12",
+			"fuel": "13386.58",
+			"CO2": "42168"
+		},
+		{
+			"aircraft_id": "B738",
+			"lto_ccd": "CCD",
+			"distance": "3000",
+			"duration": "6:47:16",
+			"fuel": "16099.42",
+			"CO2": "50713"
+		},
+		{
+			"aircraft_id": "B738",
+			"lto_ccd": "CCD",
+			"distance": "3500",
+			"duration": "7:54:18",
+			"fuel": "18660.95",
+			"CO2": "58782"
+		},
+		{
+			"aircraft_id": "B738",
+			"lto_ccd": "CCD",
+			"distance": "4000",
+			"duration": "9:01:28",
+			"fuel": "21319.00",
+			"CO2": "67155"
+		},
+		{
+			"aircraft_id": "B738",
+			"lto_ccd": "CCD",
+			"distance": "4500",
+			"duration": "10:08:34",
+			"fuel": "23882.61",
+			"CO2": "75230"
+		},
+		{
+			"aircraft_id": "B738",
+			"lto_ccd": "CCD",
+			"distance": "5000",
+			"duration": "11:15:41",
+			"fuel": "26446.88",
+			"CO2": "83308"
+		},
+		{
+			"aircraft_id": "B738",
+			"lto_ccd": "LTO",
+			"distance": "125",
+			"duration": "0:32:54",
+			"fuel": "881.10",
+			"CO2": "2775"
+		}
+	]
+}
