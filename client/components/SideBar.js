@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { X } from "phosphor-react";
+import OptionalMeetingPoints from './OptionalMeetingPoints'
 
 import { addPoints, setPoints, addStopOver } from "../store/features/pointsSlice";
 import {
@@ -26,20 +26,18 @@ const SideBar = ({ setShowReport }) => {
 
   const startPoints = useSelector((state) => state.startPoints.points);
   const meetingPointMedian = useSelector(
-    (state) => state.meetingPoint.geoDesicMedian
-  );
-  const meetingAirport = useSelector(
-    (state) => state.meetingPoint.closestAirport
+    (state) => state.meetingPoint.point
   );
   const meetingPointType = useSelector(
     (state) => state.meetingPointType.meetingPointType
   );
+  const meetingPointsArray = useSelector((state)=>state.meetingPoint.array)
 
   useEffect(() => {
     setMeetingPoint(
-      meetingPointType === "co2" ? meetingAirport : meetingPointMedian
+      meetingPointMedian
     );
-  }, [meetingPointType, meetingAirport, meetingPointMedian]);
+  }, [meetingPointType,  meetingPointMedian]);
 
   // consol.log('dfjks', Object.keys(meetingAirport).length);
   // console.log('m', meetingPoint);
@@ -135,28 +133,7 @@ const SideBar = ({ setShowReport }) => {
               Meeting Point
             </p>
             <div className="flex w-full justify-evenly">
-              <button
-                className="w-32 h-10 px-2 font-bold text-gray-300 bg-gray-700 rounded-md"
-                onClick={() => {
-                  dispatch(clearNotify());
-                  dispatch(setMeetingPointTypeCO2());
-                }}
-              >
-                Min. CO2
-              </button>
-              <button
-                className="w-32 h-10 px-2 mb-2 font-bold text-gray-300 bg-gray-700 rounded-md"
-                onClick={() => {
-                  dispatch(setMeetingPointTypeDistance());
-                  dispatch(
-                    notifyError(
-                      "Minimum distance does not equal minimum emissions."
-                    )
-                  );
-                }}
-              >
-                Min. distance
-              </button>
+              {meetingPointsArray.length > 0&&<OptionalMeetingPoints meetingPoint={meetingPoint} meetingPointsArray={meetingPointsArray}/> }
             </div>
             <div className="flex justify-between">
               <div className="flex flex-col">

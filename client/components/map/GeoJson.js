@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { addCO2, setTrips, addPoints } from '../../store/features/pointsSlice';
-import { setGeoDesicMedian, setClosestAirport, removeMeetingPoint, removeClosestAirport } from '../../store/features/meetingPointSlice';
+import { setMeetingPoint, removeMeetingPoint, setMeetingPointsArr } from '../../store/features/meetingPointSlice';
 import { v4 as uuidv4 } from 'uuid';
 
 import axios from 'axios';
@@ -18,8 +18,8 @@ const GeoJson = ({ setTotalCO2 }) => {
 	// const [meetingAirport, setMeetingAirport] = useState(null);
 
 	const startPoints = useSelector((state) => state.startPoints.points);
-	const meetingPointMedian = useSelector((state) => state.meetingPoint.geoDesicMedian);
-	const meetingAirport = useSelector((state) => state.meetingPoint.closestAirport);
+	const meetingPoint = useSelector((state) => state.meetingPoint.point);
+
 	const meetingPointType = useSelector((state) => state.meetingPointType.meetingPointType);
 
 	const getClosestAirport = async (lat, lng) => {
@@ -35,17 +35,20 @@ const GeoJson = ({ setTotalCO2 }) => {
 	// new Point by click on map
 	useMapEvents({
 		click(e) {
-			getClosestAirport(e.latlng.lat, e.latlng.lng).then((res) => {
-				const pointObj = {
-					airport: {
-						name: res.name,
-						iata_code: res.iata_code,
-						city: res.municipality,
-						coordinates: [res.latitude_deg, res.longitude_deg],
-					},
-				};
-				dispatch(addPoints(pointObj));
-			});
+      console.log(e.latlng.lat)
+      getClosestAirport(e.latlng.lat, e.latlng.lng).then((res) => {
+        console.log({res})
+        const pointObj = {
+          airport: {
+            name: res[0].ap.name,
+            iata_code: res[0].ap.iata_code,
+            city: res[0].ap.municipality,
+            coordinates: [res[0].ap.latitude_deg, res[0].ap.longitude_deg],
+          },
+        };
+        console.log({pointObj})
+        dispatch(addPoints(pointObj));
+      });
 		},
 	});
 
@@ -67,11 +70,12 @@ const GeoJson = ({ setTotalCO2 }) => {
 		if (coordinateArray.length >= 2) {
 			const data = await getDataFromStartPoints(startPoints);
 			if (data.success) {
-				const { meetingPoints } = data.success;
+        console.log(data.success)
+				const { meetingPoint } = data.success;
 				const { startPoints } = data.success;
-				console.log(meetingPoints);
-				dispatch(setClosestAirport(meetingPoints.startPointAirport));
-				dispatch(setGeoDesicMedian(meetingPoints.medianAirport));
+				const { otherMeetingPoints } = data.success;
+        dispatch(setMeetingPoint(meetingPoint));
+        dispatch(setMeetingPointsArr(otherMeetingPoints));
 				dispatch(setTrips(startPoints));
 			}
 			// dispatch(setPoints());
@@ -86,18 +90,18 @@ const GeoJson = ({ setTotalCO2 }) => {
 			{startPoints.map((startPoint) => (
 				<div key={uuidv4()}>
 					<StartPoints startPoint={startPoint} />
-					{meetingPointMedian.coordinates && (
+					{meetingPoint.coordinates && (
 						<LineToMeetingPoint
 							startPoint={startPoint.airport.coordinates}
-							meetingPoint={meetingPointType === 'co2' ? (meetingAirport.coordinates ? meetingAirport.coordinates : meetingPointMedian.coordinates) : meetingPointMedian.coordinates}
+							meetingPoint={meetingPoint.coordinates}
 						/>
 					)}
 				</div>
 			))}
-			{meetingPointMedian.coordinates && (
-				<MeetingPoint meetingPoint={meetingPointType === 'co2' ? (meetingAirport.coordinates ? meetingAirport.coordinates : meetingPointMedian.coordinates) : meetingPointMedian.coordinates} />
+			{meetingPoint.coordinates && (
+        <MeetingPoint meetingPoint={meetingPoint.coordinates}/>
 			)}
-      {meetingPointMedian.coordinates && <MeetingPoint meetingPoint={meetingPointMedian.coordinates} type="median"/>}
+      {/*{meetingPoint.coordinates && <MeetingPoint meetingPoint={meetingPointMedian.coordinates} type="median"/>}*/}
 		</FeatureGroup>
 	);
 };

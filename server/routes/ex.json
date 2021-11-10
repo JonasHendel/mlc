@@ -1,0 +1,193 @@
+{
+    "meetingPoint": {
+        "name": "St. John's International Airport",
+        "iata_code": "YYT",
+        "city": "St. John's",
+        "coordinates": [
+            47.61859894,
+            -52.75189972
+        ],
+        "totalCO2": 282315.08731115586,
+        "totalDistance": 10656.732361381786,
+        "distanceArray": [
+            4217.908899107888,
+            1841.1410833122598,
+            4597.682378961637
+        ]
+    },
+    "startPoints": [
+        {
+            "airport": {
+                "name": "OSL",
+                "iata_code": "OSL",
+                "city": "Oslo",
+                "coordinates": [
+                    "60.121",
+                    "11.0502"
+                ]
+            },
+            "toMedianAirport": {
+                "name": "St. John's International Airport",
+                "iata_code": "YYT",
+                "co2": 125444.707215409,
+                "distance": 4217.908899107888
+            },
+            "toStartPointAirport": {
+                "name": "John F Kennedy International Airport",
+                "iata_code": "lhr",
+                "co2": 175289.37048756122,
+                "distance": 5917.28061319893
+            }
+        },
+        {
+            "airport": {
+                "name": "John F Kennedy International Airport",
+                "iata_code": "lhr",
+                "city": "New York",
+                "coordinates": [
+                    "40.64094",
+                    "-73.77948"
+                ],
+                "totalCO2": 364340.8100576099,
+                "totalDistance": 12307.641398042897
+            },
+            "toMedianAirport": {
+                "name": "St. John's International Airport",
+                "iata_code": "YYT",
+                "co2": 20414.78472437946,
+                "distance": 1841.1410833122598
+            },
+            "toStartPointAirport": {
+                "name": "John F Kennedy International Airport",
+                "iata_code": "lhr",
+                "co2": 0,
+                "distance": 0
+            }
+        },
+        {
+            "airport": {
+                "name": "Berlin Brandenburg Airport",
+                "iata_code": "BER",
+                "city": "Berlin",
+                "coordinates": [
+                    "52.351389",
+                    "13.493889"
+                ]
+            },
+            "toMedianAirport": {
+                "name": "St. John's International Airport",
+                "iata_code": "YYT",
+                "co2": 136455.59537136744,
+                "distance": 4597.682378961637
+            },
+            "toStartPointAirport": {
+                "name": "John F Kennedy International Airport",
+                "iata_code": "lhr",
+                "co2": 189051.43957004874,
+                "distance": 6390.360784843967
+            }
+        }
+    ],
+    "otherMeetingPoints": [
+        {
+            "medianAirport2": {
+                "name": "St. John's International Airport",
+                "iata_code": "YYT",
+                "city": "St. John's",
+                "coordinates": [
+                    47.61859894,
+                    -52.75189972
+                ]
+            },
+            "trip": {
+                "totalCO2": 282315.08731115586,
+                "totalDist": 10656.732361381786,
+                "co2Arr": [
+                    125444.707215409,
+                    20414.78472437946,
+                    136455.59537136744
+                ],
+                "distanceArray": [
+                    4217.908899107888,
+                    1841.1410833122598,
+                    4597.682378961637
+                ]
+            }
+        },
+        {
+            "medianAirport2": {
+                "name": "Shannon Airport",
+                "iata_code": "SNN",
+                "city": "Shannon",
+                "coordinates": [
+                    52.702,
+                    -8.92482
+                ]
+            },
+            "trip": {
+                "totalCO2": 181868.6188090211,
+                "totalDist": 7927.774093012016,
+                "co2Arr": [
+                    17462.92646420629,
+                    146552.26439064805,
+                    17853.427954166757
+                ],
+                "distanceArray": [
+                    1470.85535031322,
+                    4945.923780933265,
+                    1510.9949617655311
+                ]
+            }
+        },
+        {
+            "medianAirport2": {
+                "name": "Cork Airport",
+                "iata_code": "ORK",
+                "city": "Cork",
+                "coordinates": [
+                    51.84130096,
+                    -8.491109848
+                ]
+            },
+            "trip": {
+                "totalCO2": 183577.22881747788,
+                "totalDist": 8007.005231865485,
+                "co2Arr": [
+                    17895.315356776708,
+                    147963.653478255,
+                    17718.259982446183
+                ],
+                "distanceArray": [
+                    1515.3005639430805,
+                    4994.603609266463,
+                    1497.1010586559423
+                ]
+            }
+        },
+        {
+            "medianAirport2": {
+                "name": "Keflavik International Airport",
+                "iata_code": "KEF",
+                "city": "Reykjavík",
+                "coordinates": [
+                    63.985001,
+                    -22.6056
+                ]
+            },
+            "trip": {
+                "totalCO2": 170217.3177527709,
+                "totalDist": 8378.043622134915,
+                "co2Arr": [
+                    19867.843423759994,
+                    124756.5573150511,
+                    25592.917013959814
+                ],
+                "distanceArray": [
+                    1782.802357933739,
+                    4163.168756504232,
+                    2432.072507696944
+                ]
+            }
+        }
+    ]
+}

@@ -20,7 +20,7 @@ const Loading = () => {
 		return () => clearInterval(interval);
 	});
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex items-center justify-center h-screen">
       <MlcLoading animate={svg}/>
     </div>
   )

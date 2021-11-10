@@ -3,22 +3,19 @@ import { createSlice } from '@reduxjs/toolkit';
 export const meetingPointSlice = createSlice({
 	name: 'meetingPoint',
 	initialState: {
-		geoDesicMedian: {},
-		closestAirport: {},
+    point: {},
+    array: []
 	},
 	reducers: {
-		setGeoDesicMedian: (state, action) => {
-			state.geoDesicMedian = action.payload;
+		setMeetingPoint: (state, action) => {
+			state.point = action.payload;
 		},
-		setClosestAirport: (state, action) => {
-			state.closestAirport = action.payload;
+		setMeetingPointsArr: (state, action) => {
+			state.array = action.payload;
 		},
 		removeMeetingPoint: (state) => {
-			state.geoDesicMedian = {};
-			state.closestAirport = {};
-		},
-		removeClosestAirport: (state) => {
-			state.closestAirport = {};
+			state.point = {};
+			state.array = {};
 		},
     addCO2: (state,action)=>{
       state.geoDesicMedian.co2 = action.payload
@@ -26,6 +23,6 @@ export const meetingPointSlice = createSlice({
 	},
 });
 
-export const { setGeoDesicMedian, removeMeetingPoint, setClosestAirport, removeClosestAirport, addCO2 } = meetingPointSlice.actions;
+export const { setMeetingPoint, setMeetingPointsArr, removeMeetingPoint, addCO2 } = meetingPointSlice.actions;
 
 export default meetingPointSlice.reducer;

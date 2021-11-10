@@ -19,6 +19,7 @@ const closestNumber = (array, input) => {
   return value;
 };
 
+
 // get the co2 emissions for each trip i.e. berlin to meetingpoint, london to meetingpoint, etc.
 const getCO2Array = (array) => {
   const co2Array = [];
@@ -33,12 +34,20 @@ const getCO2Array = (array) => {
 
     let co2for1NM = 0;
 
+    //console.log(tripDistInNauticalMiles)
+  
+    //console.log({distVal})
+    //33.11390129461291 }
+//{ co2PerKM: 54.8519728689013 }
+//{ co2PerKM: 33.818627657871325
 
-    if (distVal > 2000) {
+    if (distVal >= 1750) {
       co2for1NM = longhaulEmissions.CCD[distVal].CO2 / distVal;
     } else {
       co2for1NM = mediumhaulEmissions.CCD[distVal].CO2 / distVal;
     }
+
+    //console.log({co2for1NM})
 
     let co2ForTrip = co2for1NM * tripDistInNauticalMiles;
 

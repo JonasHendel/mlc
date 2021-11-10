@@ -14,10 +14,10 @@ export const pointsSlice = createSlice({
 			},
 			{
 				airport: {
-					name: 'LHR',
-          iata_code: 'LHR',
-					city: 'London',
-					coordinates: ['51.4706', '-0.461941'],
+					name: 'John F Kennedy',
+          iata_code: 'JFK',
+					city: 'New York',
+					coordinates: ['40.64094', '-73.77948'],
 				},
 			},
 			{

@@ -120,7 +120,7 @@ const weightedGeoMedian = (x, WX, eps, medianAirport) => {
 
   initialDistArr.map((dist, index) => {
     console.log(dist);
-    if (dist / 1.852 > 2000) {
+    if (dist / 1.852 >= 1750) {
       longhaulArr.push(index);
     } else {
       mediumhaulArr.push(index);
@@ -167,14 +167,14 @@ const weightedGeoMedian = (x, WX, eps, medianAirport) => {
     console.log(distanceArray[1])
 
     longhaulArr.map((indexOfLonghaulFlights) => {
-      if (distanceArray[indexOfLonghaulFlights]/1.852 < 2100) {
+      if (distanceArray[indexOfLonghaulFlights]/1.852 < 2000) {
         console.log('toLong', distanceArray)
         abort = true
       }
     });
 
     mediumhaulArr.map((indexOfMediumHaulFlights)=>{
-      if(distanceArray[indexOfMediumHaulFlights]/1.852 > 1900){
+      if(distanceArray[indexOfMediumHaulFlights]/1.852 > 1700){
         abort = true
       }
     })
