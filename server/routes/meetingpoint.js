@@ -139,6 +139,8 @@ router.post("/", (req, res) => {
     console.log('moins', tripData(startPoints, medianAirport))
     const trip = tripData(startPoints, medianAirport)
 
+    medianAirport.totalDistance = trip.totalDist
+
     otherMeetingPoints.push({
         ap: medianAirport,
         trip

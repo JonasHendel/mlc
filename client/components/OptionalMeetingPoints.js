@@ -15,7 +15,7 @@ const OptionalMeetingPoints = ({ meetingPoint, meetingPointsArray }) => {
         "city": ap.city,
         "coordinates": ap.coordinates,
         "totalCO2": trip.totalCO2,
-        "totalDistance": trip.totalDistance,
+        "totalDistance": ap.totalDistance,
         "distanceArray": trip.distanceArray
     }
     dispatch(setMeetingPoint(p))
