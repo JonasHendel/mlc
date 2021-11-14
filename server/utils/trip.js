@@ -69,13 +69,13 @@ const trip = (startPoints, meetingPoint) => {
   const distanceArray = geoDist(coordinateArray, meetingPoint.coordinates);
 
 
-  const co2Arr = getCO2Array(distanceArray);
+  const co2Array = getCO2Array(distanceArray);
 
   //console.log(co2Arr);
 
-  const totalCO2 = co2Arr.reduce((a, b) => a + b, 0);
+  const totalCO2 = co2Array.reduce((a, b) => a + b, 0);
 
-  const totalDist = distanceArray.reduce((a, b) => a + b, 0);
+  const totalDistance = distanceArray.reduce((a, b) => a + b, 0);
 
   // console.log(startPoints)
   // startPoints.map((startPoint, i) => {
@@ -84,7 +84,8 @@ const trip = (startPoints, meetingPoint) => {
   // })
   // console.log(startPoints)
 
-  return { totalCO2, totalDist, co2Arr, distanceArray };
+  return { totalCO2, totalDistance, co2Array, distanceArray };
 };
 
 module.exports = trip;
+

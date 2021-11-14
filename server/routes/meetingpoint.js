@@ -1,20 +1,58 @@
 const express = require("express");
 const geoDesicMedian = require("../utils/geoDesicMedian");
 const closestStartPoint = require("../utils/closestStartPoint");
-const closestAirport = require("../utils/airport/closestAirport");
-const tripData = require("../utils/trip");
+const closestAirports = require("../utils/airport/closestAirport");
+const getTripData = require("../utils/trip");
 
 const router = express.Router();
 
+const getWeights = (medianPoint, tripToMedianPoint) => {
+  let weights = [];
+
+  medianPoint.distanceArray.map((distance, index) => {
+    // average distance
+    let tempDistanceArray = medianPoint.distanceArray;
+
+    const filteredDistanceArray = tempDistanceArray.filter(
+      (value) => value !== distance
+    );
+
+    const averageFilteredDistance =
+      filteredDistanceArray.reduce((a, b) => a + b, 0) /
+      filteredDistanceArray.length;
+
+    // average emissions
+    let tempCO2Array = tripToMedianPoint.co2Array;
+
+    const filteredCO2Array = tempCO2Array.filter(
+      (val) => val !== tempCO2Array[index]
+    );
+
+    const averageFilteredCO2 =
+      filteredCO2Array.reduce((a, b) => a + b, 0) / filteredCO2Array.length;
+
+    // co2 consumptions per km
+    const averageCO2PerKm = averageFilteredCO2 / averageFilteredDistance;
+
+    const co2PerKm = distance === 0 ? 0 : tempCO2Array[index] / distance;
+
+    // calculate weights
+    const weight = co2PerKm / averageCO2PerKm;
+    weights.push(weight);
+  });
+  return weights;
+};
+
 router.post("/", (req, res) => {
+  const maxMediumHaulDistance = 2000; // in Nautical Miles
+
   const startPoints = req.body;
-  //console.log(startPoints)
 
-  if (startPoints.length === 0) {
-    return res.status(400).json({ error: "No start points provided" });
+  if (startPoints.length <= 1) {
+    return res
+      .status(500)
+      .json({ error: "Please provide at least 2 starting points." });
   }
-
-  //console.log(startPoints);
 
   let coordinateArray = [];
 
@@ -22,197 +60,55 @@ router.post("/", (req, res) => {
     coordinateArray.push(point.airport.coordinates);
   });
 
-  const meetingpointMedian = geoDesicMedian.geoDesicMedian(
-    coordinateArray,
-    0.0001
-  );
+  const medianPoint = geoDesicMedian.geoDesicMedian(coordinateArray, 0.001); //the smaller the second argument, the more accurate the medianPoint is
 
-  const tempAirportMedian = closestAirport(
-    meetingpointMedian.coordinates[0],
-    meetingpointMedian.coordinates[1]
-  );
+  const tripToMedianPoint = getTripData(startPoints, medianPoint);
 
-  let medianAirport = {
-    name: tempAirportMedian[0].ap.name,
-    iata_code: tempAirportMedian[0].ap.iata_code,
-    city: tempAirportMedian[0].ap.municipality,
-    coordinates: [
-      Number(tempAirportMedian[0].ap.latitude_deg),
-      Number(tempAirportMedian[0].ap.longitude_deg),
-    ],
-    // latitude: tempAirportMedian.latitude_deg,
-    // longitude: tempAirportMedian.longitude_deg,
-  };
+  const longestDistance = Math.max(...medianPoint.distanceArray) / 1.852; // divide by 1.852 to convert to Nautical Miles
 
+  let closestAirportsWGM = [] 
+  // run if there is a longhaul flight
+  if (longestDistance > maxMediumHaulDistance) {
+    const weights = getWeights(medianPoint, tripToMedianPoint);
 
-  const startPointAirport = closestStartPoint(medianAirport, startPoints);
-
-  let tripsToMedianAP = tripData(startPoints, medianAirport);
-
-  let co2ArrMedian = tripsToMedianAP.co2Arr;
-  let distanceArrayMedian = tripsToMedianAP.distanceArray;
-
-  medianAirport.totalCO2 = tripsToMedianAP.totalCO2;
-  medianAirport.totalDistance = tripsToMedianAP.totalDist;
-  medianAirport.distanceArray = distanceArrayMedian;
-
-  console.log({medianAirport});
-
-  let wGMAirport = []
-  if (Math.max(...distanceArrayMedian) / 1.852 > 2000) {
-    let weights = [];
-
-    distanceArrayMedian.map((dist, i) => {
-      let distArr = distanceArrayMedian;
-
-      const filteredDist = distArr.filter((val) => val !== dist);
-
-      const averageFilteredDist =
-        filteredDist.reduce((a, b) => a + b, 0) / filteredDist.length;
-
-      let co2Arr = co2ArrMedian;
-
-      const filteredCO2 = co2Arr.filter((val) => val !== co2Arr[i]);
-
-      const averageFilteredCO2 =
-        filteredCO2.reduce((a, b) => a + b, 0) / filteredCO2.length;
-
-      const averageCO2perKm = averageFilteredCO2 / averageFilteredDist;
-
-      let co2PerKM = 0;
-      if (dist === 0) {
-        co2PerKM = 0
-      }else{
-        co2PerKM = co2Arr[i] / dist;
-      }
-
-      console.log(co2PerKM);
-      console.log(averageCO2perKm);
-
-      const w = co2PerKM / averageCO2perKm;
-      weights.push(Number(w));
-    });
-
-    const minVal = Math.min(...weights);
-
-    console.log({ minVal });
-
-    let toOne = 0
-    if(minVal === 0){
-      toOne = 1
-    }else {
-     toOne = 1 / Number(minVal);
-    }
-    console.log({ toOne });
-
-    const scaledWeights = weights.map((weight) => weight * toOne);
-
-    console.log({scaledWeights});
-
-    console.log({weights})
-
-
-    console.log(coordinateArray);
-    const wGM = geoDesicMedian.weightedGeoMedian(
+    const weightedGeoMedian = geoDesicMedian.weightedGeoMedian(
       coordinateArray,
       weights,
       0.0001,
-      medianAirport
+      medianPoint
     );
-  wGMAirport = closestAirport(
-    wGM.coordinates[0],
-    wGM.coordinates[1]
-  );
+
+    closestAirportsWGM = closestAirports(
+      weightedGeoMedian.coordinates[0],
+      weightedGeoMedian.coordinates[1]
+    );
   }
-  let otherMeetingPoints = [] 
-  wGMAirport.map((item) => {
-    const medianAirport = {
+  let airports = []
+  
+  closestAirportsWGM.map((item)=>{
+    const airport = {
       name: item.ap.name,
       iata_code: item.ap.iata_code,
       city: item.ap.municipality,
       coordinates: [
-        Number(item.ap.latitude_deg),
         Number(item.ap.longitude_deg),
-      ],
-    };
-    console.log(medianAirport)
-    console.log('moins', tripData(startPoints, medianAirport))
-    const trip = tripData(startPoints, medianAirport)
+        Number(item.ap.latitude_deg)
+      ]
+    }
+    const tripToAirport = getTripData(startPoints, airport)
 
-    medianAirport.totalDistance = trip.totalDist
-
-    otherMeetingPoints.push({
-        ap: medianAirport,
-        trip
+    airports.push({
+      airport,
+      tripToAirport
     })
-  });
 
-  otherMeetingPoints.sort((a,b)=>a.trip.totalCO2 - b.trip.totalCO2)
+  }) 
 
-  console.log({otherMeetingPoints})
+  airports.sort((a,b)=>a.tripToAirport.totalCO2 - b.tripToAirport.totalCO2)
 
-  medianAirport = {
-    name: otherMeetingPoints[0].ap.name,
-    iata_code: otherMeetingPoints[0].ap.iata_code,
-    city: otherMeetingPoints[0].ap.municipality,
-    coordinates: otherMeetingPoints[0].ap.coordinates,
-    totalCO2: otherMeetingPoints[0].trip.totalCO2,
-    totalDistance: otherMeetingPoints[0].trip.totalDist,
-    distanceArray: otherMeetingPoints[0].trip.distanceArray 
-    // latitude: tempAirportMedian.latitude_deg,
-    // longitude: tempAirportMedian.longitude_deg,
-  };
-  tripsToMedianAP = tripData(startPoints, medianAirport);
-
-  co2ArrMedian = tripsToMedianAP.co2Arr;
-  distanceArrayMedian = tripsToMedianAP.distanceArray;
-
-  medianAirport.totalCO2 = tripsToMedianAP.totalCO2;
-  medianAirport.totalDistance = tripsToMedianAP.totalDist;
-  medianAirport.distanceArray = distanceArrayMedian;
-
-  //console.log({wGMAirport})
-  //console.log({medianAirport})
-      
-
-
-  //console.log(co2ArrMedian)
-
-  //console.log('ma',medianAirport)
-
-  startPoints.map((point, index) => {
-    //console.log(co2ArrMedian[index]);
-    point.toMedianAirport = {
-      name: medianAirport.name,
-      iata_code: medianAirport.iata_code,
-      co2: co2ArrMedian[index],
-      distance: distanceArrayMedian[index],
-    };
-  });
-
-
-  const tripsToStartPointAP = tripData(startPoints, startPointAirport);
-
-  const co2ArrStartPoint = tripsToStartPointAP.co2Arr;
-  const distanceArrayStartPoint = tripsToStartPointAP.distanceArray;
-
-  startPointAirport.totalCO2 = tripsToStartPointAP.totalCO2;
-  startPointAirport.totalDistance = tripsToStartPointAP.totalDist;
-
-  startPoints.map((point, index) => {
-    point.toStartPointAirport = {
-      name: startPointAirport.name,
-      iata_code: startPointAirport.iata_code,
-      co2: co2ArrStartPoint[index],
-      distance: distanceArrayStartPoint[index],
-    };
-  });
-  console.log((otherMeetingPoints))
-
-  res.json({
-    meetingPoint: medianAirport,
-    startPoints,
-    otherMeetingPoints
+  res.send({
+    meetingPoint: airports[0],
+    airports
   });
 });
 
