@@ -125,7 +125,7 @@ const SideBar = ({ setShowReport }) => {
             </div>
           ))}
       </div>
-      {meetingPoint?.coordinates && (
+      {meetingPoint?.airport?.coordinates && (
         <>
           <div className="mx-6 my-4 bg-gray-500 h-1px rounded-xl" />
           <div className="mx-6">
@@ -139,14 +139,14 @@ const SideBar = ({ setShowReport }) => {
               <div className="flex flex-col">
                 <p className="font-bold">Location</p>
                 <p className="text-gray-300">
-                  {Math.round(meetingPoint.coordinates[0] * 1000) / 1000},{" "}
-                  {Math.round(meetingPoint.coordinates[1] * 1000) / 1000}
+                  {Math.round(meetingPoint.airport.coordinates[0] * 1000) / 1000},{" "}
+                  {Math.round(meetingPoint.airport.coordinates[1] * 1000) / 1000}
                 </p>
               </div>
               <div className="flex flex-col">
                 <p className="font-bold">Total Distance</p>
                 <p className="text-gray-300">
-                  {Math.round(meetingPoint.totalDistance)}km
+                  {Math.round(meetingPoint.tripToAirport.totalDistance)}km
                 </p>
               </div>
             </div>
@@ -154,7 +154,7 @@ const SideBar = ({ setShowReport }) => {
               <div className="flex flex-col">
                 <p className="font-bold">Total CO2</p>
                 <p className="text-gray-300">
-                  {Math.round(meetingPoint.totalCO2) / 1000}t
+                  {Math.round(meetingPoint.tripToAirport.totalCO2) / 1000}t
                 </p>
               </div>
             </div>

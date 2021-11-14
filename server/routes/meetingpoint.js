@@ -91,8 +91,8 @@ router.post("/", (req, res) => {
       iata_code: item.ap.iata_code,
       city: item.ap.municipality,
       coordinates: [
-        Number(item.ap.longitude_deg),
-        Number(item.ap.latitude_deg)
+        Number(item.ap.latitude_deg),
+        Number(item.ap.longitude_deg)
       ]
     }
     const tripToAirport = getTripData(startPoints, airport)

@@ -17,10 +17,11 @@ import MlcLogo from "../public/mlcLOGOv2.svg";
 
 // Create styles
 const Pdf = () => {
-  const trips = useSelector((state) => state.startPoints.trips);
   const meetingPoint = useSelector(
-    (state) => state.meetingPoint.closestAirport
+    (state) => state.meetingPoint.point
   );
+  const startPoints = useSelector((state)=>state.startPoints.points)
+  const trip = meetingPoint.tripToAirport
   return (
     <PDFViewer showToolbar="false" width="640" height="944">
       <Document>
@@ -94,26 +95,26 @@ const Pdf = () => {
             </View>
             <View style={styles.tableRow}>
               <View style={styles.tableCol}>
-                <Text style={styles.tableCell}>{meetingPoint.iata_code}</Text>
+                <Text style={styles.tableCell}>{meetingPoint.airport.iata_code}</Text>
               </View>
               <View style={styles.tableCol}>
                 <Text style={styles.tableCell}>
-                  {meetingPoint.coordinates[0]}
+                  {meetingPoint.airport.coordinates[0]}
                 </Text>
               </View>
               <View style={styles.tableCol}>
                 <Text style={styles.tableCell}>
-                  {meetingPoint.coordinates[1]}
+                  {meetingPoint.airport.coordinates[1]}
                 </Text>
               </View>
               <View style={styles.tableCol}>
                 <Text style={styles.tableCell}>
-                  {Math.round(meetingPoint.totalCO2) / 1000}t
+                  {Math.round(meetingPoint.tripToAirport.totalCO2) / 1000}t
                 </Text>
               </View>
               <View style={styles.tableCol}>
                 <Text style={styles.tableCell}>
-                  {Math.round(meetingPoint.totalDistance)}km
+                  {Math.round(meetingPoint.tripToAirport.totalDistance)}km
                 </Text>
               </View>
             </View>
@@ -139,34 +140,34 @@ const Pdf = () => {
                 <Text style={styles.tableCellHeader}>Distance</Text>
               </View>
             </View>
-            {trips.map((trip) => (
+            {startPoints.map((point, index) => (
               <View style={styles.tableRow}>
                 <View style={styles.tableCol1}>
-                  <Text style={styles.tableCell}>{trip.airport.iata_code}</Text>
+                  <Text style={styles.tableCell}>{point.airport.iata_code}</Text>
                 </View>
                 <View style={styles.tableCol1}>
                   <Text style={styles.tableCell}>
-                    {trip.toStartPointAirport.iata_code}
+                    {meetingPoint.airport.iata_code}
                   </Text>
                 </View>
                 <View style={styles.tableCol2}>
-                  {Math.round(trip.toStartPointAirport.co2) == 0 ? (
+                  {Math.round(meetingPoint.tripToAirport.co2Array[index]) == 0 ? (
                     <Text style={styles.tableCell}>0t/0t</Text>
                   ) : (
                     <Text style={styles.tableCell}>
                       3.153/
-                      {Math.round(trip.toStartPointAirport.co2 - 3153) / 1000}t
+                      {Math.round(meetingPoint.tripToAirport.co2Array[index] - 3153) / 1000}t
                     </Text>
                   )}
                 </View>
                 <View style={styles.tableCol1}>
                   <Text style={styles.tableCell}>
-                    {Math.round(trip.toStartPointAirport.co2) / 1000}t
+                    {Math.round(meetingPoint.tripToAirport.co2Array[index]) / 1000}t
                   </Text>
                 </View>
                 <View style={styles.tableCol1}>
                   <Text style={styles.tableCell}>
-                    {Math.round(trip.toStartPointAirport.distance)}
+                    {Math.round(meetingPoint.tripToAirport.distanceArray[index])}KM
                   </Text>
                 </View>
               </View>

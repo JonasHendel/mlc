@@ -61,8 +61,8 @@ const AirportSearch = ({
 
   console.log(airportArray);
   return (
-    <form className="flex justify-between w-full mx-6 mb-6">
-      <div>
+    <form className="flex justify-between w-full mb-6">
+      <div className="mx-6 w-96">
         <input
           value={city}
           onChange={(e) => {
@@ -70,13 +70,13 @@ const AirportSearch = ({
             setCity(e.target.value);
           }}
           placeholder="Enter city"
-          className="h-10 px-1 py-1 bg-transparent border-2 border-gray-700 outline-none wufull rounded-md focus:border-gray-600"
+          className="w-full h-10 px-1 py-1 bg-transparent border-2 border-gray-700 outline-none rounded-md focus:border-gray-600"
         />
         {airportArray.length > 0 && city.length > 0 && (
-          <div className="absolute px-1 py-1 border-2 border-gray-600 outline-none w-52 bg-secondary min-h-10 rounded-md focus:border-gray-600">
+          <div className="absolute z-50 w-full px-1 py-1 border-2 border-gray-600 outline-none bg-secondary min-h-10 rounded-md focus:border-gray-600">
             {airportArray.map((airport) => (
               <div
-                className="cursor-pointer"
+                className="cursor-pointer bottom-2"
                 onClick={() => {
                   onClickFunction(airport);
                   setCity("");
@@ -84,6 +84,7 @@ const AirportSearch = ({
               >
                 <p className="font-bold text-white">{airport.iata}</p>
                 <p className="text-gray-200">{airport.name}</p>
+                <div className="w-full mt-1 border-b-2 border-gray-500" />
               </div>
             ))}
           </div>

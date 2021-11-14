@@ -62,6 +62,7 @@ const GeoJson = ({ setTotalCO2 }) => {
 		}
 	};
 
+
 	useEffect(async () => {
 		let coordinateArray = [];
 		startPoints.map((startPoint) => {
@@ -73,9 +74,9 @@ const GeoJson = ({ setTotalCO2 }) => {
         console.log(data.success)
 				const { meetingPoint } = data.success;
 				const { startPoints } = data.success;
-				const { otherMeetingPoints } = data.success;
+				const { airports } = data.success;
         dispatch(setMeetingPoint(meetingPoint));
-        dispatch(setMeetingPointsArr(otherMeetingPoints));
+        dispatch(setMeetingPointsArr(airports));
 				dispatch(setTrips(startPoints));
 			}
 			// dispatch(setPoints());
@@ -90,16 +91,16 @@ const GeoJson = ({ setTotalCO2 }) => {
 			{startPoints.map((startPoint) => (
 				<div key={uuidv4()}>
 					<StartPoints startPoint={startPoint} />
-					{meetingPoint.coordinates && (
+					{meetingPoint.airport?.coordinates && (
 						<LineToMeetingPoint
 							startPoint={startPoint.airport.coordinates}
-							meetingPoint={meetingPoint.coordinates}
+							meetingPoint={meetingPoint.airport.coordinates}
 						/>
 					)}
 				</div>
 			))}
-			{meetingPoint.coordinates && (
-        <MeetingPoint meetingPoint={meetingPoint.coordinates}/>
+			{meetingPoint.airport?.coordinates && (
+        <MeetingPoint meetingPoint={meetingPoint.airport.coordinates}/>
 			)}
       {/*{meetingPoint.coordinates && <MeetingPoint meetingPoint={meetingPointMedian.coordinates} type="median"/>}*/}
 		</FeatureGroup>
