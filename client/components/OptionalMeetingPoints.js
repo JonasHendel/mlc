@@ -43,7 +43,7 @@ const OptionalMeetingPoints = ({ meetingPoint, meetingPointsArray }) => {
   console.log({meetingPointsArray})
 
   return (
-    <div className="flex flex-row justify-between w-full my-4">
+    <div className="justify-between w-full my-4 grid gap-5 grid-cols-4">
       {meetingPointsArray.map((airport) => (
         <Button otherAirport={airport} />
       ))}

@@ -52,7 +52,7 @@ module.exports = (lat1, lng1) => {
   }
   dArr.sort((a, b) => a.d- b.d);
 
-  const slicedArr = dArr.slice(0, 5);
+  const slicedArr = dArr.slice(0, 3);
 
   //console.log(d);
   //console.log(ap);
