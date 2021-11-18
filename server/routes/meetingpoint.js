@@ -66,12 +66,13 @@ router.post("/", (req, res) => {
 
   const longestDistance = Math.max(...medianPoint.distanceArray) / 1.852; // divide by 1.852 to convert to Nautical Miles
 
+  let weightedGeoMedian = {}
   let closestAirportsWGM = [] 
   // run if there is a longhaul flight
   if (longestDistance > maxMediumHaulDistance) {
     const weights = getWeights(medianPoint, tripToMedianPoint);
 
-    const weightedGeoMedian = geoDesicMedian.weightedGeoMedian(
+    weightedGeoMedian = geoDesicMedian.weightedGeoMedian(
       coordinateArray,
       weights,
       0.0001,
@@ -83,6 +84,21 @@ router.post("/", (req, res) => {
       weightedGeoMedian.coordinates[1]
     );
   }
+
+  const median = {
+    ap: {
+      name: "Median",
+      iata_code: "MED",
+      municipality: "Unknown",
+      latitude_deg: weightedGeoMedian.coordinates[0],
+      longitude_deg: weightedGeoMedian.coordinates[1]
+    }
+
+  }
+
+
+  closestAirportsWGM.push(median)
+
   let airports = []
   
   closestAirportsWGM.map((item)=>{
@@ -103,6 +119,8 @@ router.post("/", (req, res) => {
     })
 
   }) 
+
+
 
   airports.sort((a,b)=>a.tripToAirport.totalCO2 - b.tripToAirport.totalCO2)
 

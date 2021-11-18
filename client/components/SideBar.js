@@ -94,13 +94,12 @@ const SideBar = ({ setShowReport }) => {
       <div className="flex flex-col">
         {startPoints &&
           startPoints.map((point, i) => (
-            <div className="flex flex-col ">
-              <div key={i} className="flex items-center justify-between mx-6">
-                <div className="">
+            <div className="flex flex-col mb-2">
+              <div key={i} className="flex items-center justify-between mx-6 ">
+                <div className="leading-5">
                   <p className="font-bold">{point.airport.iata_code}</p>
-                  <p className="text-gray-300">
-                    {Math.round(point.airport.coordinates[0] * 10000) / 10000},{" "}
-                    {Math.round(point.airport.coordinates[1] * 10000) / 10000}
+                  <p className="text-gray-400">
+                    {point.airport.name}
                   </p>
                 </div>
                 <div className="flex items-center">
@@ -136,11 +135,11 @@ const SideBar = ({ setShowReport }) => {
               {meetingPointsArray.length > 0&&<OptionalMeetingPoints meetingPoint={meetingPoint} meetingPointsArray={meetingPointsArray}/> }
             </div>
             <div className="flex justify-between">
-              <div className="flex flex-col">
-                <p className="font-bold">Location</p>
+            <div className="flex flex-col justify-between">
+              <div className="flex flex-col mb-4">
+                <p className="font-bold">{meetingPoint.airport.iata_code}</p>
                 <p className="text-gray-300">
-                  {Math.round(meetingPoint.airport.coordinates[0] * 1000) / 1000},{" "}
-                  {Math.round(meetingPoint.airport.coordinates[1] * 1000) / 1000}
+                  {meetingPoint.airport.city}
                 </p>
               </div>
               <div className="flex flex-col">
@@ -150,13 +149,21 @@ const SideBar = ({ setShowReport }) => {
                 </p>
               </div>
             </div>
-            <div className="flex justify-between mt-2">
+            <div className="flex flex-col justify-between">
+              <div className="flex flex-col mb-4">
+                <p className="font-bold">Location</p>
+                <p className="text-gray-300">
+                  {Math.round(meetingPoint.airport.coordinates[0] * 1000) / 1000},{" "}
+                  {Math.round(meetingPoint.airport.coordinates[1] * 1000) / 1000}
+                </p>
+              </div>
               <div className="flex flex-col">
                 <p className="font-bold">Total CO2</p>
                 <p className="text-gray-300">
                   {Math.round(meetingPoint.tripToAirport.totalCO2) / 1000}t
                 </p>
               </div>
+            </div>
             </div>
             <div className="flex justify-center mt-3">
               <button

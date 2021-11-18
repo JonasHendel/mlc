@@ -62,7 +62,7 @@ const AirportSearch = ({
   console.log(airportArray);
   return (
     <form className="flex justify-between w-full mb-6">
-      <div className="mx-6 w-96">
+      <div className="relative mx-6 w-96">
         <input
           value={city}
           onChange={(e) => {

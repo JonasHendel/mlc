@@ -179,10 +179,14 @@ const weightedGeoMedian = (x, WX, eps, medianAirport) => {
       }
     })
 
+
+    console.log(distanceArray)
+    console.log(abort)
+
     if(abort){
       const totalDist = distanceArray.reduce((a, b) => a + b, 0);
       return {
-        coordinates: geoMean2,
+        coordinates: geoMean,
         distance: Math.round(totalDist),
         distanceArray: distanceArray,
       };

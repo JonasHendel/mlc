@@ -41,7 +41,7 @@ const GeoJson = ({ setTotalCO2 }) => {
         const pointObj = {
           airport: {
             name: res[0].ap.name,
-            iata_code: res[0].ap.iata_code,
+            iata_code: res[0].ap.iata_code ? res[0].ap.iata_code : "No code available",
             city: res[0].ap.municipality,
             coordinates: [res[0].ap.latitude_deg, res[0].ap.longitude_deg],
           },
