@@ -11,6 +11,7 @@ import {
 import AirportSearch from "./AirportSearch";
 import { clearNotify, notifyError } from "../store/features/notifySlice";
 import {} from "../store/features/meetingPointSlice";
+import Test from './Test'
 
 const SideBar = ({ setShowReport }) => {
   const [geocode, setGeocode] = useState("");
@@ -174,6 +175,7 @@ const SideBar = ({ setShowReport }) => {
               >
                 Show report
               </button>
+              <Test/>
             </div>
           </div>
         </>
