@@ -83,7 +83,7 @@ const SideBar = ({ setShowReport }) => {
 
   return (
     <div className="absolute flex flex-col justify-start py-5 mt-10 ml-10 w-96 bg-primary max-h-90 z-9999 rounded-xl">
-      <p className="w-full mb-2 text-xl font-bold text-center">Add location</p>
+      <p className="w-full mb-2 text-xl font-bold text-center">Add start point</p>
       <AirportSearch
         setAirport={setAirport}
         setGeocode={setGeocode}
@@ -92,7 +92,7 @@ const SideBar = ({ setShowReport }) => {
           addAirport(airport);
         }}
       />
-      <div className="flex flex-col">
+      <div className="flex flex-col overflow-scroll max-h-72">
         {startPoints &&
           startPoints.map((point, i) => (
             <div className="flex flex-col mb-2">
@@ -175,6 +175,8 @@ const SideBar = ({ setShowReport }) => {
               >
                 Show report
               </button>
+            </div>
+            <div className="flex justify-center mt-3">
               <Test/>
             </div>
           </div>

@@ -21,11 +21,11 @@ const Pdf = () => {
     (state) => state.meetingPoint.point
   );
 
-  const clientHeight = document.body.clientHeight
+  console.log(document.height)
   const startPoints = useSelector((state)=>state.startPoints.points)
   const trip = meetingPoint.tripToAirport
   return (
-    <PDFViewer showToolbar="false" width={640} height={clientHeight*0.9477124183}>
+    <PDFViewer showToolbar="false" width="640" height="944">
       <Document>
         <Page style={styles.body}>
           <View style={styles.header}>
