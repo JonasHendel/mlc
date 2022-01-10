@@ -69,6 +69,7 @@ const AirportSearch = ({
             searchAirport(e.target.value);
             setCity(e.target.value);
           }}
+          onSubmit={(e=>{e.preventDefault()})}
           placeholder="Enter city"
           className="w-full h-10 px-1 py-1 bg-transparent border-2 border-gray-500 outline-none rounded-md focus:border-gray-600"
         />

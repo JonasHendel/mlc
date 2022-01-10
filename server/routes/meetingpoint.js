@@ -3,45 +3,9 @@ const geoDesicMedian = require("../utils/geoDesicMedian");
 const closestStartPoint = require("../utils/closestStartPoint");
 const closestAirports = require("../utils/airport/closestAirport");
 const getTripData = require("../utils/trip");
+const getWeights = require("../utils/getWeights");
 
 const router = express.Router();
-
-const getWeights = (medianPoint, tripToMedianPoint) => {
-  let weights = [];
-
-  medianPoint.distanceArray.map((distance, index) => {
-    // average distance
-    let tempDistanceArray = medianPoint.distanceArray;
-
-    const filteredDistanceArray = tempDistanceArray.filter(
-      (value) => value !== distance
-    );
-
-    const averageFilteredDistance =
-      filteredDistanceArray.reduce((a, b) => a + b, 0) /
-      filteredDistanceArray.length;
-
-    // average emissions
-    let tempCO2Array = tripToMedianPoint.co2Array;
-
-    const filteredCO2Array = tempCO2Array.filter(
-      (val) => val !== tempCO2Array[index]
-    );
-
-    const averageFilteredCO2 =
-      filteredCO2Array.reduce((a, b) => a + b, 0) / filteredCO2Array.length;
-
-    // co2 consumptions per km
-    const averageCO2PerKm = averageFilteredCO2 / averageFilteredDistance;
-
-    const co2PerKm = distance === 0 ? 0 : tempCO2Array[index] / distance;
-
-    // calculate weights
-    const weight = co2PerKm / averageCO2PerKm;
-    weights.push(weight);
-  });
-  return weights;
-};
 
 router.post("/", (req, res) => {
   const maxMediumHaulDistance = 2000; // in Nautical Miles
@@ -60,73 +24,129 @@ router.post("/", (req, res) => {
     coordinateArray.push(point.airport.coordinates);
   });
 
-  const medianPoint = geoDesicMedian.geoDesicMedian(coordinateArray, 0.001); //the smaller the second argument, the more accurate the medianPoint is
+  let medianPoint = geoDesicMedian.geoDesicMedian(coordinateArray, 0.001); //the smaller the second argument, the more accurate the medianPoint is
 
   const tripToMedianPoint = getTripData(startPoints, medianPoint);
 
   const longestDistance = Math.max(...medianPoint.distanceArray) / 1.852; // divide by 1.852 to convert to Nautical Miles
 
-  let weightedGeoMedian = {}
-  let closestAirportsWGM = [] 
   // run if there is a longhaul flight
   if (longestDistance > maxMediumHaulDistance) {
+    //if(false){
     const weights = getWeights(medianPoint, tripToMedianPoint);
 
-    weightedGeoMedian = geoDesicMedian.weightedGeoMedian(
+    medianPoint = geoDesicMedian.weightedGeoMedian(
       coordinateArray,
       weights,
       0.0001,
       medianPoint
     );
-
-    closestAirportsWGM = closestAirports(
-      weightedGeoMedian.coordinates[0],
-      weightedGeoMedian.coordinates[1]
-    );
   }
+
+  let closestAirportsArray = closestAirports(
+    medianPoint.coordinates[0],
+    medianPoint.coordinates[1]
+  );
 
   const median = {
     ap: {
       name: "Median",
       iata_code: "MED",
       municipality: "Unknown",
-      latitude_deg: weightedGeoMedian.coordinates[0],
-      longitude_deg: weightedGeoMedian.coordinates[1]
-    }
+      latitude_deg: medianPoint.coordinates[0],
+      longitude_deg: medianPoint.coordinates[1],
+    },
+  };
 
-  }
-
-
-  closestAirportsWGM.push(median)
+  closestAirportsArray.unshift(median)
 
   let airports = []
-  
-  closestAirportsWGM.map((item)=>{
+
+  closestAirportsArray.map((item) => {
     const airport = {
       name: item.ap.name,
       iata_code: item.ap.iata_code,
       city: item.ap.municipality,
       coordinates: [
         Number(item.ap.latitude_deg),
-        Number(item.ap.longitude_deg)
-      ]
-    }
-    const tripToAirport = getTripData(startPoints, airport)
+        Number(item.ap.longitude_deg),
+      ],
+    };
+    const tripToAirport = getTripData(startPoints, airport);
 
     airports.push({
       airport,
-      tripToAirport
-    })
+      tripToAirport,
+    });
+  });
 
-  }) 
+  console.log(airports)
 
+  console.log(airports[0]);
 
+  let nwse = [
+    [
+      airports[0].airport.coordinates[0] + 2,
+      airports[0].airport.coordinates[1],
+    ],
+    [
+      airports[0].airport.coordinates[0] - 2,
+      airports[0].airport.coordinates[1],
+    ],
+    [
+      airports[0].airport.coordinates[0],
+      airports[0].airport.coordinates[1] + 2,
+    ],
+    [
+      airports[0].airport.coordinates[0],
+      airports[0].airport.coordinates[1] - 2,
+    ],
+    //[medianPoint.coordinates[0]+2, medianPoint.coordinates[1]],
+    //[medianPoint.coordinates[0]-2, medianPoint.coordinates[1]],
+    //[medianPoint.coordinates[0], medianPoint.coordinates[1]+2],
+    //[medianPoint.coordinates[0], medianPoint.coordinates[1]-2],
+  ];
+  console.log(nwse);
 
-  airports.sort((a,b)=>a.tripToAirport.totalCO2 - b.tripToAirport.totalCO2)
+  let airportsNwse = [];
+  nwse.map((item, i) => {
+    const airport = {
+      name: `nswe${i}`,
+      iata_code: `nswe${i}`,
+      city: "nwse",
+      coordinates: [Number(item[0]), Number(item[1])],
+    };
+    const tripToAirport = getTripData(startPoints, airport);
 
+    airportsNwse.push({
+      airport,
+      tripToAirport,
+    });
+  });
+
+  const addMedian = () => {
+    const airport = {
+      name: airports[0].airport.name,
+      iata_code: airports[0].airport.iata_code,
+      city: airports[0].airport.municipality,
+      coordinates: airports[0].airport.coordinates,
+    };
+    const tripToAirport = getTripData(startPoints, airport);
+
+    airportsNwse.unshift({
+      airport,
+      tripToAirport,
+    });
+  };
+
+  addMedian();
+
+  //airports.sort((a,b)=>a.tripToAirport.totalCO2 - b.tripToAirport.totalCO2)
+
+  // airports for closest airports and airportsNwse for +1/-1 lat/lng
   res.send({
     meetingPoint: airports[0],
-    airports
+    airports: airports,
   });
 });
 

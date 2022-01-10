@@ -1,5 +1,6 @@
 const mathjs = require("mathjs");
 const haversineFormula = require("./haversineFormula.js");
+const polylabel = require("polylabel");
 const { mean, distance } = mathjs;
 
 const p1 = [59.9139, 10.7522];
@@ -13,7 +14,7 @@ const X2 = [p1[1], p2[1], p3[1], p4[1]];
 const x = [p1, p2, p3, p4];
 
 const geoDist = (x, geoMean) => {
-  //console.log('x',x)
+  console.log("x", x);
   // console.log('m',geoMean)
   let distanceToGeoMean = [];
   for (let i = 0; i < x.length; i++) {
@@ -96,10 +97,37 @@ const geoDesicMedian = (x, eps) => {
 };
 
 const weightedGeoMedian = (x, WX, eps, medianAirport) => {
-  //console.log('called wgm')
+  console.log("called wgm");
   let lat = [];
   let long = [];
 
+  let num1 = 9.5;
+
+  let num2 = 10.5;
+
+  //const WX = [1,1,1]
+
+  //const WX = [0.5859366687152695, 1.6370753529367899, 0.6903562883794945]
+
+  const midPoint = (points) => {
+    let lat = [];
+    let lng = [];
+
+    points.map((point) => lat.push(Number(point[0])));
+    points.map((point) => lng.push(Number(point[1])));
+
+    const latSum = lat.reduce((a, b) => a + b, 0);
+    const lngSum = lng.reduce((a, b) => a + b, 0);
+
+    console.log({ lngSum });
+
+    const latLength = lat.length;
+    const lngLength = lng.length;
+
+    return [latSum / latLength, lngLength];
+  };
+
+  console.log(WX);
   for (let i = 0; i < x.length; i++) {
     lat.push(x[i][0]);
     long.push(x[i][1]);
@@ -107,14 +135,34 @@ const weightedGeoMedian = (x, WX, eps, medianAirport) => {
 
   //let geoMean = [weightedMean(lat, WX), weightedMean(long, WX)];
 
-  let geoMean = medianAirport.coordinates;
-
+  //let geoMean = medianAirport.coordinates;
   //console.log({geoMean})
 
   let longhaulArr = [];
   let mediumhaulArr = [];
 
-  const initialDistArr = medianAirport.distanceArray
+  let geoMean = mean(x, 0);
+
+  let result = []
+
+  //x.map((arr)=>{
+    //let temp = [parseFloat(arr[0]), parseFloat(arr[1])]
+    //result.push(temp)
+  //})
+
+  //console.log(x)
+
+  //console.log({result})
+
+  //const mp = polylabel([result], 1.0);
+
+  ////const mp = midPoint(x)
+
+  //const m = geoDist(x, mp);
+
+  //console.log({ mp });
+
+  const initialDistArr = medianAirport.distanceArray;
 
   //console.log({initialDistArr})
 
@@ -127,7 +175,10 @@ const weightedGeoMedian = (x, WX, eps, medianAirport) => {
     }
   });
 
+  let arr2 = [];
   while (true) {
+    arr2.push("j");
+    console.log(arr2.length, "--------");
     for (let i = 0; i < x.length; i++) {
       var dist = Math.sqrt(
         Math.pow(x[i][0] - geoMean[0], 2) + Math.pow(x[i][1] - geoMean[1], 2)
@@ -161,36 +212,45 @@ const weightedGeoMedian = (x, WX, eps, medianAirport) => {
     }
     finalArr.push(sum1, sum2);
     let wSum = W.reduce((a, b) => a + b, 0);
-    const geoMean2 = finalArr.map((float) => float / wSum);
 
-    let abort = false
+    //const geoMean2 = finalArr.map((float) => float / wSum);
+
+    let geoMean2 = null;
+
+    for (let i = 0; i <= 1; i++) {
+      geoMean2 = finalArr.map((float) => float / wSum);
+    }
+
+    const distanceArray2 = geoDist(x, geoMean2)
+
+    let abort = false;
     //console.log(distanceArray[1])
 
-    longhaulArr.map((indexOfLonghaulFlights) => {
-      if (distanceArray[indexOfLonghaulFlights]/1.852 < 2000) {
-        //console.log('toLong', distanceArray)
-        abort = true
+
+    // not needed since it is good if longhaul flights are transformed to medium haul flights, however mediumhaulflights shouldnt become longhaulflights
+    //longhaulArr.map((indexOfLonghaulFlights) => {
+      //if (distanceArray[indexOfLonghaulFlights] / 1.852 < 2000) {
+        ////console.log('toLong', distanceArray)
+        //abort = true;
+      //}
+    //});
+
+    mediumhaulArr.map((indexOfMediumHaulFlights) => {
+      if (distanceArray2[indexOfMediumHaulFlights] / 1.852 > 2000) {
+        abort = true;
       }
     });
 
-    mediumhaulArr.map((indexOfMediumHaulFlights)=>{
-      if(distanceArray[indexOfMediumHaulFlights]/1.852 > 1700){
-        abort = true
-      }
-    })
+    console.log(distanceArray);
+    console.log(abort);
 
-
-    console.log(distanceArray)
-    console.log(abort)
-
-    if(abort){
+    if (abort) {
       const totalDist = distanceArray.reduce((a, b) => a + b, 0);
       return {
         coordinates: geoMean,
         distance: Math.round(totalDist),
         distanceArray: distanceArray,
       };
-
     }
 
     if (distance(geoMean, geoMean2) < eps) {

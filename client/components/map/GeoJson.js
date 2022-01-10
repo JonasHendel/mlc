@@ -86,16 +86,20 @@ const GeoJson = ({ setTotalCO2 }) => {
 		}
 	}, [startPoints]);
 
+
 	return (
 		<FeatureGroup>
-			{startPoints.map((startPoint) => (
+			{startPoints.map((startPoint, index) => (
 				<div key={uuidv4()}>
 					<StartPoints startPoint={startPoint} />
 					{meetingPoint.airport?.coordinates && (
+            <>
 						<LineToMeetingPoint
 							startPoint={startPoint.airport.coordinates}
-							meetingPoint={meetingPoint.airport.coordinates}
+							meetingPoint={meetingPoint}
+              index={index}
 						/>
+            </>
 					)}
 				</div>
 			))}
@@ -147,7 +151,8 @@ const StartPoints = ({ startPoint }) => {
 				<Tooltip className='custom-popup' opacity={0.9} offset={[-50, -60]} autoclose={false}>
 					<div>
 						<p>{startPoint.airport.iata_code}</p>
-						<p>{Math.round(startPoint.airport.coordinates[0]*100)/100}, {Math.round(startPoint.airport.coordinates[1]*100)/100}</p>
+            <p>{startPoint.airport.city}</p>
+            {/*<p>{Math.round(startPoint.airport.coordinates[0]*100)/100}, {Math.round(startPoint.airport.coordinates[1]*100)/100}</p>*/}
 					</div>
 				</Tooltip>
 			</Marker>
@@ -156,10 +161,39 @@ const StartPoints = ({ startPoint }) => {
 };
 
 const LineToMeetingPoint = ({ startPoint, meetingPoint, index }) => {
-	const pathOptions = {
+	const mediumDistPath = {
 		color: '#a3a3a3',
 	};
-	return <Polyline pathOptions={pathOptions} positions={[startPoint, meetingPoint]} key={index} />;
+  const longDistPath = {
+    color: 'red',
+  };
+
+  const coordinates = meetingPoint.airport.coordinates
+
+  const longDistance = meetingPoint.tripToAirport.distanceArray[index]/1.852 > 2000 ? true : false
+
+  console.log(longDistance)
+    
+  return <Polyline pathOptions={longDistance ? longDistPath : mediumDistPath} positions={[startPoint, coordinates]} key={index} />;
 };
+
+//const LineToMeetingPoint = ({ startPoint, meetingPoint }) => {
+	//const mediumDistPath = {
+		//color: 'a3a3a3',
+	//};
+	//const longDistPath = {
+		//color: 'a3a3a3',
+	//};
+
+  ////console.log({index})
+  ////console.log(meetingpoints.triptoairport.distancearray[index])
+
+  ////const longdistance = meetingpoints.triptoairport.distancearray[index] > 2000 ? true : false
+
+  ////console.log({longdistance})
+
+
+  //return <Polyline pathOptions={mediumDistPath} positions={[startPoint, meetingPoint]}  />;
+//};
 
 export default GeoJson;

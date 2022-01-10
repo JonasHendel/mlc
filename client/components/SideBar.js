@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { X } from "phosphor-react";
-import OptionalMeetingPoints from './OptionalMeetingPoints'
+import { X, ArrowDown } from "phosphor-react";
+import OptionalMeetingPoints from "./OptionalMeetingPoints";
 
-import { addPoints, setPoints, addStopOver } from "../store/features/pointsSlice";
+import {
+  addPoints,
+  setPoints,
+  addStopOver,
+} from "../store/features/pointsSlice";
 import {
   setMeetingPointTypeDistance,
   setMeetingPointTypeCO2,
@@ -11,7 +15,7 @@ import {
 import AirportSearch from "./AirportSearch";
 import { clearNotify, notifyError } from "../store/features/notifySlice";
 import {} from "../store/features/meetingPointSlice";
-import Test from './Test'
+import Test from "./Test";
 
 const SideBar = ({ setShowReport }) => {
   const [geocode, setGeocode] = useState("");
@@ -26,19 +30,15 @@ const SideBar = ({ setShowReport }) => {
   const [stopOver, setStopOver] = useState({});
 
   const startPoints = useSelector((state) => state.startPoints.points);
-  const meetingPointMedian = useSelector(
-    (state) => state.meetingPoint.point
-  );
+  const meetingPointMedian = useSelector((state) => state.meetingPoint.point);
   const meetingPointType = useSelector(
     (state) => state.meetingPointType.meetingPointType
   );
-  const meetingPointsArray = useSelector((state)=>state.meetingPoint.array)
+  const meetingPointsArray = useSelector((state) => state.meetingPoint.array);
 
   useEffect(() => {
-    setMeetingPoint(
-      meetingPointMedian
-    );
-  }, [meetingPointType,  meetingPointMedian]);
+    setMeetingPoint(meetingPointMedian);
+  }, [meetingPointType, meetingPointMedian]);
 
   // consol.log('dfjks', Object.keys(meetingAirport).length);
   // console.log('m', meetingPoint);
@@ -83,7 +83,9 @@ const SideBar = ({ setShowReport }) => {
 
   return (
     <div className="absolute flex flex-col justify-start py-5 mt-10 ml-10 w-96 bg-primary max-h-90 z-9999 rounded-xl">
-      <p className="w-full mb-2 text-xl font-bold text-center">Add start point</p>
+      <p className="w-full mb-2 text-xl font-bold text-center">
+        Add start point
+      </p>
       <AirportSearch
         setAirport={setAirport}
         setGeocode={setGeocode}
@@ -92,16 +94,14 @@ const SideBar = ({ setShowReport }) => {
           addAirport(airport);
         }}
       />
-      <div className="flex flex-col overflow-scroll max-h-72">
+      <div className="flex flex-col overflow-scroll max-h-64">
         {startPoints &&
           startPoints.map((point, i) => (
             <div className="flex flex-col mb-2">
               <div key={i} className="flex items-center justify-between mx-6 ">
                 <div className="leading-5">
                   <p className="font-bold">{point.airport.iata_code}</p>
-                  <p className="text-gray-400">
-                    {point.airport.name}
-                  </p>
+                  <p className="text-gray-400">{point.airport.name}</p>
                 </div>
                 <div className="flex items-center">
                   <button
@@ -133,38 +133,44 @@ const SideBar = ({ setShowReport }) => {
               Meeting Point
             </p>
             <div className="flex w-full justify-evenly">
-              {meetingPointsArray.length > 0&&<OptionalMeetingPoints meetingPoint={meetingPoint} meetingPointsArray={meetingPointsArray}/> }
+              {meetingPointsArray.length > 0 && (
+                <OptionalMeetingPoints
+                  meetingPoint={meetingPoint}
+                  meetingPointsArray={meetingPointsArray}
+                />
+              )}
             </div>
             <div className="flex justify-between">
-            <div className="flex flex-col justify-between">
-              <div className="flex flex-col mb-4">
-                <p className="font-bold">{meetingPoint.airport.iata_code}</p>
-                <p className="text-gray-300">
-                  {meetingPoint.airport.city}
-                </p>
+              <div className="flex flex-col justify-between">
+                <div className="flex flex-col mb-4">
+                  <p className="font-bold">{meetingPoint.airport.iata_code}</p>
+                  <p className="text-gray-300">{meetingPoint.airport.city}</p>
+                </div>
+                <div className="flex flex-col">
+                  <p className="font-bold">Total Distance</p>
+                  <p className="text-gray-300">
+                    {Math.round(meetingPoint.tripToAirport.totalDistance)}km
+                  </p>
+                </div>
               </div>
-              <div className="flex flex-col">
-                <p className="font-bold">Total Distance</p>
-                <p className="text-gray-300">
-                  {Math.round(meetingPoint.tripToAirport.totalDistance)}km
-                </p>
+              <div className="flex flex-col justify-between">
+                <div className="flex flex-col mb-4">
+                  <p className="font-bold">Location</p>
+                  <p className="text-gray-300">
+                    {Math.round(meetingPoint.airport.coordinates[0] * 1000) /
+                      1000}
+                    ,{" "}
+                    {Math.round(meetingPoint.airport.coordinates[1] * 1000) /
+                      1000}
+                  </p>
+                </div>
+                <div className="flex flex-col">
+                  <p className="font-bold">Total CO2</p>
+                  <p className="text-gray-300">
+                    {Math.round(meetingPoint.tripToAirport.totalCO2) / 1000}t
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="flex flex-col justify-between">
-              <div className="flex flex-col mb-4">
-                <p className="font-bold">Location</p>
-                <p className="text-gray-300">
-                  {Math.round(meetingPoint.airport.coordinates[0] * 1000) / 1000},{" "}
-                  {Math.round(meetingPoint.airport.coordinates[1] * 1000) / 1000}
-                </p>
-              </div>
-              <div className="flex flex-col">
-                <p className="font-bold">Total CO2</p>
-                <p className="text-gray-300">
-                  {Math.round(meetingPoint.tripToAirport.totalCO2) / 1000}t
-                </p>
-              </div>
-            </div>
             </div>
             <div className="flex justify-center mt-3">
               <button
@@ -177,7 +183,7 @@ const SideBar = ({ setShowReport }) => {
               </button>
             </div>
             <div className="flex justify-center mt-3">
-              <Test/>
+              <Test />
             </div>
           </div>
         </>

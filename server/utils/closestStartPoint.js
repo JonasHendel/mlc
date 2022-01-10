@@ -1,6 +1,6 @@
 const median = require('./geoDesicMedian')
 
-// finds the closest startPoint to the given lat/long (meetingPoint in this casd)
+// finds the closest startPoint to the given lat/long (meetingPoint in this case)
 module.exports = (meetingPoint, startPoints) => {
   if (Boolean(meetingPoint)) {
     // const { distanceArray } = meetingPoint;
